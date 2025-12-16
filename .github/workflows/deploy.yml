@@ -23,11 +23,8 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Deploy to Nginx web root (atomic)
+      - name: Deploy to Nginx web root
         run: |
           set -e
-          mkdir -p /home/lgbeta/webserver/html_new
-          rsync -a --delete dist/ /home/lgbeta/webserver/html_new/
-          mv /home/lgbeta/webserver/html /home/lgbeta/webserver/html_old || true
-          mv /home/lgbeta/webserver/html_new /home/lgbeta/webserver/html
+          rsync -a --delete dist/ /home/lgbeta/webserver/html/
 
