@@ -1,201 +1,240 @@
-import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
-import TechLogos from "@/components/TechLogos";
-import { ArrowRight, Check } from "lucide-react";
+import {
+  Calendar,
+  Server as ServerIcon,
+  CheckCircle2,
+  ArrowRight,
+  Shield,
+  Globe,
+  Lock,
+  Cloud,
+} from "lucide-react";
 
-const Index = () => {
-  const techLogos = [
-    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg", alt: "Azure", title: "Microsoft Azure" },
-    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg", alt: "Linux", title: "Linux" },
-    { src: "https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg", alt: "Cisco", title: "Cisco" },
-    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", alt: "Docker", title: "Docker" },
-    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg", alt: "Raspberry Pi", title: "Raspberry Pi" },
-    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg", alt: "Cloudflare", title: "Cloudflare" },
-    { src: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/home-assistant.svg", alt: "Home Assistant", title: "Home Assistant" },
-    { src: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/zigbee2mqtt.svg", alt: "Zigbee", title: "Zigbee" },
+const ProjektWebHosting = () => {
+  const stats = [
+    { icon: Calendar, label: "Zeitraum", value: "10.12 - 12.12.2025" },
+    { icon: ServerIcon, label: "Platform", value: "Raspberry Pi" },
+    { icon: Cloud, label: "Tunnel", value: "Cloudflare" },
+    { icon: CheckCircle2, label: "Status", value: "Produktiv", highlight: true },
   ];
 
-  const certificates = [
-    "MS Azure Administrator (AZ-104)",
-    "MS Windows Server 2022 & Powershell",
-    "Linux Essentials",
-    "ITIL v4 Foundation",
+  const techStack = [
+    { icon: "🐧", title: "Raspberry Pi OS", desc: "Linux-basiertes Betriebssystem" },
+    { icon: "🐳", title: "Docker", desc: "Container-Plattform" },
+    { icon: "🌐", title: "Nginx", desc: "Web Server" },
+    { icon: "☁️", title: "Cloudflare Tunnel", desc: "Reverse Tunnel Lösung" },
   ];
 
-  const badges = [
-    "CCNA: Introduction to Networks",
-    "Cisco Networking Basics",
-    "Cisco Operating Systems Support",
-    "Cisco Security and Connectivity Support",
-    "Cisco Introduction to IoT",
+  const benefits = [
+    { icon: Shield, title: "Keine Portweiterleitung", desc: "Höhere Sicherheit durch geschlossene Ports" },
+    { icon: Lock, title: "Automatisches SSL", desc: "HTTPS wird automatisch bereitgestellt" },
+    { icon: Globe, title: "Dynamische IP", desc: "Funktioniert auch bei wechselnder IP-Adresse" },
   ];
 
   return (
     <Layout>
-      {/* 1) Önce ana konu anlatımı / hero */}
-      <section className="min-h-[calc(100vh-5rem)] flex items-center px-4 md:px-6 py-12">
-        <div className="max-w-7xl mx-auto w-full">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Hero Content */}
-            <div className="flex flex-col gap-8">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-light leading-tight">
-                <span className="font-semibold gradient-text">Fachinformatiker für Systemintegration</span>
-              </h1>
+      {/* Hero */}
+      <section className="py-16 px-4 text-center bg-gradient-to-b from-primary/5 to-transparent relative overflow-hidden">
+        <div className="max-w-4xl mx-auto relative z-10">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <span className="gradient-text">Web-Hosting ohne Port-Forwarding</span>
+          </h1>
+          <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
+            Sicheres Hosting mit Cloudflare Tunnel - Veröffentlichung einer lokalen Webanwendung ohne Portweiterleitung
+          </p>
 
-              <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-                Fachinformatiker für Systemintegration mit Azure & Cisco Zertifizierungen.
-                Spezialisiert auf Netzwerkinfrastruktur, Containerisierung und Smart Home Automation.
-              </p>
+          {/* Tech Logos */}
+          <div className="flex flex-wrap justify-center gap-6 mb-8">
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg"
+              alt="Cloudflare"
+              className="w-12 h-12 animate-float"
+            />
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg"
+              alt="Nginx"
+              className="w-12 h-12 animate-float"
+              style={{ animationDelay: "0.2s" }}
+            />
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+              alt="Docker"
+              className="w-12 h-12 animate-float"
+              style={{ animationDelay: "0.4s" }}
+            />
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg"
+              alt="Raspberry Pi"
+              className="w-12 h-12 animate-float"
+              style={{ animationDelay: "0.6s" }}
+            />
+          </div>
 
-              {/* Stats */}
-              <div className="flex flex-wrap gap-8 pt-4">
-                <div className="flex flex-col gap-1">
-                  <span className="text-3xl font-semibold gradient-text">3</span>
-                  <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Projekte</span>
-                </div>
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+            {stats.map((stat) => (
+              <div key={stat.label} className="glass rounded-xl p-4 text-center hover-lift">
+                <stat.icon className="w-8 h-8 mx-auto mb-2 text-primary" />
+                <p className="text-xs text-muted-foreground mb-1">{stat.label}</p>
+                <p className={`font-semibold ${stat.highlight ? "text-emerald" : ""}`}>{stat.value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                <div className="relative group flex flex-col gap-1 cursor-pointer">
-                  <span className="text-3xl font-semibold gradient-text">4</span>
-                  <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Zertifikate</span>
-
-                  {/* Tooltip */}
-                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 min-w-[280px] bg-card border border-border rounded-xl p-4 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
-                    <div className="text-xs font-mono uppercase tracking-wider text-primary mb-3 pb-2 border-b border-border">
-                      Offizielle Zertifikate
-                    </div>
-                    <ul className="space-y-2">
-                      {certificates.map((cert) => (
-                        <li key={cert} className="flex items-center gap-2 text-sm">
-                          <Check className="w-4 h-4 text-primary" />
-                          {cert}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-card" />
+      {/* Architecture */}
+      <section className="py-8 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="glass rounded-2xl p-8">
+            <h3 className="text-xl font-bold text-center mb-8 gradient-text">System-Architektur</h3>
+            <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
+              {["🌐 Internet", "☁️ Cloudflare", "🔒 Tunnel", "🐳 Docker", "🖥️ Nginx"].map((step, index, arr) => (
+                <div key={step} className="flex items-center gap-4">
+                  <div className="text-center">
+                    <div className="text-2xl mb-2">{step.split(" ")[0]}</div>
+                    <div className="text-xs font-medium">{step.split(" ").slice(1).join(" ")}</div>
                   </div>
+                  {index < arr.length - 1 && (
+                    <ArrowRight className="w-6 h-6 text-muted-foreground animate-pulse-arrow hidden md:block" />
+                  )}
                 </div>
-
-                <div className="relative group flex flex-col gap-1 cursor-pointer">
-                  <span className="text-3xl font-semibold gradient-text">5</span>
-                  <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Badges</span>
-
-                  {/* Tooltip */}
-                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 min-w-[280px] bg-card border border-border rounded-xl p-4 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
-                    <div className="text-xs font-mono uppercase tracking-wider text-primary mb-3 pb-2 border-b border-border">
-                      Cisco Networking Academy
-                    </div>
-                    <ul className="space-y-2">
-                      {badges.map((badge) => (
-                        <li key={badge} className="flex items-center gap-2 text-sm">
-                          <Check className="w-4 h-4 text-primary" />
-                          {badge}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-card" />
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <span className="text-3xl font-semibold gradient-text">24/7</span>
-                  <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Home Lab</span>
-                </div>
-              </div>
-
-              {/* Buttons */}
-              <div className="flex flex-wrap gap-4 pt-4">
-                <Link
-                  to="/ueber-mich"
-                  className="inline-flex items-center gap-2 px-7 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground font-medium text-sm uppercase tracking-wider rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
-                >
-                  Mehr erfahren
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link
-                  to="/kontakt"
-                  className="inline-flex items-center gap-2 px-7 py-4 border border-border text-foreground font-medium text-sm uppercase tracking-wider rounded-lg hover:bg-secondary/50 hover:border-primary transition-all"
-                >
-                  Kontakt
-                </Link>
-              </div>
-            </div>
-
-            {/* Hero Image Area */}
-            <div className="relative h-[500px] lg:h-[650px] flex items-end justify-center">
-              <div className="relative w-full h-full rounded-3xl overflow-hidden border border-border">
-                {/* HERO IMAGE */}
-                <img
-                  src="/images/hero.jpg"
-                  alt="Hero"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-
-                {/* Overlays */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-emerald/20" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-              </div>
-
-              {/* Tech Logos */}
-              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2">
-                <TechLogos logos={techLogos} />
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2) Bu iki bölüm en alta taşındı */}
-      <section className="px-4 md:px-6 py-12">
-        <div className="max-w-7xl mx-auto w-full">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-            <div className="flex flex-col gap-4">
-              <h2 className="text-2xl md:text-3xl font-semibold">
-                Automatisierter Entwicklungs- und Veröffentlichungsprozess
-              </h2>
-              <p className="text-muted-foreground leading-relaxed">
-                Änderungen an der Website werden direkt im Quellcode vorgenommen und in das GitHub-Repository gespeichert.
-                Jeder gespeicherte Stand (Commit) startet automatisch einen definierten Prozess, bei dem die Website auf
-                einem eigenen Server neu gebaut und veröffentlicht wird. Dadurch wird sichergestellt, dass alle Anpassungen
-                kontrolliert, reproduzierbar und ohne manuelle Eingriffe online gehen. Die aktualisierte Version ist in der
-                Regel innerhalb weniger Sekunden bis Minuten öffentlich sichtbar.
-              </p>
-            </div>
+      {/* Content */}
+      <section className="py-12 px-4 max-w-4xl mx-auto space-y-12">
+        {/* Projektübersicht */}
+        <div className="glass rounded-xl p-6 md:p-8 hover-lift">
+          <h2 className="text-2xl font-bold mb-6 gradient-text">Projektübersicht</h2>
+          <p className="text-muted-foreground mb-4 leading-relaxed">
+            In diesem Projekt wurde eine zuvor ausschließlich im lokalen Netzwerk betriebene Docker-basierte Webanwendung
+            (Nginx) ohne Portweiterleitung sicher über das öffentliche Internet veröffentlicht. Hierfür kam Cloudflare
+            Tunnel als Reverse-Tunnel-Lösung zum Einsatz.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            Der Fokus lag auf einer sicheren, wartungsarmen und professionellen Veröffentlichung unter Verwendung einer
+            eigenen Domain, automatischem HTTPS (SSL/TLS) sowie einer sauberen www- und non-www-Weiterleitung. Ziel war es,
+            eine Home-LAB-Umgebung realitätsnah an professionelle Hosting-Szenarien anzunähern.
+          </p>
+        </div>
 
-            <div className="relative w-full rounded-2xl overflow-hidden border border-border">
-              <img
-                // TODO: Buradaki src senin mevcut kodundaki fotoğrafla AYNI kalmalı
-                src="/images/Automatisierter_Veroeffentlichungsprozess.png"
-                alt="Automatisierter Entwicklungs- und Veröffentlichungsprozess"
-                className="w-full h-full object-cover"
-              />
-            </div>
+        {/* Tech Stack */}
+        <div>
+          <h2 className="text-2xl font-bold mb-6 gradient-text">Verwendete Technologien</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {techStack.map((tech) => (
+              <div key={tech.title} className="glass rounded-xl p-4 hover-lift">
+                <div className="text-3xl mb-2">{tech.icon}</div>
+                <h3 className="font-semibold mb-1">{tech.title}</h3>
+                <p className="text-xs text-muted-foreground">{tech.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Benefits */}
+        <div>
+          <h2 className="text-2xl font-bold mb-6 gradient-text">Vorteile der Lösung</h2>
+          <div className="grid md:grid-cols-3 gap-4">
+            {benefits.map((benefit) => (
+              <div key={benefit.title} className="bg-emerald/10 border border-emerald/30 rounded-xl p-6 hover-lift">
+                <benefit.icon className="w-8 h-8 text-emerald mb-3" />
+                <h3 className="font-semibold mb-2">{benefit.title}</h3>
+                <p className="text-sm text-muted-foreground">{benefit.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Why Cloudflare Tunnel */}
+        <div className="glass rounded-xl p-6 md:p-8 hover-lift">
+          <h2 className="text-2xl font-bold mb-6 gradient-text">Warum Cloudflare Tunnel?</h2>
+          <p className="text-muted-foreground mb-4 leading-relaxed">
+            Untersucht wurden klassische Portweiterleitungen, externes VPS-Hosting sowie VPN- und Reverse-Proxy-Kombinationen.
+            Aufgrund von Sicherheitsrisiken, zusätzlichem Kostenaufwand oder erhöhter Komplexität wurden diese Varianten verworfen.
+          </p>
+          <ul className="space-y-3 text-muted-foreground">
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-emerald flex-shrink-0 mt-0.5" />
+              <span>Keine Portöffnung am Router erforderlich</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-emerald flex-shrink-0 mt-0.5" />
+              <span>SSL wird automatisch bereitgestellt</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-emerald flex-shrink-0 mt-0.5" />
+              <span>Zugriff auch bei wechselnder IP-Adresse des Heimanschlusses</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <CheckCircle2 className="w-5 h-5 text-emerald flex-shrink-0 mt-0.5" />
+              <span>Kostenlose Nutzung für private Projekte</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Security Notice */}
+        <div className="bg-accent/10 border-l-4 border-accent rounded-r-xl p-6">
+          <h3 className="font-semibold mb-2 flex items-center gap-2 text-accent">
+            <Shield className="w-5 h-5" />
+            Sicherheitshinweis
+          </h3>
+          <p className="text-muted-foreground">
+            Durch Cloudflare Tunnel bleibt der Heimrouter vollständig geschlossen. Die Verbindung wird von innen nach außen
+            aufgebaut, wodurch keine eingehenden Verbindungen akzeptiert werden müssen. Dies erhöht die Sicherheit erheblich.
+          </p>
+        </div>
+      </section>
+
+      {/* NEW: Automatisierter Entwicklungs- und Veröffentlichungsprozess (en sona taşındı) */}
+      <section className="py-12 px-4 max-w-4xl mx-auto">
+        <div className="glass rounded-xl p-6 md:p-8 hover-lift">
+          <h2 className="text-2xl font-bold mb-4 gradient-text">
+            Automatisierter Entwicklungs- und Veröffentlichungsprozess
+          </h2>
+
+          <p className="text-muted-foreground mb-6 leading-relaxed">
+            Änderungen an der Website werden direkt im Quellcode vorgenommen und in das GitHub-Repository gespeichert.
+            Jeder gespeicherte Stand (Commit) startet automatisch einen definierten Prozess, bei dem die Website auf
+            einem eigenen Server neu gebaut und veröffentlicht wird. Dadurch wird sichergestellt, dass alle Anpassungen
+            kontrolliert, reproduzierbar und ohne manuelle Eingriffe online gehen. Die aktualisierte Version ist in der
+            Regel innerhalb weniger Sekunden bis Minuten öffentlich sichtbar.
+          </p>
+
+          <div className="rounded-lg overflow-hidden border border-border">
+            <img
+              src="/images/Automatisierter_Veroeffentlichungsprozess.png"
+              alt="Automatisierter Entwicklungs- und Veröffentlichungsprozess"
+              className="w-full h-auto"
+              loading="lazy"
+            />
           </div>
         </div>
       </section>
 
-      <section className="px-4 md:px-6 pb-16">
-        <div className="max-w-7xl mx-auto w-full">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-            <div className="flex flex-col gap-4">
-              <h2 className="text-2xl md:text-3xl font-semibold">
-                Zugriff eines Besuchers auf die Website
-              </h2>
-              <p className="text-muted-foreground leading-relaxed">
-                Wenn eine Besucherin oder ein Besucher die Website aufruft, wird die Anfrage über den Domainnamen an eine
-                sichere Cloud-Infrastruktur weitergeleitet. Von dort aus gelangt die Anfrage über einen geschützten Tunnel
-                zum Webserver, der die aktuellen Inhalte ausliefert. Dieser Ansatz ermöglicht einen stabilen, sicheren und
-                performanten Zugriff auf die Website, ohne dass direkte Serverports im Internet geöffnet werden müssen.
-              </p>
-            </div>
+      {/* NEW: Zugriff eines Besuchers auf die Website (en sona taşındı) */}
+      <section className="py-12 px-4 max-w-4xl mx-auto">
+        <div className="glass rounded-xl p-6 md:p-8 hover-lift">
+          <h2 className="text-2xl font-bold mb-4 gradient-text">Zugriff eines Besuchers auf die Website</h2>
 
-            <div className="relative w-full rounded-2xl overflow-hidden border border-border">
-              <img
-                // TODO: Buradaki src senin mevcut kodundaki fotoğrafla AYNI kalmalı
-                src="/images/Zugriff_eines_Besuchers_auf_die_Website.png"
-                alt="Zugriff eines Besuchers auf die Website"
-                className="w-full h-full object-cover"
-              />
-            </div>
+          <p className="text-muted-foreground mb-6 leading-relaxed">
+            Wenn eine Besucherin oder ein Besucher die Website aufruft, wird die Anfrage über den Domainnamen an eine
+            sichere Cloud-Infrastruktur weitergeleitet. Von dort aus gelangt die Anfrage über einen geschützten Tunnel
+            zum Webserver, der die aktuellen Inhalte ausliefert. Dieser Ansatz ermöglicht einen stabilen, sicheren und
+            performanten Zugriff auf die Website, ohne dass direkte Serverports im Internet geöffnet werden müssen.
+          </p>
+
+          <div className="rounded-lg overflow-hidden border border-border">
+            <img
+              src="/images/Zugriff_eines_Besuchers_auf_die_Website.png"
+              alt="Zugriff eines Besuchers auf die Website"
+              className="w-full h-auto"
+              loading="lazy"
+            />
           </div>
         </div>
       </section>
@@ -203,4 +242,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default ProjektWebHosting;
