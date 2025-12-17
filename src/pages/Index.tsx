@@ -35,14 +35,17 @@ const Index = () => {
       <section className="min-h-[calc(100vh-5rem)] flex items-center px-4 md:px-6 py-12">
         <div className="max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
             {/* Hero Content */}
             <div className="flex flex-col gap-8">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-light leading-tight">
-                <span className="font-semibold gradient-text">Fachinformatiker für Systemintegration</span>
+                <span className="font-semibold gradient-text">
+                  Fachinformatiker für Systemintegration
+                </span>
               </h1>
-              
+
               <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-                Fachinformatiker für Systemintegration mit Azure & Cisco Zertifizierungen. 
+                Fachinformatiker für Systemintegration mit Azure & Cisco Zertifizierungen.
                 Spezialisiert auf Netzwerkinfrastruktur, Containerisierung und Smart Home Automation.
               </p>
 
@@ -50,13 +53,17 @@ const Index = () => {
               <div className="flex flex-wrap gap-8 pt-4">
                 <div className="flex flex-col gap-1">
                   <span className="text-3xl font-semibold gradient-text">3</span>
-                  <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Projekte</span>
+                  <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                    Projekte
+                  </span>
                 </div>
 
                 <div className="relative group flex flex-col gap-1 cursor-pointer">
                   <span className="text-3xl font-semibold gradient-text">4</span>
-                  <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Zertifikate</span>
-                  {/* Tooltip */}
+                  <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                    Zertifikate
+                  </span>
+
                   <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 min-w-[280px] bg-card border border-border rounded-xl p-4 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
                     <div className="text-xs font-mono uppercase tracking-wider text-primary mb-3 pb-2 border-b border-border">
                       Offizielle Zertifikate
@@ -75,8 +82,10 @@ const Index = () => {
 
                 <div className="relative group flex flex-col gap-1 cursor-pointer">
                   <span className="text-3xl font-semibold gradient-text">5</span>
-                  <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Badges</span>
-                  {/* Tooltip */}
+                  <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                    Badges
+                  </span>
+
                   <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 min-w-[280px] bg-card border border-border rounded-xl p-4 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
                     <div className="text-xs font-mono uppercase tracking-wider text-primary mb-3 pb-2 border-b border-border">
                       Cisco Networking Academy
@@ -95,7 +104,9 @@ const Index = () => {
 
                 <div className="flex flex-col gap-1">
                   <span className="text-3xl font-semibold gradient-text">24/7</span>
-                  <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Home Lab</span>
+                  <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                    Home Lab
+                  </span>
                 </div>
               </div>
 
@@ -108,6 +119,7 @@ const Index = () => {
                   Mehr erfahren
                   <ArrowRight className="w-4 h-4" />
                 </Link>
+
                 <Link
                   to="/kontakt"
                   className="inline-flex items-center gap-2 px-7 py-4 border border-border text-foreground font-medium text-sm uppercase tracking-wider rounded-lg hover:bg-secondary/50 hover:border-primary transition-all"
@@ -117,22 +129,37 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Hero Image Area */}
+            {/* Hero Image */}
             <div className="relative h-[500px] lg:h-[650px] flex items-end justify-center">
               <div className="relative w-full h-full rounded-3xl overflow-hidden border border-border">
+
+                {/* HERO IMAGE */}
+                <img
+                  src="/images/hero.jpg"
+                  alt="Hero"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+
+                {/* Overlays */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-emerald/20" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+
+                {/* Center Content */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <div className="w-40 h-40 md:w-48 md:h-48 mx-auto mb-6 rounded-full bg-gradient-to-br from-primary to-accent p-1 shadow-2xl">
                       <div className="w-full h-full rounded-full bg-card flex items-center justify-center">
-                        <span className="text-5xl md:text-6xl font-semibold gradient-text">GZ</span>
+                        <span className="text-5xl md:text-6xl font-semibold gradient-text">
+                          GZ
+                        </span>
                       </div>
                     </div>
                     <p className="text-xl font-semibold">Gökhan Zehirlioglu</p>
-                    <p className="text-sm text-muted-foreground mt-1">Fachinformatiker für Systemintegration</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Fachinformatiker für Systemintegration
+                    </p>
                   </div>
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
               </div>
 
               {/* Tech Logos */}
@@ -140,6 +167,7 @@ const Index = () => {
                 <TechLogos logos={techLogos} />
               </div>
             </div>
+
           </div>
         </div>
       </section>
