@@ -1,5 +1,15 @@
+
 import Layout from "@/components/Layout";
-import { Calendar, Server as ServerIcon, CheckCircle2, ArrowRight, Shield, Globe, Lock, Cloud } from "lucide-react";
+import {
+  Calendar,
+  Server as ServerIcon,
+  CheckCircle2,
+  ArrowRight,
+  Shield,
+  Globe,
+  Lock,
+  Cloud,
+} from "lucide-react";
 
 const ProjektWebHosting = () => {
   const stats = [
@@ -36,10 +46,29 @@ const ProjektWebHosting = () => {
 
           {/* Tech Logos */}
           <div className="flex flex-wrap justify-center gap-6 mb-8">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg" alt="Cloudflare" className="w-12 h-12 animate-float" />
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="Nginx" className="w-12 h-12 animate-float" style={{ animationDelay: "0.2s" }} />
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker" className="w-12 h-12 animate-float" style={{ animationDelay: "0.4s" }} />
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg" alt="Raspberry Pi" className="w-12 h-12 animate-float" style={{ animationDelay: "0.6s" }} />
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg"
+              alt="Cloudflare"
+              className="w-12 h-12 animate-float"
+            />
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg"
+              alt="Nginx"
+              className="w-12 h-12 animate-float"
+              style={{ animationDelay: "0.2s" }}
+            />
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+              alt="Docker"
+              className="w-12 h-12 animate-float"
+              style={{ animationDelay: "0.4s" }}
+            />
+            <img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg"
+              alt="Raspberry Pi"
+              className="w-12 h-12 animate-float"
+              style={{ animationDelay: "0.6s" }}
+            />
           </div>
 
           {/* Stats */}
@@ -77,20 +106,69 @@ const ProjektWebHosting = () => {
         </div>
       </section>
 
+      {/* NEW: Automatisierter Entwicklungs- und Veröffentlichungsprozess */}
+      <section className="py-12 px-4 max-w-4xl mx-auto">
+        <div className="glass rounded-xl p-6 md:p-8 hover-lift">
+          <h2 className="text-2xl font-bold mb-4 gradient-text">
+            Automatisierter Entwicklungs- und Veröffentlichungsprozess
+          </h2>
+
+          <p className="text-muted-foreground mb-6 leading-relaxed">
+            Änderungen an der Website werden direkt im Quellcode vorgenommen und in das GitHub-Repository gespeichert.
+            Jeder gespeicherte Stand (Commit) startet automatisch einen definierten Prozess, bei dem die Website auf
+            einem eigenen Server neu gebaut und veröffentlicht wird. Dadurch wird sichergestellt, dass alle Anpassungen
+            kontrolliert, reproduzierbar und ohne manuelle Eingriffe online gehen. Die aktualisierte Version ist in der
+            Regel innerhalb weniger Sekunden bis Minuten öffentlich sichtbar.
+          </p>
+
+          <div className="rounded-lg overflow-hidden border border-border">
+            <img
+              src="/images/Automatisierter_Veroeffentlichungsprozess.png"
+              alt="Automatisierter Entwicklungs- und Veröffentlichungsprozess"
+              className="w-full h-auto"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* NEW: Zugriff eines Besuchers auf die Website */}
+      <section className="py-12 px-4 max-w-4xl mx-auto">
+        <div className="glass rounded-xl p-6 md:p-8 hover-lift">
+          <h2 className="text-2xl font-bold mb-4 gradient-text">Zugriff eines Besuchers auf die Website</h2>
+
+          <p className="text-muted-foreground mb-6 leading-relaxed">
+            Wenn eine Besucherin oder ein Besucher die Website aufruft, wird die Anfrage über den Domainnamen an eine
+            sichere Cloud-Infrastruktur weitergeleitet. Von dort aus gelangt die Anfrage über einen geschützten Tunnel
+            zum Webserver, der die aktuellen Inhalte ausliefert. Dieser Ansatz ermöglicht einen stabilen, sicheren und
+            performanten Zugriff auf die Website, ohne dass direkte Serverports im Internet geöffnet werden müssen.
+          </p>
+
+          <div className="rounded-lg overflow-hidden border border-border">
+            <img
+              src="/images/Zugriff_eines_Besuchers_auf_die_Website.png"
+              alt="Zugriff eines Besuchers auf die Website"
+              className="w-full h-auto"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Content */}
       <section className="py-12 px-4 max-w-4xl mx-auto space-y-12">
         {/* Projektübersicht */}
         <div className="glass rounded-xl p-6 md:p-8 hover-lift">
           <h2 className="text-2xl font-bold mb-6 gradient-text">Projektübersicht</h2>
           <p className="text-muted-foreground mb-4 leading-relaxed">
-            In diesem Projekt wurde eine zuvor ausschließlich im lokalen Netzwerk betriebene Docker-basierte Webanwendung (Nginx) 
-            ohne Portweiterleitung sicher über das öffentliche Internet veröffentlicht. Hierfür kam Cloudflare Tunnel als 
-            Reverse-Tunnel-Lösung zum Einsatz.
+            In diesem Projekt wurde eine zuvor ausschließlich im lokalen Netzwerk betriebene Docker-basierte Webanwendung
+            (Nginx) ohne Portweiterleitung sicher über das öffentliche Internet veröffentlicht. Hierfür kam Cloudflare
+            Tunnel als Reverse-Tunnel-Lösung zum Einsatz.
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            Der Fokus lag auf einer sicheren, wartungsarmen und professionellen Veröffentlichung unter Verwendung einer eigenen 
-            Domain, automatischem HTTPS (SSL/TLS) sowie einer sauberen www- und non-www-Weiterleitung. Ziel war es, eine 
-            Home-LAB-Umgebung realitätsnah an professionelle Hosting-Szenarien anzunähern.
+            Der Fokus lag auf einer sicheren, wartungsarmen und professionellen Veröffentlichung unter Verwendung einer
+            eigenen Domain, automatischem HTTPS (SSL/TLS) sowie einer sauberen www- und non-www-Weiterleitung. Ziel war es,
+            eine Home-LAB-Umgebung realitätsnah an professionelle Hosting-Szenarien anzunähern.
           </p>
         </div>
 
@@ -126,7 +204,7 @@ const ProjektWebHosting = () => {
         <div className="glass rounded-xl p-6 md:p-8 hover-lift">
           <h2 className="text-2xl font-bold mb-6 gradient-text">Warum Cloudflare Tunnel?</h2>
           <p className="text-muted-foreground mb-4 leading-relaxed">
-            Untersucht wurden klassische Portweiterleitungen, externes VPS-Hosting sowie VPN- und Reverse-Proxy-Kombinationen. 
+            Untersucht wurden klassische Portweiterleitungen, externes VPS-Hosting sowie VPN- und Reverse-Proxy-Kombinationen.
             Aufgrund von Sicherheitsrisiken, zusätzlichem Kostenaufwand oder erhöhter Komplexität wurden diese Varianten verworfen.
           </p>
           <ul className="space-y-3 text-muted-foreground">
@@ -156,7 +234,7 @@ const ProjektWebHosting = () => {
             Sicherheitshinweis
           </h3>
           <p className="text-muted-foreground">
-            Durch Cloudflare Tunnel bleibt der Heimrouter vollständig geschlossen. Die Verbindung wird von innen nach außen 
+            Durch Cloudflare Tunnel bleibt der Heimrouter vollständig geschlossen. Die Verbindung wird von innen nach außen
             aufgebaut, wodurch keine eingehenden Verbindungen akzeptiert werden müssen. Dies erhöht die Sicherheit erheblich.
           </p>
         </div>
