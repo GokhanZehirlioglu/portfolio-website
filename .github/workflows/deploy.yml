@@ -26,5 +26,5 @@ jobs:
       - name: Deploy to Nginx web root
         run: |
           set -e
-          rsync -a --delete dist/ /home/lgbeta/webserver/html/
-
+          mkdir -p /home/lgbeta/webserver/html/dist
+          rsync -a --delete dist/ /home/lgbeta/webserver/html/dist/
