@@ -49,7 +49,7 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-7 ml-auto mr-6">
+          <div className="hidden lg:flex items-center gap-5 ml-auto mr-7">
 
             {navLinks.slice(0, 2).map((link) => (
               <Link
