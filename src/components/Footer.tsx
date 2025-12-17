@@ -7,9 +7,9 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <MapPin className="w-4 h-4" />
-          <span>Mannheim, Deutschland</span>
+          <span>Baden-Württemberg, Deutschland</span>
           <span className="hidden md:inline">•</span>
-          <span className="hidden md:inline">© 2024 Gökhan Zehirlioglu</span>
+          <span className="hidden md:inline">© 2025 Gökhan Zehirlioglu</span>
         </div>
         <p className="text-sm text-muted-foreground md:hidden">© 2024 Gökhan Zehirlioglu</p>
         <div className="flex items-center gap-6">
@@ -32,7 +32,7 @@ const Footer = () => {
             <Github className="w-5 h-5" />
           </a>
           <a
-            href="mailto:contact@goekhanzehirlioglu.de"
+            href="mailto:contact@gokhanzehirlioglu.de"
             className="text-muted-foreground hover:text-primary transition-colors"
             title="E-Mail"
           >
