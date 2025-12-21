@@ -10,8 +10,8 @@ import {
   Lock,
   Cloud,
   X,
-  FileText, // Yeni ekledik: Dosya ikonu
-  Download, // Yeni ekledik: İndirme ikonu
+  FileText,
+  Download,
 } from "lucide-react";
 
 type LightboxData = {
@@ -128,7 +128,7 @@ const ProjektWebHosting = () => {
       <div className="no-motion">
         <Lightbox />
 
-        {/* Hero (Giriş Bölümü) */}
+        {/* Hero */}
         <section className="py-16 px-4 text-center bg-gradient-to-b from-primary/5 to-transparent relative overflow-hidden">
           <div className="max-w-4xl mx-auto relative z-10">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -137,32 +137,45 @@ const ProjektWebHosting = () => {
             <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
               Sicheres Hosting mit Cloudflare Tunnel - Veröffentlichung einer lokalen Webanwendung ohne Portweiterleitung
             </p>
-            {/* --- GÜNCELLENMİŞ VE OKUNAKLI BUTON KODU --- */}
+
+            {/* --- AKILLI BUTON (Hem Aydınlık Hem Karanlık Mod Uyumlu) --- */}
             <div className="flex justify-center mb-10">
               <a 
                 href="/web-hosting-ohne-port-forwarding.docx" 
                 download 
-                className="group relative inline-flex items-center gap-3 px-8 py-4 bg-white border-2 border-emerald-500/20 rounded-full overflow-hidden transition-all hover:border-emerald-500/50 hover:scale-105 shadow-lg shadow-emerald-500/10"
+                className="
+                  group relative inline-flex items-center gap-3 px-8 py-4 
+                  rounded-full overflow-hidden transition-all duration-300
+                  
+                  /* AYDINLIK MOD (Light Mode) */
+                  bg-white border-2 border-emerald-500/20 shadow-lg shadow-emerald-500/10
+                  hover:border-emerald-500/50 hover:scale-105
+
+                  /* KARANLIK MOD (Dark Mode) - dark: ile başlayanlar */
+                  dark:bg-white/5 dark:border-white/10 dark:shadow-none
+                  dark:hover:bg-white/10
+                "
               >
-                {/* Arka planı beyaz yaptık, gölge ekledik */}
-                
-                {/* İkon rengini koyu yeşil yaptık */}
-                <FileText className="w-6 h-6 text-emerald-600 group-hover:scale-110 transition-transform" />
+                {/* İkon */}
+                <FileText className="w-6 h-6 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform" />
                 
                 <div className="flex flex-col items-start text-left">
-                  {/* İSTEDİĞİN DEĞİŞİKLİK: Kelimeyi ayırdık ve rengini koyulaştırdık */}
-                  <span className="text-xs text-emerald-600/80 font-bold tracking-widest uppercase">PROJEKT DOKUMENTATION</span>
+                  {/* Başlık */}
+                  <span className="text-xs font-bold tracking-widest uppercase text-emerald-600/80 dark:text-emerald-400/80">
+                    PROJEKT DOKUMENTATION
+                  </span>
                   
-                  {/* İndirme yazısını simsiyah yaptık ki net okunsun */}
-                  <span className="text-sm font-black text-slate-800 group-hover:text-emerald-700 transition-colors">Download .DOCX</span>
+                  {/* Alt Başlık (İndir Yazısı) - Rengi moda göre değişir */}
+                  <span className="text-sm font-black transition-colors text-slate-800 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-300">
+                    Download .DOCX
+                  </span>
                 </div>
                 
-                {/* İndirme okunu belirgin hale getirdik */}
-                <Download className="w-5 h-5 text-slate-400 group-hover:text-emerald-600 group-hover:translate-y-1 transition-all ml-2" />
+                {/* Ok İkonu */}
+                <Download className="w-5 h-5 ml-2 transition-all text-slate-400 dark:text-white/50 group-hover:text-emerald-600 dark:group-hover:text-white group-hover:translate-y-1" />
               </a>
             </div>
-            {/* ------------------------------------------- */}
-
+            {/* ----------------------------------------------------------- */}
 
             <div className="flex flex-wrap justify-center gap-6 mb-8">
               <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg" alt="Cloudflare" className="w-12 h-12" />
