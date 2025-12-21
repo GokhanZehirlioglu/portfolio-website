@@ -137,27 +137,32 @@ const ProjektWebHosting = () => {
             <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
               Sicheres Hosting mit Cloudflare Tunnel - Veröffentlichung einer lokalen Webanwendung ohne Portweiterleitung
             </p>
-
-            {/* --- YENİ EKLENEN DOCX DOKÜMANTASYON BUTONU --- */}
+            {/* --- GÜNCELLENMİŞ VE OKUNAKLI BUTON KODU --- */}
             <div className="flex justify-center mb-10">
               <a 
-                href="/web-hosting-ohne-port-forwarding.docx" // Dosya adı tam olarak buraya yazıldı
-                download // Dosyanın indirilmesini zorlar
-                className="group relative inline-flex items-center gap-3 px-8 py-4 bg-white/5 border border-white/10 rounded-full overflow-hidden transition-all hover:bg-white/10 hover:scale-105 active:scale-95"
+                href="/web-hosting-ohne-port-forwarding.docx" 
+                download 
+                className="group relative inline-flex items-center gap-3 px-8 py-4 bg-white border-2 border-emerald-500/20 rounded-full overflow-hidden transition-all hover:border-emerald-500/50 hover:scale-105 shadow-lg shadow-emerald-500/10"
               >
-                {/* Buton Arkasındaki Parlama Efekti */}
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/10 to-emerald-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* Arka planı beyaz yaptık, gölge ekledik */}
                 
-                {/* İkon ve Yazı */}
-                <FileText className="w-5 h-5 text-emerald-400 group-hover:text-emerald-300 transition-colors" />
+                {/* İkon rengini koyu yeşil yaptık */}
+                <FileText className="w-6 h-6 text-emerald-600 group-hover:scale-110 transition-transform" />
+                
                 <div className="flex flex-col items-start text-left">
-                  <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Projektdokumentation</span>
-                  <span className="text-sm font-bold text-white group-hover:text-emerald-50 transition-colors">Download .DOCX</span>
+                  {/* İSTEDİĞİN DEĞİŞİKLİK: Kelimeyi ayırdık ve rengini koyulaştırdık */}
+                  <span className="text-xs text-emerald-600/80 font-bold tracking-widest uppercase">PROJEKT DOKUMENTATION</span>
+                  
+                  {/* İndirme yazısını simsiyah yaptık ki net okunsun */}
+                  <span className="text-sm font-black text-slate-800 group-hover:text-emerald-700 transition-colors">Download .DOCX</span>
                 </div>
-                <Download className="w-4 h-4 text-white/50 group-hover:text-white group-hover:translate-y-1 transition-all ml-2" />
+                
+                {/* İndirme okunu belirgin hale getirdik */}
+                <Download className="w-5 h-5 text-slate-400 group-hover:text-emerald-600 group-hover:translate-y-1 transition-all ml-2" />
               </a>
             </div>
-            {/* ----------------------------------------- */}
+            {/* ------------------------------------------- */}
+
 
             <div className="flex flex-wrap justify-center gap-6 mb-8">
               <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg" alt="Cloudflare" className="w-12 h-12" />
