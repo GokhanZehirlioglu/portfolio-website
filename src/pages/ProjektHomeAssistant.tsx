@@ -1,5 +1,16 @@
 import Layout from "@/components/Layout";
-import { Download, Calendar, Server as ServerIcon, Wifi, CheckCircle2, ArrowRight, Shield, Zap, Database } from "lucide-react";
+import { 
+  Download, 
+  Calendar, 
+  Server as ServerIcon, 
+  Wifi, 
+  CheckCircle2, 
+  ArrowRight, 
+  Shield, 
+  Zap, 
+  Database,
+  FileText // Yeni eklendi
+} from "lucide-react";
 
 const ProjektHomeAssistant = () => {
   const stats = [
@@ -33,6 +44,45 @@ const ProjektHomeAssistant = () => {
           <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
             Vollständig lokale Smart-Home-Plattform auf Raspberry Pi 5 mit Zigbee, Docker und sicherer VPN-Anbindung
           </p>
+
+          {/* --- AKILLI DOKÜMANTASYON BUTONU (Home Assistant) --- */}
+          <div className="flex justify-center mb-10">
+            <a 
+              href="/home_assistant.docx" 
+              download 
+              className="
+                group relative inline-flex items-center gap-3 px-8 py-4 
+                rounded-full overflow-hidden transition-all duration-300
+                
+                /* AYDINLIK MOD (Light Mode) */
+                bg-white border-2 border-emerald-500/20 shadow-lg shadow-emerald-500/10
+                hover:border-emerald-500/50 hover:scale-105
+
+                /* KARANLIK MOD (Dark Mode) */
+                dark:bg-white/5 dark:border-white/10 dark:shadow-none
+                dark:hover:bg-white/10
+              "
+            >
+              {/* İkon */}
+              <FileText className="w-6 h-6 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform" />
+              
+              <div className="flex flex-col items-start text-left">
+                {/* Başlık */}
+                <span className="text-xs font-bold tracking-widest uppercase text-emerald-600/80 dark:text-emerald-400/80">
+                  PROJEKT DOKUMENTATION
+                </span>
+                
+                {/* Alt Başlık */}
+                <span className="text-sm font-black transition-colors text-slate-800 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-300">
+                  Download .DOCX
+                </span>
+              </div>
+              
+              {/* Ok İkonu */}
+              <Download className="w-5 h-5 ml-2 transition-all text-slate-400 dark:text-white/50 group-hover:text-emerald-600 dark:group-hover:text-white group-hover:translate-y-1" />
+            </a>
+          </div>
+          {/* ----------------------------------------------------- */}
 
           {/* Tech Logos */}
           <div className="flex flex-wrap justify-center gap-6 mb-8">
