@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Image from "next/image"; // Bu satırı ekledim: Hızlandırma motoru burada
 import Layout from "@/components/Layout";
 import {
   Calendar,
@@ -71,14 +70,12 @@ const ProjektWebHosting = () => {
           </button>
 
           <div className="rounded-xl overflow-hidden border border-white/10 bg-black/20 shadow-2xl">
-            {/* Lightbox içindeki resim standart kalabilir, tıklandıktan sonra yüklenir */}
             <img
               src={lightbox.src}
               alt={lightbox.alt}
               className="w-full h-auto max-h-[85vh] object-contain"
               draggable={false}
-              loading="eager"
-              decoding="async"
+              loading="eager" 
             />
           </div>
 
@@ -88,7 +85,6 @@ const ProjektWebHosting = () => {
     );
   };
 
-  // BURAYI GÜNCELLEDİM: Next.js Image bileşeni kullanılıyor
   const ClickToZoomImage = ({ src, alt }: { src: string; alt: string }) => (
     <button
       type="button"
@@ -97,14 +93,12 @@ const ProjektWebHosting = () => {
       aria-label="Bild vergrößern"
     >
       <div className="rounded-lg overflow-hidden border border-border relative">
-        <Image
+        <img
           src={src}
           alt={alt}
-          width={1200} // Genişlik tahmini (otomatik ölçeklenir)
-          height={800} // Yükseklik tahmini (otomatik ölçeklenir)
           className="w-full h-auto"
-          quality={80} // Kalite optimizasyonu
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+          loading="lazy" 
+          decoding="async"
         />
         <div className="absolute bottom-3 right-3 text-xs px-2 py-1 rounded-md bg-black/60 text-white/90">
           Klicken zum Vergrößern
@@ -116,7 +110,6 @@ const ProjektWebHosting = () => {
   return (
     <Layout>
       <style jsx global>{`
-        /* Sayfa içindeki tüm animasyon ve transition'ları kapat */
         .no-motion *,
         .no-motion *::before,
         .no-motion *::after {
@@ -124,8 +117,6 @@ const ProjektWebHosting = () => {
           transition: none !important;
           scroll-behavior: auto !important;
         }
-
-        /* Eğer "glass" class'ı backdrop-filter/blur kullanıyorsa, bunu da kapat */
         .no-motion .glass {
           backdrop-filter: none !important;
           -webkit-backdrop-filter: none !important;
@@ -145,35 +136,13 @@ const ProjektWebHosting = () => {
               Sicheres Hosting mit Cloudflare Tunnel - Veröffentlichung einer lokalen Webanwendung ohne Portweiterleitung
             </p>
 
-            {/* Tech Logos */}
             <div className="flex flex-wrap justify-center gap-6 mb-8">
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg"
-                alt="Cloudflare"
-                className="w-12 h-12"
-                loading="eager"
-              />
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg"
-                alt="Nginx"
-                className="w-12 h-12"
-                loading="eager"
-              />
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
-                alt="Docker"
-                className="w-12 h-12"
-                loading="eager"
-              />
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg"
-                alt="Raspberry Pi"
-                className="w-12 h-12"
-                loading="eager"
-              />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg" alt="Cloudflare" className="w-12 h-12" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" alt="Nginx" className="w-12 h-12" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker" className="w-12 h-12" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg" alt="Raspberry Pi" className="w-12 h-12" />
             </div>
 
-            {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
               {stats.map((stat) => (
                 <div key={stat.label} className="glass rounded-xl p-4 text-center">
