@@ -32,7 +32,7 @@ const Footer = () => {
             <Github className="w-5 h-5" />
           </a>
           <a
-            href="mailto:contact@gokhanzehirlioglu.de"
+            href="mailto:gokhanzehirlioglu@gmail.com"
             className="text-muted-foreground hover:text-primary transition-colors"
             title="E-Mail"
           >

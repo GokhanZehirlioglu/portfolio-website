@@ -21,7 +21,7 @@ const Kontakt = () => {
       icon: Mail,
       title: "E-Mail",
       subtitle: "Direkt schreiben",
-      href: "mailto:kontakt@gokhan-zehirlioglu.de",
+      href: "mailto:gokhanzehirlioglu@gmail.com",
       color: "currentColor",
     },
   ];
