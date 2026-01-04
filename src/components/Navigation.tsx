@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Sun, Moon, Home, Server, Cloud, Lightbulb } from "lucide-react";
+import { Menu, X, ChevronDown, Sun, Moon, Home, Server, Cloud } from "lucide-react";
 
 const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -36,7 +36,7 @@ const Navigation = () => {
     { path: "/projekt/home-assistant", label: "Home Assistant", icon: Home },
     { path: "/projekt/web-server", label: "Web Server", icon: Server },
     { path: "/projekt/web-hosting", label: "Web Hosting", icon: Cloud },
-    { path: "/projekt/lemye-ogreniyor", label: "Lemye ögreniyor", icon: Lightbulb },
+    { path: "/projekt/switching-vlan-einrichten", label: "Switching VLAN einrichten", icon: Server },
   ];
 
   return (

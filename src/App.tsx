@@ -10,7 +10,7 @@ import Kontakt from "./pages/Kontakt";
 import ProjektHomeAssistant from "./pages/ProjektHomeAssistant";
 import ProjektWebServer from "./pages/ProjektWebServer";
 import ProjektWebHosting from "./pages/ProjektWebHosting";
-import ProjektLemyeOgreniyor from "./pages/ProjektLemyeOgreniyor";
+import ProjektSwitchingVlanEintichten from "./pages/ProjektSwitchingVlanEintichten";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,7 +33,7 @@ const App = () => {
             <Route path="/projekt/home-assistant" element={<ProjektHomeAssistant />} />
             <Route path="/projekt/web-server" element={<ProjektWebServer />} />
             <Route path="/projekt/web-hosting" element={<ProjektWebHosting />} />
-            <Route path="/projekt/lemye-ogreniyor" element={<ProjektLemyeOgreniyor />} />
+            <Route path="/projekt/switching-vlan-einrichten" element={<ProjektSwitchingVlanEintichten />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
