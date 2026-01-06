@@ -19,13 +19,14 @@ const UeberMich: React.FC = () => {
   // Not: Linux yerine Ubuntu (Orijinal Turuncu) kullanıldı - Daha temiz görünür.
   // Wazuh için güvenilir Wikimedia kaynağı kullanıldı.
   const techStack = [
+    { name: "Linux", url: "https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg" },
     { name: "Ubuntu / Linux", url: "https://cdn.simpleicons.org/ubuntu/E95420" },
     { name: "Docker", url: "https://cdn.simpleicons.org/docker/2496ED" },
     { name: "Home Assistant", url: "https://cdn.simpleicons.org/homeassistant/41BDF5" },
     { name: "Nginx", url: "https://cdn.simpleicons.org/nginx/009639" },
     { name: "Cloudflare", url: "https://cdn.simpleicons.org/cloudflare/F38020" },
     { name: "Cisco", url: "https://cdn.simpleicons.org/cisco/1BA0D7" },
-    { name: "Wazuh", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Wazuh_Logo.png/640px-Wazuh_Logo.png" }, // Orijinal Logo
+    { name: "Wazuh", url: "https://raw.githubusercontent.com/wazuh/wazuh/master/brand/icon_wazuh.png" },
   ];
 
   // --- KONFİGÜRASYON: PROJE DURUMLARI (TOPLAM 8 MODÜL) ---
