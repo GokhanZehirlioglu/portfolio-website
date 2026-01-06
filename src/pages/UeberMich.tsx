@@ -13,7 +13,10 @@ import {
   Shield, 
   Network, 
   Layers, 
-  ArrowRight 
+  ArrowRight,
+  Briefcase,
+  BrainCircuit,
+  Target
 } from "lucide-react";
 
 const UeberMich: React.FC = () => {
@@ -30,129 +33,157 @@ const UeberMich: React.FC = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
+      {/* --- HERO SECTION --- */}
       <section className="py-16 px-4 text-center bg-gradient-to-b from-primary/5 to-transparent">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+        <h1 className="text-4xl md:text-5xl font-bold mb-6">
           <span className="gradient-text">Über mich</span>
         </h1>
-        <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-          Als angehender Fachinformatiker für Systemintegration (Start: Juni 2025) verfolge ich einen klaren Ansatz: <span className="text-primary font-medium">IT muss praxisnah, sicher und dokumentiert sein.</span>
+        <p className="text-muted-foreground max-w-3xl mx-auto text-lg leading-relaxed">
+          Ich arbeite <span className="text-primary font-medium">strukturiert, prozessorientiert und verantwortungsbewusst</span>. 
+          Ein sorgfältiger Umgang mit Daten, klare Abläufe und nachvollziehbare Dokumentation sind für mich 
+          zentrale Voraussetzungen für einen verlässlichen IT-Betrieb.
         </p>
       </section>
 
-      {/* Main Content */}
-      <section className="py-12 px-4 max-w-5xl mx-auto space-y-16">
+      {/* --- MAIN CONTENT --- */}
+      <section className="py-8 px-4 max-w-5xl mx-auto space-y-20">
         
-        {/* SECTION 1: Home Lab & Architektur */}
-        <div>
-          <h2 className="text-2xl font-semibold mb-8 flex items-center gap-3">
-            <Layers className="w-7 h-7 text-primary" />
-            Home-LAB & Architektur
-          </h2>
+        {/* 1. SEKTION: Haltung & Hintergrund (2 Kolonlu Grid) */}
+        <div className="grid md:grid-cols-2 gap-8">
           
-          <div className="glass rounded-xl p-6 md:p-8 hover-lift border border-primary/10">
-            {/* Intro Text */}
-            <div className="mb-8">
-              <p className="text-muted-foreground leading-relaxed">
-                Mein Herzstück ist mein Home-LAB. Anders als übliche Testumgebungen ist dies eine bewusst geplante 
-                <strong className="text-primary"> Enterprise-Simulation</strong>, die ich von Grund auf selbst aufgebaut habe – 
-                inklusive Architektur, Betrieb und vollständiger Dokumentation. Hier bilde ich reale Betriebs-, Netzwerk- und Sicherheitsanforderungen ab.
+          {/* Sol: Warum IT? */}
+          <div className="glass p-8 rounded-xl border border-primary/10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-primary/10 p-2 rounded-lg text-primary">
+                <Briefcase size={24} />
+              </div>
+              <h2 className="text-xl font-semibold">Vom Hintergrund zur IT-Praxis</h2>
+            </div>
+            <div className="space-y-4 text-muted-foreground text-sm leading-relaxed">
+              <p>
+                Aus diesem Grund habe ich mich bewusst für einen beruflichen Wechsel in die IT entschieden und befinde mich seit Juni 2025 
+                in der Umschulung zum Fachinformatiker für Systemintegration.
+              </p>
+              <p>
+                Bereits vor meiner Umschulung habe ich in daten- und prozessorientierten Kontexten gearbeitet. 
+                Besonders Aufgaben an der Schnittstelle zwischen Technik, Organisation und Prozessen sprechen mich an – 
+                dort, wo Genauigkeit und sauberes Reporting entscheidend sind.
+              </p>
+              <p className="font-medium text-foreground">
+                Systeme müssen nicht nur funktionieren, sondern verständlich, wartbar und langfristig stabil sein.
               </p>
             </div>
+          </div>
 
-            {/* Split Layout: Image & Details */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-              
-              {/* Left Column: Image (Infografik) */}
-              <div className="order-2 lg:order-1">
-                <div className="relative rounded-lg overflow-hidden border border-primary/20 shadow-2xl bg-black/50 aspect-[4/3] group">
-                  <img 
-                    src="/images/homelab-architecture.png" 
-                    alt="IT Infrastructure Architecture Diagram" 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                    <p className="text-xs text-white/80 text-center">Systemarchitektur & Datenfluss</p>
-                  </div>
-                </div>
+          {/* Sağ: Aktuelle Entwicklung */}
+          <div className="glass p-8 rounded-xl border border-primary/10">
+            <div className="flex items-center gap-3 mb-4">
+               <div className="bg-primary/10 p-2 rounded-lg text-primary">
+                <BrainCircuit size={24} />
               </div>
-
-              {/* Right Column: Project Structure (Text) */}
-              <div className="order-1 lg:order-2 space-y-6">
-                <h3 className="text-lg font-bold text-foreground">Arbeitsweise & Projektstruktur</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Mein Portfolio umfasst derzeit 8 aufeinander aufbauende Projektmodule (5 abgeschlossen, 3 in Entwicklung).
-                </p>
-
-                <ul className="space-y-4">
-                  <li className="flex gap-3 items-start">
-                    <div className="mt-1 bg-primary/10 p-1.5 rounded-full text-primary">
-                       <Server size={16} />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-sm">Infrastruktur & Virtualisierung</h4>
-                      <p className="text-sm text-muted-foreground">Linux-Basis (Ubuntu/Pi) & Docker-Fundament.</p>
-                    </div>
-                  </li>
-
-                  <li className="flex gap-3 items-start">
-                    <div className="mt-1 bg-primary/10 p-1.5 rounded-full text-primary">
-                       <Cpu size={16} />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-sm">Application & Services</h4>
-                      <p className="text-sm text-muted-foreground">Orchestrierung von Home Assistant (IoT/State Monitoring) & Nginx.</p>
-                    </div>
-                  </li>
-
-                  <li className="flex gap-3 items-start">
-                    <div className="mt-1 bg-primary/10 p-1.5 rounded-full text-primary">
-                       <Shield size={16} />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-sm">Security & Access</h4>
-                      <p className="text-sm text-muted-foreground">Cloudflare Tunnel & SSL (Zero Trust statt Port-Forwarding).</p>
-                    </div>
-                  </li>
-
-                   <li className="flex gap-3 items-start">
-                    <div className="mt-1 bg-primary/10 p-1.5 rounded-full text-primary">
-                       <Network size={16} />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-sm">Enterprise Networking</h4>
-                      <p className="text-sm text-muted-foreground">VLAN-Segmentierung & ACLs auf Cisco Catalyst Hardware.</p>
-                    </div>
-                  </li>
-                </ul>
-
-                {/* Roadmap Box */}
-                <div className="mt-6 pt-4 border-t border-primary/10">
-                  <div className="flex items-center gap-2 text-amber-500 mb-1">
-                    <ArrowRight size={16} />
-                    <span className="text-xs font-bold uppercase tracking-wider">Roadmap</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    Erweiterung Layer-3-Routing, dedizierte Firewalls & zentrales SIEM (Wazuh).
-                  </p>
-                </div>
-              </div>
-
+              <h2 className="text-xl font-semibold">Aktuelle Entwicklung & Lernansatz</h2>
             </div>
-
-            {/* Closing Statement */}
-            <div className="mt-8 text-center border-t border-primary/10 pt-6">
-               <p className="italic text-muted-foreground">
-                 "Mein Ziel ist es, theoretisches Wissen systematisch in eine belastbare, wartbare und sauber dokumentierte IT-Infrastruktur zu übersetzen."
-               </p>
+            <div className="space-y-4 text-muted-foreground text-sm leading-relaxed">
+              <p>
+                Parallel zur Umschulung entwickle ich meine praktischen Fähigkeiten gezielt weiter. 
+                Dafür habe ich unter dem Namen <strong>Home-LAB</strong> eine eigene, zusammenhängende IT-Lernumgebung aufgebaut.
+              </p>
+              <p>
+                Dabei geht es mir nicht um isolierte Einzelübungen, sondern um eine <strong>systematische Entwicklung</strong>: 
+                Planung, Umsetzung, Betrieb und Dokumentation gehören immer zusammen.
+              </p>
+              <ul className="list-disc list-inside space-y-1 pt-2 opacity-90">
+                <li>Netzwerk- und Systemadministration</li>
+                <li>Linux-basierter Betrieb & Container</li>
+                <li>Security-nahe Betriebs-Themen</li>
+              </ul>
             </div>
           </div>
         </div>
 
-        {/* SECTION 2: Technische Fähigkeiten (Grid) */}
-        <div>
-          <h2 className="text-xl font-semibold mb-6 flex items-center gap-3">
-            <Code className="w-6 h-6 text-primary" />
+        {/* 2. SEKTION: VISUELLE ÜBERSICHT (Görsel Odaklı) */}
+        <div className="relative">
+          <div className="text-center mb-8 max-w-2xl mx-auto">
+             <h2 className="text-2xl font-bold flex items-center justify-center gap-3 mb-3">
+               <Layers className="text-primary w-6 h-6" />
+               Systemische Sicht
+             </h2>
+             <p className="text-muted-foreground">
+               Die folgende Übersicht zeigt beispielhaft, wie ich IT-Systeme denke und strukturiere: 
+               schichtweise aufgebaut, sicher angebunden und klar voneinander getrennt.
+             </p>
+          </div>
+
+          {/* GÖRSEL KART */}
+          <div className="glass p-2 md:p-4 rounded-2xl border border-primary/20 shadow-2xl bg-black/40">
+             <div className="rounded-xl overflow-hidden aspect-video relative group">
+                {/* Görsel */}
+                <img 
+                  src="/images/homelab-architecture.png" 
+                  alt="System Architecture Diagram" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+             </div>
+             <p className="text-xs text-center text-muted-foreground mt-3 italic">
+               Visualisierung: Infrastruktur, Services, Security und Networking im Zusammenspiel.
+             </p>
+          </div>
+        </div>
+
+        {/* 3. SEKTION: PROJEKTE & ZUKUNFT (Text Tabanlı) */}
+        <div className="grid md:grid-cols-2 gap-12 items-start">
+            
+            {/* Projekte & Status */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <Code className="text-primary w-5 h-5" />
+                Projekte & Realisierung
+              </h3>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                Meine aktuelle Systemlandschaft besteht aus mehreren aufeinander aufbauenden Projektmodulen (8 Module), 
+                von denen ein Teil bereits abgeschlossen ist. Der Fokus liegt dabei auf:
+              </p>
+              <ul className="space-y-3">
+                <li className="flex gap-3 text-sm text-muted-foreground">
+                  <div className="bg-primary/10 p-1 rounded-full text-primary h-fit"><Shield size={14} /></div>
+                  <span>Stabiler Infrastruktur & Netzwerksegmentierung (VLANs)</span>
+                </li>
+                 <li className="flex gap-3 text-sm text-muted-foreground">
+                  <div className="bg-primary/10 p-1 rounded-full text-primary h-fit"><Lock size={14} /></div>
+                  <span>Sicherem externem Zugriff (Zero Trust / SSL)</span>
+                </li>
+                 <li className="flex gap-3 text-sm text-muted-foreground">
+                  <div className="bg-primary/10 p-1 rounded-full text-primary h-fit"><Server size={14} /></div>
+                  <span>Klarer Trennung von Rollen und Diensten (Docker)</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Zukunft & Roadmap */}
+            <div>
+               <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <Target className="text-primary w-5 h-5" />
+                Blick nach vorn & Roadmap
+              </h3>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                Perspektivisch möchte ich mich im Bereich <strong>Cloud- und Security-naher IT-Infrastrukturen</strong> weiterentwickeln.
+                Mein Ziel ist es, theoretisches Wissen unmittelbar in eine belastbare Praxis zu übersetzen.
+              </p>
+              <div className="glass bg-primary/5 border border-primary/10 p-4 rounded-lg">
+                <h4 className="text-sm font-semibold text-primary mb-2 flex items-center gap-2">
+                  <ArrowRight size={14} /> Nächste Schritte:
+                </h4>
+                <p className="text-xs text-muted-foreground">
+                  Ausbau von Routing-Konzepten, Einführung dedizierter Firewalls und Einstieg in zentrales Logging / Security-Monitoring (SIEM).
+                </p>
+              </div>
+            </div>
+        </div>
+        
+        {/* --- TEKNİK YETENEKLER (SKILLS) --- */}
+        <div className="pt-8 border-t border-primary/10">
+          <h2 className="text-xl font-semibold mb-8 text-center flex items-center justify-center gap-2">
+            <Cpu className="w-5 h-5 text-primary" />
             Technische Fähigkeiten
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -163,42 +194,6 @@ const UeberMich: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* SECTION 3: Ausbildung & Zertifizierungen */}
-        <div className="grid md:grid-cols-2 gap-8">
-            {/* Ausbildung */}
-            <div>
-            <h2 className="text-xl font-semibold mb-6 flex items-center gap-3">
-                <GraduationCap className="w-6 h-6 text-primary" />
-                Ausbildung
-            </h2>
-            <div className="glass rounded-xl p-6 hover-lift h-full border border-primary/5">
-                <p className="text-sm text-muted-foreground mb-2">2021 - 2024</p>
-                <h3 className="text-lg font-semibold text-primary mb-2">Fachinformatiker für Systemintegration</h3>
-                <p className="text-muted-foreground text-sm">
-                Berufsausbildung mit Schwerpunkt auf IT-Infrastruktur, Netzwerktechnik und Systemadministration.
-                </p>
-            </div>
-            </div>
-
-            {/* Zertifizierungen */}
-            <div>
-            <h2 className="text-xl font-semibold mb-6 flex items-center gap-3">
-                <Award className="w-6 h-6 text-primary" />
-                Zertifizierungen
-            </h2>
-            <div className="glass rounded-xl p-6 h-full border border-primary/5">
-                <div className="flex flex-wrap gap-3">
-                <span className="px-4 py-2 bg-primary/10 border border-primary/30 text-primary rounded-lg text-sm font-medium">
-                    Microsoft Azure Fundamentals (AZ-900)
-                </span>
-                <span className="px-4 py-2 bg-primary/10 border border-primary/30 text-primary rounded-lg text-sm font-medium">
-                    Cisco Certified Entry Networking Technician
-                </span>
-                </div>
-            </div>
-            </div>
         </div>
 
       </section>
