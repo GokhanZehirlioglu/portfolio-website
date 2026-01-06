@@ -3,54 +3,46 @@ import Layout from "@/components/Layout";
 import { 
   Quote, 
   Briefcase, 
-  GraduationCap, 
+  FlaskConical, // Yeni ikon: Home Lab / Deney Tüpü
   ArrowRight, 
   CheckCircle2, 
   Loader2, 
   Target,
   Layers,
   BookOpen,
-  Zap,
   LayoutDashboard
 } from "lucide-react";
 
 const UeberMich: React.FC = () => {
   
-  // --- KONFİGÜRASYON: TEKNOLOJİ STACK'İ (HER ZAMAN RENKLİ) ---
+  // --- KONFİGÜRASYON: TEKNOLOJİ STACK'İ ---
+  // Not: Linux yerine Ubuntu (Orijinal Turuncu) kullanıldı - Daha temiz görünür.
+  // Wazuh için güvenilir Wikimedia kaynağı kullanıldı.
   const techStack = [
-    { name: "Linux", url: "https://cdn.simpleicons.org/linux/FCC624" },
+    { name: "Ubuntu / Linux", url: "https://cdn.simpleicons.org/ubuntu/E95420" },
     { name: "Docker", url: "https://cdn.simpleicons.org/docker/2496ED" },
     { name: "Home Assistant", url: "https://cdn.simpleicons.org/homeassistant/41BDF5" },
     { name: "Nginx", url: "https://cdn.simpleicons.org/nginx/009639" },
     { name: "Cloudflare", url: "https://cdn.simpleicons.org/cloudflare/F38020" },
     { name: "Cisco", url: "https://cdn.simpleicons.org/cisco/1BA0D7" },
-    { name: "Wazuh", url: "https://cdn.simpleicons.org/wazuh/00BCE4" },
+    { name: "Wazuh", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Wazuh_Logo.png/640px-Wazuh_Logo.png" }, // Orijinal Logo
   ];
 
-  // --- KONFİGÜRASYON: PROJE DURUMLARI (AYRILMIŞ VE GÜNCEL) ---
+  // --- KONFİGÜRASYON: PROJE DURUMLARI (TOPLAM 8 MODÜL) ---
   const projectStatus = [
     { label: "Infrastruktur & Docker-Basis", status: "Abgeschlossen", active: false },
     { label: "IoT-Integration (Home Assistant)", status: "Abgeschlossen", active: false },
     { label: "Web-Hosting & Reverse Proxy", status: "Abgeschlossen", active: false },
     { label: "Secure Access (Zero Trust/Tunnel)", status: "Abgeschlossen", active: false },
     { label: "VLAN & Netz-Segmentierung", status: "In Arbeit", active: true }, 
-    { label: "Layer-3 Routing Konzepte", status: "Geplant", active: false }, // AYRILDI
-    { label: "Dedizierte Firewalls & Zonen", status: "Geplant", active: false }, // AYRILDI
+    { label: "Layer-3 Routing Konzepte", status: "Geplant", active: false }, 
+    { label: "Implementierung von Next Gen. Firewalls", status: "Geplant", active: false }, // İsim Düzeltildi
+    { label: "Zentrales Logging & SIEM (Wazuh)", status: "Geplant", active: false }, // Eklendi (8. Modül)
   ];
 
   return (
     <Layout>
-      {/* MİMARİ AKIŞ: 
-         1. Hero (Kimlik - Ortalanmış)
-         2. Geçmiş (Hintergrund)
-         3. Yöntem (Home-LAB Felsefesi)
-         4. Görsel (Kanıt)
-         5. Proje Durumu & Gelecek (Status + Roadmap)
-         6. Akademik Derinleşme (Vertiefung - Alta taşındı)
-         7. Tech Stack (Renkli Logolar)
-      */}
-
-      {/* --- 1. HERO SECTION (PROFESSIONELLE SELBSTVERORTUNG) --- */}
+      {/* 1. HERO SECTION (KİMLİK) */}
       <section className="pt-20 pb-12 px-4 bg-gradient-to-b from-primary/5 to-transparent">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-8">
@@ -72,7 +64,7 @@ const UeberMich: React.FC = () => {
               technische Verantwortung systematisch verbinden kann.
             </p>
             
-            {/* Alıntı Kutusu */}
+            {/* Alıntı */}
             <div className="glass mt-10 p-6 rounded-xl border border-primary/10 shadow-sm flex flex-col md:flex-row items-center justify-center gap-4 text-center md:text-left">
               <div className="bg-primary/10 p-3 rounded-full">
                 <Quote className="w-6 h-6 text-primary" />
@@ -88,9 +80,8 @@ const UeberMich: React.FC = () => {
 
       <section className="pb-16 px-4 max-w-5xl mx-auto space-y-24">
         
-        {/* --- 2. VOM HINTERGRUND ZUR IT-PRAXIS --- */}
+        {/* 2. GEÇMİŞ (HINTERGRUND) */}
         <div className="grid md:grid-cols-[1fr_3fr] gap-8 items-start">
-          {/* İkon Kutusu (Sol) */}
           <div className="hidden md:flex flex-col items-center text-center p-6 glass rounded-2xl border border-primary/10 bg-gradient-to-br from-primary/5 to-transparent shadow-sm">
             <Briefcase className="w-10 h-10 text-primary mb-3" />
             <span className="text-xs font-bold text-primary tracking-wider uppercase">Hintergrund</span>
@@ -110,7 +101,6 @@ const UeberMich: React.FC = () => {
               Diese Erfahrung bildet heute die Grundlage meiner IT-Arbeitsweise. Besonders Aufgaben an der 
               Schnittstelle zwischen Technik, Organisation und Prozessen sprechen mich an.
             </p>
-            {/* Vurgulu Alan */}
             <div className="bg-card p-5 rounded-xl border-l-4 border-primary shadow-sm">
               <p className="text-foreground font-medium">
                 Auch meine vorherige Tätigkeit als <span className="text-primary font-bold">Gründer und Leiter eines Nachhilfezentrums</span> hat 
@@ -120,11 +110,12 @@ const UeberMich: React.FC = () => {
           </div>
         </div>
 
-        {/* --- 3. AKTUELLE ENTWICKLUNG (HOME LAB FELSEFESİ) --- */}
+        {/* 3. YÖNTEM (HOME LAB FELSEFESİ) */}
         <div>
+           {/* İkon Değişti: Mezuniyet Kepi -> Deney Tüpü (FlaskConical) */}
            <h2 className="text-2xl font-bold flex items-center gap-4 mb-6 text-foreground">
              <div className="bg-primary/10 p-2 rounded-lg shadow-sm">
-               <GraduationCap className="w-7 h-7 text-primary" />
+               <FlaskConical className="w-7 h-7 text-primary" />
              </div>
              Aktuelle Entwicklung & Lernansatz
            </h2>
@@ -141,7 +132,7 @@ const UeberMich: React.FC = () => {
            </div>
         </div>
 
-        {/* --- 4. GÖRSEL KANIT (SYSTEMISCHE SICHT) --- */}
+        {/* 4. GÖRSEL KANIT */}
         <div className="my-10">
           <div className="w-full rounded-2xl overflow-hidden shadow-2xl border border-primary/20 bg-black/50 group relative aspect-[16/9] md:aspect-[21/9]">
              <img 
@@ -149,8 +140,6 @@ const UeberMich: React.FC = () => {
                alt="IT System Architecture Diagram" 
                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
              />
-             
-             {/* Caption */}
              <div className="absolute bottom-0 w-full bg-black/80 backdrop-blur-md py-4 px-6 border-t border-white/10">
                <p className="text-sm text-center text-white/90 font-medium tracking-wide">
                  Systemdenken in der Praxis: Eine Schicht-für-Schicht visualisierte Infrastruktur – von der Hardware bis zur Security-Gateway.
@@ -159,7 +148,7 @@ const UeberMich: React.FC = () => {
           </div>
         </div>
 
-        {/* --- 5. PROJEKT-STATUS & ROADMAP --- */}
+        {/* 5. PROJE DURUMU & GELECEK */}
         <div className="grid md:grid-cols-2 gap-12 pt-10 border-t border-primary/10">
           
           {/* Sol: Proje Durumları */}
@@ -180,7 +169,9 @@ const UeberMich: React.FC = () => {
                     {item.status === "Abgeschlossen" && <CheckCircle2 size={18} className="text-green-500" />}
                     {item.status === "In Arbeit" && <Loader2 size={18} className="text-primary animate-spin" />}
                     {item.status === "Geplant" && <div className="w-4 h-4 rounded-full border-2 border-muted-foreground/30" />}
-                    <span className="text-xs text-muted-foreground w-24 text-right">{item.status}</span>
+                    
+                    {/* Status Text (Mobil uyumlu min-width) */}
+                    <span className="text-xs text-muted-foreground w-24 text-right hidden sm:block">{item.status}</span>
                   </div>
                 </div>
               ))}
@@ -211,9 +202,8 @@ const UeberMich: React.FC = () => {
           </div>
         </div>
 
-        {/* --- 6. AKTUELLE FACHLICHE VERTIEFUNG (YENİ KONUM) --- */}
+        {/* 6. AKADEMİK DERİNLEŞME (VERTIEFUNG) */}
         <div className="glass p-8 rounded-2xl border border-primary/10 bg-gradient-to-r from-primary/5 via-transparent to-transparent relative overflow-hidden mt-8">
-            {/* Dekoratif Arka Plan İkonu */}
             <BookOpen className="absolute -right-8 -bottom-8 w-40 h-40 text-primary/5 rotate-12" />
             
             <h3 className="text-xl font-bold mb-4 flex items-center gap-3">
@@ -232,7 +222,7 @@ const UeberMich: React.FC = () => {
             </p>
         </div>
 
-        {/* --- 7. TECH STACK (RENKLİ LOGOLAR) --- */}
+        {/* 7. TECH STACK (UX ve Renk Düzeltmeleri Yapıldı) */}
         <div className="mt-12 pt-10 border-t border-primary/10 text-center">
           <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-[0.2em] mb-10">
             Eingesetzte Technologien & Tools
@@ -240,14 +230,17 @@ const UeberMich: React.FC = () => {
           
           <div className="flex flex-wrap justify-center items-center gap-10 md:gap-16">
             {techStack.map((tech) => (
-              <div key={tech.name} className="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-1">
-                {/* Logo Resmi - Grayscale YOK, Her zaman renkli */}
+              // UX: Relative ve Group eklendi - Tooltip artık kaymaz
+              <div key={tech.name} className="relative group flex flex-col items-center gap-3 transition-transform hover:-translate-y-1 cursor-pointer">
+                {/* Logo */}
                 <img 
                   src={tech.url} 
                   alt={tech.name} 
-                  className="h-10 w-10 md:h-12 md:w-12 transition-all duration-300 drop-shadow-sm"
+                  className="h-10 w-10 md:h-12 md:w-12 drop-shadow-sm object-contain"
                 />
-                <span className="text-[11px] font-medium text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-6 whitespace-nowrap">
+                
+                {/* Tooltip (Label) - Absolute pozisyon düzeltildi */}
+                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[11px] font-medium text-muted-foreground bg-background/80 px-2 py-1 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-primary/10">
                   {tech.name}
                 </span>
               </div>
