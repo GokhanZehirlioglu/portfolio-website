@@ -280,7 +280,7 @@ a1b2c3d4e5f6   nginx:stable-alpine   Up 3 weeks      0.0.0.0:8082->80/tcp`;
             <div className="relative aspect-video bg-slate-50">
               {/* --- DÜZELTİLDİ: Browser Fotoğrafı (.jpg olarak) --- */}
               <img 
-                src="/images/webserver-foto5.jpg" 
+                src="/images/webserver-foto5.png" 
                 alt="Browser Network Analysis" 
                 className="w-full h-full object-cover"
               />
