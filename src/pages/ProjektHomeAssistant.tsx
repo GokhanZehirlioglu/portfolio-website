@@ -21,11 +21,12 @@ import {
   Maximize2,
   Wifi,
   Layers,
+  // --- EKLENEN YENİ İKONLAR (Eksik olanlar bunlardı) ---
+  Box,
   Zap,
   ToggleLeft,
-  Box,
-  Smartphone, // Tablet/Kontrol için
-  Tablet
+  Tablet,
+  Smartphone
 } from "lucide-react";
 
 const ProjektHomeAssistant = () => {
@@ -34,7 +35,7 @@ const ProjektHomeAssistant = () => {
 
   // --- KONFİGÜRASYON ---
   
-  [cite_start]// Proje Künyesi [cite: 11-30]
+  // Proje Künyesi
   const projectStats = [
     { icon: Calendar, label: "Projektzeitraum", value: "02.10.25 – 29.11.25" },
     { icon: Server, label: "Infrastruktur", value: "Raspberry Pi 5 (Docker Host)" },
@@ -42,7 +43,7 @@ const ProjektHomeAssistant = () => {
     { icon: ShieldCheck, label: "Sicherheitslevel", value: "Local Only / Zero Trust", highlight: true },
   ];
 
-  [cite_start]// Donanım Spekleri [cite: 85-111]
+  // Donanım Spekleri
   const hardwareSpecs = [
     { label: "Host System", value: "Raspberry Pi 5, 16GB RAM" },
     { label: "Storage", value: "SanDisk Extreme PRO microSDXC (A2)" },
@@ -56,13 +57,13 @@ const ProjektHomeAssistant = () => {
     { name: "Docker", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
     { name: "Home Assistant", url: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/home-assistant.svg" },
     { name: "Zigbee2MQTT", url: "https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/images/logo.png" },
-    { name: "Mosquitto MQTT", url: "https://cdn.simpleicons.org/eclipse-mosquitto/3C5280" }, // MQTT Logosu
-    { name: "Zigbee", url: "https://upload.wikimedia.org/wikipedia/commons/9/9a/ZigBee_Alliance_logo.svg" }, // Zigbee Logosu (Alliance)
+    { name: "Mosquitto MQTT", url: "https://cdn.simpleicons.org/eclipse-mosquitto/3C5280" },
+    { name: "Zigbee", url: "https://upload.wikimedia.org/wikipedia/commons/9/9a/ZigBee_Alliance_logo.svg" },
     { name: "Tailscale", url: "https://cdn.simpleicons.org/tailscale/white/121212" }, 
     { name: "Linux", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
   ];
 
-  [cite_start]// Challenges [cite: 181-187]
+  // Challenges
   const challenges = [
     {
         title: "Interoperabilität & Protokolle",
@@ -160,7 +161,6 @@ const ProjektHomeAssistant = () => {
                 in der Geräte nicht miteinander kommunizieren können und sensible Daten (Kamerabilder, Anwesenheitsstatus)
                 zwingend über externe Cloud-Server geleitet werden.
               </p>
-              {/* GELİŞTİRİLMİŞ METİN KISMI */}
               <p>
                 Zusätzlich zur Fragmentierung stellte diese Abhängigkeit ein erhebliches Sicherheits- und Datenschutzrisiko dar.
                 Ein zentrales Ziel war daher nicht nur die technische Bündelung, sondern die <strong>Rückgewinnung der Datenhoheit</strong>.
@@ -190,7 +190,7 @@ const ProjektHomeAssistant = () => {
                     </div>
                 ))}
              </div>
-             {/* Tech Stack Icons (Raspberry Pi, Zigbee, MQTT eklendi) */}
+             {/* Tech Stack Icons */}
              <div className="flex flex-wrap gap-4 mt-8 justify-center relative z-10">
                 {techStackIcons.map((tech) => (
                     <div key={tech.name} className="relative group">
@@ -202,7 +202,7 @@ const ProjektHomeAssistant = () => {
         </div>
       </section>
 
-      {/* --- ZIGBEE & HARDWARE SECTION (Yeni Başlık Eklendi) --- */}
+      {/* --- ZIGBEE & HARDWARE SECTION --- */}
       <section className="py-16 px-4 bg-background/50 border-y border-primary/5">
         <div className="max-w-6xl mx-auto">
             {/* ÜST BAŞLIK */}
@@ -228,7 +228,7 @@ const ProjektHomeAssistant = () => {
                         </ul>
                     </div>
                 </div>
-                {/* Hardware List Box (Tercümeler Yapıldı) */}
+                {/* Hardware List Box */}
                 <div className="glass p-6 rounded-2xl border-primary/10">
                     <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                         <Box className="text-primary w-5 h-5" /> Installierte Hardware
@@ -442,70 +442,6 @@ const ProjektHomeAssistant = () => {
          </div>
       </section>
 
-      {/* --- SYSTEMARCHITEKTUR & DATENFLUSS (5. Kutu Eklendi) --- */}
-      <div className="py-16 px-4 bg-primary/5 border-y border-primary/10">
-        <div className="max-w-6xl mx-auto glass p-8 rounded-2xl border-primary/10 text-center">
-            <h3 className="text-xl font-bold mb-10 flex items-center justify-center gap-3">
-                <Network className="text-primary w-6 h-6" />
-                Systemarchitektur & Remote Access (Tailscale)
-            </h3>
-
-            {/* ŞEMA (5 Adım) */}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 mb-12 overflow-x-auto py-6 px-4">
-                {/* 1. Internet */}
-                <div className="flex flex-col items-center gap-3 min-w-[100px] group">
-                    <div className="bg-blue-500/10 p-4 rounded-full ring-1 ring-blue-500/30 group-hover:scale-110 transition-transform">
-                         <Globe size={28} className="text-blue-500" />
-                    </div>
-                    <span className="text-[10px] font-bold text-muted-foreground">WAN / Internet</span>
-                </div>
-
-                <ArrowRight className="text-muted-foreground/50 hidden md:block" size={16} />
-
-                {/* 2. Tailscale (VPN) */}
-                <div className="flex flex-col items-center gap-3 min-w-[100px] group">
-                    <div className="bg-zinc-900 p-4 rounded-full ring-1 ring-white/20 relative group-hover:scale-110 transition-transform">
-                        <img src="https://cdn.simpleicons.org/tailscale/white" alt="Tailscale VPN" className="w-7 h-7 object-contain" />
-                        <span className="absolute -top-2 -right-3 bg-emerald-500 text-[8px] text-white font-bold px-1.5 py-0.5 rounded-full shadow-lg">ENC</span>
-                    </div>
-                    <span className="text-[10px] font-bold text-foreground">Tailscale Mesh</span>
-                </div>
-
-                <ArrowRight className="text-muted-foreground/50 hidden md:block" size={16} />
-
-                {/* 3. Docker Host */}
-                <div className="flex flex-col items-center gap-3 min-w-[120px] group">
-                     <div className="glass p-3 rounded-2xl border-primary/20 text-center group-hover:border-primary/50 transition-colors">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker Host" className="w-8 h-8 mx-auto mb-2 drop-shadow-lg" />
-                        <span className="text-xs font-bold block">Docker Host</span>
-                        <span className="text-[9px] text-muted-foreground">RPi 5</span>
-                     </div>
-                </div>
-
-                <ArrowRight className="text-muted-foreground/50 hidden md:block" size={16} />
-
-                {/* 4. IoT Network (Zigbee) */}
-                <div className="flex flex-col items-center gap-3 min-w-[100px] group">
-                    <div className="bg-orange-500/10 p-4 rounded-full ring-1 ring-orange-500/30 group-hover:scale-110 transition-transform">
-                        <img src="https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/images/logo.png" alt="Zigbee2MQTT" className="w-7 h-7 object-contain" />
-                    </div>
-                    <span className="text-[10px] font-bold text-orange-500">Zigbee Mesh</span>
-                </div>
-
-                <ArrowRight className="text-muted-foreground/50 hidden md:block" size={16} />
-
-                {/* 5. Central Control (Tablet) - YENİ EKLENDİ */}
-                <div className="flex flex-col items-center gap-3 min-w-[100px] group">
-                    <div className="bg-purple-500/10 p-4 rounded-full ring-1 ring-purple-500/30 group-hover:scale-110 transition-transform relative">
-                        <Tablet size={28} className="text-purple-500" />
-                        <div className="absolute bottom-0 right-0 bg-green-500 w-3 h-3 rounded-full border-2 border-black"></div>
-                    </div>
-                    <span className="text-[10px] font-bold text-purple-400">Zentrale Steuerung</span>
-                </div>
-            </div>
-        </div>
-      </div>
-
       {/* --- DASHBOARD & MONITORING (TAŞINDI) --- */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
@@ -581,7 +517,7 @@ const ProjektHomeAssistant = () => {
                 </div>
             </div>
 
-            {/* --- TAILSCALE SECTION (TAŞINDI & YENİLENDİ) --- */}
+            {/* --- TAILSCALE SECTION --- */}
             <div className="bg-primary/5 rounded-2xl border border-primary/10 p-8 mb-16">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div>
@@ -622,7 +558,7 @@ const ProjektHomeAssistant = () => {
                 </div>
             </div>
 
-             {/* Enerji Analizi - CLICKABLE (DOSYA YOLLARI DÜZELTİLDİ) */}
+             {/* Enerji Analizi - CLICKABLE */}
             <div>
                 <h3 className="text-xl font-bold mb-6 flex items-center gap-2 gradient-text">
                     <Activity size={20} />
@@ -660,6 +596,70 @@ const ProjektHomeAssistant = () => {
             </div>
         </div>
       </section>
+
+      {/* --- SYSTEMARCHITEKTUR & DATENFLUSS (AŞAĞI TAŞINDI) --- */}
+      <div className="py-16 px-4 bg-primary/5 border-y border-primary/10">
+        <div className="max-w-6xl mx-auto glass p-8 rounded-2xl border-primary/10 text-center">
+            <h3 className="text-xl font-bold mb-10 flex items-center justify-center gap-3">
+                <Network className="text-primary w-6 h-6" />
+                Systemarchitektur & Remote Access (Tailscale)
+            </h3>
+
+            {/* ŞEMA (5 Adım) */}
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 mb-12 overflow-x-auto py-6 px-4">
+                {/* 1. Internet */}
+                <div className="flex flex-col items-center gap-3 min-w-[100px] group">
+                    <div className="bg-blue-500/10 p-4 rounded-full ring-1 ring-blue-500/30 group-hover:scale-110 transition-transform">
+                         <Globe size={28} className="text-blue-500" />
+                    </div>
+                    <span className="text-[10px] font-bold text-muted-foreground">WAN / Internet</span>
+                </div>
+
+                <ArrowRight className="text-muted-foreground/50 hidden md:block" size={16} />
+
+                {/* 2. Tailscale (VPN) */}
+                <div className="flex flex-col items-center gap-3 min-w-[100px] group">
+                    <div className="bg-zinc-900 p-4 rounded-full ring-1 ring-white/20 relative group-hover:scale-110 transition-transform">
+                        <img src="https://cdn.simpleicons.org/tailscale/white" alt="Tailscale VPN" className="w-7 h-7 object-contain" />
+                        <span className="absolute -top-2 -right-3 bg-emerald-500 text-[8px] text-white font-bold px-1.5 py-0.5 rounded-full shadow-lg">ENC</span>
+                    </div>
+                    <span className="text-[10px] font-bold text-foreground">Tailscale Mesh</span>
+                </div>
+
+                <ArrowRight className="text-muted-foreground/50 hidden md:block" size={16} />
+
+                {/* 3. Docker Host */}
+                <div className="flex flex-col items-center gap-3 min-w-[120px] group">
+                     <div className="glass p-3 rounded-2xl border-primary/20 text-center group-hover:border-primary/50 transition-colors">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker Host" className="w-8 h-8 mx-auto mb-2 drop-shadow-lg" />
+                        <span className="text-xs font-bold block">Docker Host</span>
+                        <span className="text-[9px] text-muted-foreground">RPi 5</span>
+                     </div>
+                </div>
+
+                <ArrowRight className="text-muted-foreground/50 hidden md:block" size={16} />
+
+                {/* 4. IoT Network (Zigbee) */}
+                <div className="flex flex-col items-center gap-3 min-w-[100px] group">
+                    <div className="bg-orange-500/10 p-4 rounded-full ring-1 ring-orange-500/30 group-hover:scale-110 transition-transform">
+                        <img src="https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/images/logo.png" alt="Zigbee2MQTT" className="w-7 h-7 object-contain" />
+                    </div>
+                    <span className="text-[10px] font-bold text-orange-500">Zigbee Mesh</span>
+                </div>
+
+                <ArrowRight className="text-muted-foreground/50 hidden md:block" size={16} />
+
+                {/* 5. Central Control (Tablet) - YENİ EKLENDİ */}
+                <div className="flex flex-col items-center gap-3 min-w-[100px] group">
+                    <div className="bg-purple-500/10 p-4 rounded-full ring-1 ring-purple-500/30 group-hover:scale-110 transition-transform relative">
+                        <Tablet size={28} className="text-purple-500" />
+                        <div className="absolute bottom-0 right-0 bg-green-500 w-3 h-3 rounded-full border-2 border-black"></div>
+                    </div>
+                    <span className="text-[10px] font-bold text-purple-400">Zentrale Steuerung</span>
+                </div>
+            </div>
+        </div>
+      </div>
 
       {/* CHALLENGES & FAZIT */}
       <section className="py-16 px-4 max-w-4xl mx-auto space-y-16">
