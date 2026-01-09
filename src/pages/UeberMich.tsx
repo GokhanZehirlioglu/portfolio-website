@@ -31,12 +31,12 @@ const UeberMich: React.FC = () => {
 
   // --- KONFİGÜRASYON: PROJE DURUMLARI (TOPLAM 8 MODÜL) ---
   const projectStatus = [
-    { label: "Infrastruktur & Docker-Basis", status: "Abgeschlossen", active: false },
-    { label: "IoT-Integration (Home Assistant)", status: "Abgeschlossen", active: false },
-    { label: "Web-Hosting & Reverse Proxy", status: "Abgeschlossen", active: false },
-    { label: "Secure Access (Zero Trust/Tunnel)", status: "Abgeschlossen", active: false },
-    { label: "VLAN & Netz-Segmentierung", status: "In Arbeit", active: true }, 
-    { label: "Layer-3 Routing Konzepte", status: "Geplant", active: false }, 
+    { label: "Home Server & Infrastruktur Einrichten (Docker-Basis)", status: "Abgeschlossen", active: false },
+    { label: "Smart Home & IoT-Integration (Home Assistant)", status: "Abgeschlossen", active: false },
+    { label: "Web-Server Einrichten (Ngnix)", status: "Abgeschlossen", active: false },
+    { label: "Web-Hosting & Reverse Proxy(Cloudflare Tunnel)", status: "Abgeschlossen", active: false },
+    { label: "Switching Layerr 2 VLAN & Netz-Segmentierung", status: "In Arbeit", active: true }, 
+    { label: "Routing Layer-3 ACL", status: "Geplant", active: false }, 
     { label: "Implementierung von Next Gen. Firewalls", status: "Geplant", active: false }, // İsim Düzeltildi
     { label: "Zentrales Logging & SIEM (Wazuh)", status: "Geplant", active: false }, // Eklendi (8. Modül)
   ];
