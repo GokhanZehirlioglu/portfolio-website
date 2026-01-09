@@ -21,7 +21,6 @@ import {
   Maximize2,
   Wifi,
   Layers,
-  // --- EKLENEN YENİ İKONLAR (Eksik olanlar bunlardı) ---
   Box,
   Zap,
   ToggleLeft,
@@ -310,7 +309,12 @@ const ProjektHomeAssistant = () => {
       </section>
 
 
-      {/* TERMINAL & BACKEND */}
+      {/* =========================================================================================
+          ORTA BÖLÜM: YENİDEN SIRALANDI
+          Sıra: Deep Dive -> Frontend UX -> Data Analytics -> Logic -> Dashboard
+          ========================================================================================= */}
+
+      {/* 1. DEEP DIVE (SERVICE MANAGEMENT) */}
       <section className="py-16 px-4">
         <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
@@ -376,9 +380,96 @@ const ProjektHomeAssistant = () => {
         </div>
       </section>
 
+      {/* 2. FRONTEND UX (TABLET & MOBILE) */}
+      <section className="py-16 px-4 bg-background/50 border-y border-primary/5">
+        <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold mb-4 flex items-center justify-center gap-3">
+                    <Activity className="text-primary w-7 h-7" />
+                    Frontend UX (Tablet & Mobile)
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                    Die technische Komplexität wird in eine intuitive Benutzeroberfläche abstrahiert.
+                    Das System unterscheidet strikt zwischen technischem Monitoring und täglicher Bedienung.
+                </p>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-4">
+                {/* Foto 1 */}
+                <div className="glass p-2 rounded-xl border-primary/10 hover:border-primary/30 transition-all hover:-translate-y-1 cursor-pointer group" onClick={() => setSelectedImage("/images/home-assistant-foto1.png")}>
+                    <div className="relative">
+                            <img src="/images/home-assistant-foto1.png" alt="Tablet UI - Beleuchtung & Szenen" className="w-full h-auto rounded-lg shadow-sm" />
+                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
+                            <Maximize2 className="text-white w-8 h-8" />
+                            </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground text-center mt-2 font-medium">Beleuchtung & Szenen</p>
+                </div>
+                {/* Foto 2 */}
+                <div className="glass p-2 rounded-xl border-primary/10 hover:border-primary/30 transition-all hover:-translate-y-1 cursor-pointer group" onClick={() => setSelectedImage("/images/home-assistant-foto2.png")}>
+                    <div className="relative">
+                        <img src="/images/home-assistant-foto2.png" alt="Tablet UI - Klimasteuerung" className="w-full h-auto rounded-lg shadow-sm" />
+                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
+                            <Maximize2 className="text-white w-8 h-8" />
+                            </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground text-center mt-2 font-medium">Klimasteuerung</p>
+                </div>
+                {/* Foto 3 */}
+                <div className="glass p-2 rounded-xl border-primary/10 hover:border-primary/30 transition-all hover:-translate-y-1 cursor-pointer group" onClick={() => setSelectedImage("/images/home-assistant-foto3.png")}>
+                    <div className="relative">
+                        <img src="/images/home-assistant-foto3.png" alt="Tablet UI - Präsenz & Geofencing" className="w-full h-auto rounded-lg shadow-sm" />
+                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
+                            <Maximize2 className="text-white w-8 h-8" />
+                            </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground text-center mt-2 font-medium">Präsenz & Geofencing</p>
+                </div>
+            </div>
+        </div>
+      </section>
 
-      {/* LOGIC & PRIVACY */}
-      <section className="py-16 px-4 max-w-5xl mx-auto">
+      {/* 3. DATA ANALYTICS & ENERGY MANAGEMENT */}
+      <section className="py-16 px-4">
+        <div className="max-w-6xl mx-auto">
+            <h3 className="text-xl font-bold mb-6 flex items-center justify-center gap-2 gradient-text">
+                <Activity size={20} />
+                Data Analytics & Energy Management
+            </h3>
+            <div className="bg-[#121212] rounded-2xl p-6 md:p-8 border border-white/5 shadow-2xl relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0 opacity-70"></div>
+                <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <div className="space-y-4 order-2 md:order-1">
+                        <h4 className="text-lg font-bold text-white mb-2">Verbrauchstransparenz</h4>
+                            <p className="text-sm text-gray-400 leading-relaxed">
+                            Durch den Einsatz von Tuya Smart Plugs mit Leistungsmessung werden Stromverbräuche einzelner Verbraucher
+                            (Server, Workstation, Haushaltsgeräte) erfasst. Die Daten werden in InfluxDB persistiert und ermöglichen
+                            detaillierte Kostenanalysen und Anomalie-Erkennung.
+                        </p>
+                    </div>
+                    <div className="space-y-4 order-1 md:order-2">
+                        {/* Grafik 1 - Dosya uzantısı kontrol edildi: .jpg */}
+                        <div className="cursor-pointer group relative" onClick={() => setSelectedImage("/images/home-assistant-foto5.jpg")}>
+                            <img src="/images/home-assistant-foto5.jpg" alt="Energy Graph Weekly" className="w-full h-auto rounded-lg border border-white/10 shadow-md transition-transform" />
+                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
+                                <Maximize2 className="text-white w-8 h-8" />
+                            </div>
+                        </div>
+                        {/* Grafik 2 - Dosya uzantısı kontrol edildi: .jpg */}
+                            <div className="cursor-pointer group relative" onClick={() => setSelectedImage("/images/home-assistant-foto6.jpg")}>
+                            <img src="/images/home-assistant-foto6.jpg" alt="Device Energy List" className="w-full h-auto rounded-lg border border-white/10 shadow-md transition-transform" />
+                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
+                                <Maximize2 className="text-white w-8 h-8" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      {/* 4. AUTOMATIONS-LOGIK & PRIVACY */}
+      <section className="py-16 px-4 max-w-5xl mx-auto bg-background/50 border-y border-primary/5">
          <div className="text-center mb-12">
             <h2 className="text-2xl font-bold flex items-center justify-center gap-3 mb-4">
                 <Activity className="text-primary w-7 h-7" />
@@ -442,162 +533,31 @@ const ProjektHomeAssistant = () => {
          </div>
       </section>
 
-      {/* --- DASHBOARD & MONITORING (TAŞINDI) --- */}
+      {/* 5. INFRASTRUCTURE HEALTH DASHBOARD */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
-             <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4 flex items-center justify-center gap-3 gradient-text">
-                    Das Ergebnis: Zentrale Kontrolle
-                </h2>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                    Die technische Komplexität wird in eine intuitive Benutzeroberfläche abstrahiert.
-                    Das System unterscheidet strikt zwischen technischem Monitoring und täglicher Bedienung.
-                </p>
-            </div>
-
-            {/* Dashboard - CLICKABLE */}
-            <div className="mb-16">
-                <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                    <Server size={20} className="text-primary" />
-                    Infrastructure Health Dashboard
-                </h3>
-                <div className="rounded-2xl overflow-hidden shadow-2xl border border-primary/20 group relative cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto4.png")}>
-                    <img src="/images/home-assistant-foto4.png" alt="Home Assistant Admin Dashboard" className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]" />
-                    {/* Büyütme İkonu */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
-                         <Maximize2 className="text-white w-10 h-10 drop-shadow-md" />
-                    </div>
-                    <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2 shadow-lg pointer-events-none">
-                        <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></div>
-                        <span className="text-xs text-white/90 font-medium">System Status: Healthy</span>
-                    </div>
+            <h3 className="text-xl font-bold mb-6 flex items-center justify-center gap-2">
+                <Server size={20} className="text-primary" />
+                Infrastructure Health Dashboard
+            </h3>
+            <div className="rounded-2xl overflow-hidden shadow-2xl border border-primary/20 group relative cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto4.png")}>
+                <img src="/images/home-assistant-foto4.png" alt="Home Assistant Admin Dashboard" className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]" />
+                {/* Büyütme İkonu */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
+                        <Maximize2 className="text-white w-10 h-10 drop-shadow-md" />
                 </div>
-                <p className="text-sm text-muted-foreground mt-3 text-center">
-                    Echtzeit-Überwachung von Server-Metriken (Load, RAM, Storage) und Zigbee-Signalqualität.
-                </p>
-            </div>
-
-            {/* Tablet UI - FRONTEND UX BÖLÜMÜ - CLICKABLE */}
-            <div className="mb-16">
-                <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                    <Activity className="text-primary w-6 h-6" />
-                    Frontend UX (Tablet & Mobile)
-                </h3>
-                <div className="grid md:grid-cols-3 gap-4">
-                    {/* Foto 1 */}
-                    <div className="glass p-2 rounded-xl border-primary/10 hover:border-primary/30 transition-all hover:-translate-y-1 cursor-pointer group" onClick={() => setSelectedImage("/images/home-assistant-foto1.png")}>
-                        <div className="relative">
-                             <img src="/images/home-assistant-foto1.png" alt="Tablet UI - Beleuchtung & Szenen" className="w-full h-auto rounded-lg shadow-sm" />
-                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
-                                <Maximize2 className="text-white w-8 h-8" />
-                             </div>
-                        </div>
-                        <p className="text-xs text-muted-foreground text-center mt-2 font-medium">Beleuchtung & Szenen</p>
-                    </div>
-                    {/* Foto 2 */}
-                    <div className="glass p-2 rounded-xl border-primary/10 hover:border-primary/30 transition-all hover:-translate-y-1 cursor-pointer group" onClick={() => setSelectedImage("/images/home-assistant-foto2.png")}>
-                        <div className="relative">
-                            <img src="/images/home-assistant-foto2.png" alt="Tablet UI - Klimasteuerung" className="w-full h-auto rounded-lg shadow-sm" />
-                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
-                                <Maximize2 className="text-white w-8 h-8" />
-                             </div>
-                        </div>
-                        <p className="text-xs text-muted-foreground text-center mt-2 font-medium">Klimasteuerung</p>
-                    </div>
-                    {/* Foto 3 */}
-                    <div className="glass p-2 rounded-xl border-primary/10 hover:border-primary/30 transition-all hover:-translate-y-1 cursor-pointer group" onClick={() => setSelectedImage("/images/home-assistant-foto3.png")}>
-                        <div className="relative">
-                            <img src="/images/home-assistant-foto3.png" alt="Tablet UI - Präsenz & Geofencing" className="w-full h-auto rounded-lg shadow-sm" />
-                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
-                                <Maximize2 className="text-white w-8 h-8" />
-                             </div>
-                        </div>
-                        <p className="text-xs text-muted-foreground text-center mt-2 font-medium">Präsenz & Geofencing</p>
-                    </div>
+                <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2 shadow-lg pointer-events-none">
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></div>
+                    <span className="text-xs text-white/90 font-medium">System Status: Healthy</span>
                 </div>
             </div>
-
-            {/* --- TAILSCALE SECTION --- */}
-            <div className="bg-primary/5 rounded-2xl border border-primary/10 p-8 mb-16">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <h2 className="text-2xl font-bold flex items-center gap-3 mb-4">
-                            <Globe className="text-primary w-8 h-8" />
-                            Sicherer Fernzugriff (Anywhere Access)
-                        </h2>
-                        {/* GÜNCELLENEN TAILSCALE METNİ */}
-                        <p className="text-muted-foreground leading-relaxed mb-4">
-                            Ob im Büro, im Urlaub oder unterwegs: Dank <strong>Tailscale</strong> ist das Smart Home jederzeit sicher erreichbar.
-                            Dies ermöglicht eine verschlüsselte Verbindung zum Heimnetzwerk, ohne dass Router-Ports geöffnet werden müssen (No Port-Forwarding).
-                            Das System verhält sich für das Endgerät so, als wäre es direkt im lokalen WLAN ("wie zu Hause").
-                        </p>
-                        <ul className="space-y-3">
-                            <li className="flex items-start gap-3 text-sm text-foreground/80">
-                                <CheckCircle2 className="text-emerald-500 w-5 h-5 flex-shrink-0 mt-0.5" />
-                                <span><strong>Ende-zu-Ende Verschlüsselung:</strong> WireGuard-basiertes Protokoll.</span>
-                            </li>
-                            <li className="flex items-start gap-3 text-sm text-foreground/80">
-                                <CheckCircle2 className="text-emerald-500 w-5 h-5 flex-shrink-0 mt-0.5" />
-                                <span><strong>Zero Trust Access:</strong> Nur authentifizierte Geräte haben Zugriff.</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    {/* TAILSCALE FOTO - KÜÇÜLTÜLDÜ VE EĞİK STİL */}
-                    <div className="glass p-2 rounded-xl border-primary/20 shadow-2xl rotate-1 hover:rotate-0 transition-transform duration-500 cursor-pointer group max-w-sm mx-auto" onClick={() => setSelectedImage("/images/home-assistant-foto12.jpeg")}>
-                        <div className="relative overflow-hidden rounded-lg">
-                            <img src="/images/home-assistant-foto12.jpeg" alt="Tailscale Admin Console" className="w-full h-auto object-cover" />
-                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
-                                <Maximize2 className="text-white w-8 h-8 drop-shadow-md" />
-                            </div>
-                            <div className="absolute bottom-0 left-0 right-0 bg-black/70 backdrop-blur-sm p-2 text-center pointer-events-none">
-                                <span className="text-[10px] text-white/80 font-mono">Tailnet Admin - Authenticated Only</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-             {/* Enerji Analizi - CLICKABLE */}
-            <div>
-                <h3 className="text-xl font-bold mb-6 flex items-center gap-2 gradient-text">
-                    <Activity size={20} />
-                    Data Analytics & Energy Management
-                </h3>
-                <div className="bg-[#121212] rounded-2xl p-6 md:p-8 border border-white/5 shadow-2xl relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0 opacity-70"></div>
-                    <div className="grid md:grid-cols-2 gap-8 items-center">
-                        <div className="space-y-4 order-2 md:order-1">
-                            <h4 className="text-lg font-bold text-white mb-2">Verbrauchstransparenz</h4>
-                             <p className="text-sm text-gray-400 leading-relaxed">
-                                Durch den Einsatz von Tuya Smart Plugs mit Leistungsmessung werden Stromverbräuche einzelner Verbraucher
-                                (Server, Workstation, Haushaltsgeräte) erfasst. Die Daten werden in InfluxDB persistiert und ermöglichen
-                                detaillierte Kostenanalysen und Anomalie-Erkennung.
-                            </p>
-                        </div>
-                        <div className="space-y-4 order-1 md:order-2">
-                            {/* Grafik 1 - Dosya uzantısı kontrol edildi: .jpg */}
-                            <div className="cursor-pointer group relative" onClick={() => setSelectedImage("/images/home-assistant-foto5.jpg")}>
-                                <img src="/images/home-assistant-foto5.jpg" alt="Energy Graph Weekly" className="w-full h-auto rounded-lg border border-white/10 shadow-md transition-transform" />
-                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
-                                    <Maximize2 className="text-white w-8 h-8" />
-                                </div>
-                            </div>
-                            {/* Grafik 2 - Dosya uzantısı kontrol edildi: .jpg */}
-                             <div className="cursor-pointer group relative" onClick={() => setSelectedImage("/images/home-assistant-foto6.jpg")}>
-                                <img src="/images/home-assistant-foto6.jpg" alt="Device Energy List" className="w-full h-auto rounded-lg border border-white/10 shadow-md transition-transform" />
-                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
-                                    <Maximize2 className="text-white w-8 h-8" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <p className="text-sm text-muted-foreground mt-3 text-center">
+                Echtzeit-Überwachung von Server-Metriken (Load, RAM, Storage) und Zigbee-Signalqualität.
+            </p>
         </div>
       </section>
 
-      {/* --- SYSTEMARCHITEKTUR & DATENFLUSS (AŞAĞI TAŞINDI) --- */}
+      {/* --- SYSTEMARCHITEKTUR & DATENFLUSS (EN SON) --- */}
       <div className="py-16 px-4 bg-primary/5 border-y border-primary/10">
         <div className="max-w-6xl mx-auto glass p-8 rounded-2xl border-primary/10 text-center">
             <h3 className="text-xl font-bold mb-10 flex items-center justify-center gap-3">
@@ -649,13 +609,34 @@ const ProjektHomeAssistant = () => {
 
                 <ArrowRight className="text-muted-foreground/50 hidden md:block" size={16} />
 
-                {/* 5. Central Control (Tablet) - YENİ EKLENDİ */}
+                {/* 5. Central Control (Tablet) */}
                 <div className="flex flex-col items-center gap-3 min-w-[100px] group">
                     <div className="bg-purple-500/10 p-4 rounded-full ring-1 ring-purple-500/30 group-hover:scale-110 transition-transform relative">
                         <Tablet size={28} className="text-purple-500" />
                         <div className="absolute bottom-0 right-0 bg-green-500 w-3 h-3 rounded-full border-2 border-black"></div>
                     </div>
                     <span className="text-[10px] font-bold text-purple-400">Zentrale Steuerung</span>
+                </div>
+            </div>
+
+            {/* TAILSCALE AÇIKLAMA */}
+            <div className="grid md:grid-cols-2 gap-8 text-left mt-8 bg-black/20 p-6 rounded-xl border border-white/5">
+                <div>
+                    <h4 className="text-lg font-bold flex items-center gap-2 mb-3">
+                        <Globe className="text-emerald-500 w-5 h-5" /> Sicherer Fernzugriff
+                    </h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                        Sollte ein Zugriff von außerhalb notwendig sein (z.B. im Urlaub), kommt <strong>Tailscale</strong> zum Einsatz.
+                        Dies ermöglicht eine verschlüsselte Verbindung zum Heimnetzwerk, ohne dass Router-Ports geöffnet werden müssen (No Port-Forwarding).
+                        Das System bleibt im öffentlichen Internet unsichtbar.
+                    </p>
+                </div>
+                {/* Tailscale Screenshot */}
+                <div className="relative group overflow-hidden rounded-lg border border-white/10 cursor-pointer h-32 md:h-auto" onClick={() => setSelectedImage("/images/home-assistant-foto12.jpeg")}>
+                     <img src="/images/home-assistant-foto12.jpeg" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" alt="Tailscale Admin" />
+                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
+                        <Maximize2 className="text-white w-6 h-6" />
+                    </div>
                 </div>
             </div>
         </div>
