@@ -16,9 +16,11 @@ import {
   CheckCircle2,
   AlertTriangle,
   Lightbulb,
-  Globe, // Internet için
-  X,     // Kapatma ikonu
-  Maximize2 // Büyütme ikonu
+  Globe, 
+  X,     
+  Maximize2,
+  Wifi,    // EKLENDİ (Hata buradaydı)
+  Layers   // EKLENDİ (Hata buradaydı)
 } from "lucide-react";
 
 const ProjektHomeAssistant = () => {
@@ -57,7 +59,7 @@ const ProjektHomeAssistant = () => {
   const challenges = [
     {
         title: "Interoperabilität & Protokolle",
-        icon: Wifi, // Zigbee için Wifi ikonu temsili kalabilir veya logo kullanılabilir
+        icon: Wifi, // Artık import edildiği için çalışacak
         problem: "Inkompatibilitäten beim Initial-Handshake bestimmter Zigbee-Endgeräte (Sonoff) im Mesh-Netzwerk.",
         solution: "Analyse der Zigbee-Frames via Z2M-Logs, Durchführung gezielter 'Re-Interviews' und Firmware-Upgrade des Coordinators zur Stabilisierung der Mesh-Topologie."
     },
@@ -129,7 +131,7 @@ const ProjektHomeAssistant = () => {
       <section className="py-16 px-4 max-w-5xl mx-auto space-y-20">
         <div className="grid md:grid-cols-2 gap-12 items-start">
           <div className="space-y-6">
-            {/* ALMANCA BAŞLIK GÜNCELLENDİ */}
+            {/* BAŞLIK DÜZELTİLDİ: Vendor Lock-in ibaresi kalktı */}
             <h2 className="text-2xl font-bold flex items-center gap-3">
               <Lightbulb className="text-primary w-6 h-6" />
               Ausgangslage: Die Herstellerabhängigkeit
@@ -174,7 +176,7 @@ const ProjektHomeAssistant = () => {
           </div>
         </div>
 
-        {/* SYSTEMARCHITEKTUR & DATENFLUSS (ORİJİNAL LOGOLAR İLE) */}
+        {/* SYSTEMARCHITEKTUR & DATENFLUSS */}
         <div className="glass p-8 rounded-2xl border-primary/10 text-center">
             <h3 className="text-xl font-bold mb-10 flex items-center justify-center gap-3">
                 <Network className="text-primary w-6 h-6" />
