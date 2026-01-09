@@ -16,7 +16,8 @@ import {
   Activity,
   Network,
   Cpu,
-  Link as LinkIcon
+  Link as LinkIcon,
+  Zap
 } from "lucide-react";
 
 type LightboxData = {
@@ -37,22 +38,39 @@ const ProjektWebHosting = () => {
 
   const stats = [
     { icon: Calendar, label: "Zeitraum", value: "10.12 - 12.12.2025" },
-    { icon: ServerIcon, label: "Platform", value: "Raspberry Pi" },
-    { icon: Cloud, label: "Tunnel", value: "Cloudflare" },
+    { icon: ServerIcon, label: "Hardware", value: "Raspberry Pi 5" },
+    { icon: Globe, label: "Modus", value: "Self-Hosted" },
     { icon: CheckCircle2, label: "Status", value: "Produktiv", highlight: true },
   ];
 
+  // RESMİ LOGOLAR İÇİN URL'LER
   const techStack = [
-    { icon: "🐧", title: "Raspberry Pi OS", desc: "Linux-basiertes Betriebssystem" },
-    { icon: "🐳", title: "Docker", desc: "Container-Plattform" },
-    { icon: "🌐", title: "Nginx", desc: "Web Server" },
-    { icon: "☁️", title: "Cloudflare Tunnel", desc: "Reverse Tunnel Lösung" },
+    { 
+      iconUrl: "https://cdn.simpleicons.org/raspberrypi/C51A4A", 
+      title: "Raspberry Pi OS", 
+      desc: "Host Operating System" 
+    },
+    { 
+      iconUrl: "https://cdn.simpleicons.org/docker/2496ED", 
+      title: "Docker Engine", 
+      desc: "Container Virtualization" 
+    },
+    { 
+      iconUrl: "https://cdn.simpleicons.org/nginx/009639", 
+      title: "Nginx Web Server", 
+      desc: "Static Content Delivery" 
+    },
+    { 
+      iconUrl: "https://cdn.simpleicons.org/cloudflare/F38020", 
+      title: "Cloudflare Tunnel", 
+      desc: "Zero Trust Reverse Tunnel" 
+    },
   ];
 
   const benefits = [
-    { icon: Shield, title: "Keine Portweiterleitung", desc: "Höhere Sicherheit durch geschlossene Ports" },
-    { icon: Lock, title: "Automatisches SSL", desc: "HTTPS wird automatisch bereitgestellt" },
-    { icon: Globe, title: "Dynamische IP", desc: "Funktioniert auch bei wechselnder IP-Adresse" },
+    { icon: Shield, title: "Sicherheit (No Port-Forwarding)", desc: "Keine offenen Ports am Heimrouter notwendig." },
+    { icon: Lock, title: "Automatisches SSL/TLS", desc: "Zertifikatsmanagement via Cloudflare Edge." },
+    { icon: Zap, title: "Resilienz (Dynamic IP)", desc: "Unabhängig von IP-Änderungen des ISPs." },
   ];
 
   const Lightbox = () => {
@@ -92,7 +110,6 @@ const ProjektWebHosting = () => {
     );
   };
 
-  // Geliştirilmiş Resim Bileşeni
   const ClickToZoomImage = ({ src, alt, caption, type = "default" }: { src: string; alt: string; caption?: string; type?: "terminal" | "browser" | "default" }) => (
     <div className="group h-full flex flex-col">
       <button
@@ -156,19 +173,20 @@ const ProjektWebHosting = () => {
       <div className="no-motion">
         <Lightbox />
 
-        {/* Hero Section */}
+        {/* --- 1. HERO SECTION --- */}
         <section className="py-16 px-4 text-center bg-gradient-to-b from-primary/5 to-transparent relative overflow-hidden">
           <div className="max-w-4xl mx-auto relative z-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-600 dark:text-orange-400 text-xs font-medium mb-6">
                <Cloud size={14} />
-               <span>Cloudflare Tunnel Project</span>
+               <span>Secure Self-Hosting Project</span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="gradient-text">Web-Hosting ohne Port-Forwarding</span>
+            <h1 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">
+              Secure Web Hosting &<br />
+              <span className="gradient-text">Reverse Tunneling (Self-Hosted)</span>
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto mb-8 text-lg">
-              Sicheres Hosting mit Cloudflare Tunnel - Veröffentlichung einer lokalen Webanwendung ohne Portweiterleitung
+              Veröffentlichung einer lokalen Webanwendung ohne Port-Forwarding mittels Cloudflare Zero Trust Tunnel.
             </p>
 
             {/* Download Button */}
@@ -210,13 +228,85 @@ const ProjektWebHosting = () => {
           </div>
         </section>
 
-        {/* --- PROOF OF WORK (GÖRSEL KANITLAR) --- */}
+        {/* --- 2. PROJEKTÜBERSICHT (PROJE ÖZETİ - ÖNE ALINDI) --- */}
+        <section className="py-12 px-4 max-w-4xl mx-auto">
+          <div className="glass rounded-xl p-6 md:p-8">
+            <h2 className="text-2xl font-bold mb-6 gradient-text">Projektübersicht & Kontext</h2>
+            <div className="space-y-4 text-muted-foreground leading-relaxed">
+              <p>
+                Im vorangegangenen Projekt wurde ein Nginx-Webserver erfolgreich auf einem Raspberry Pi im lokalen Netzwerk deployt. 
+                Der nächste logische Schritt war die <strong>öffentliche Bereitstellung (Self-Hosting)</strong> dieser Anwendung.
+              </p>
+              <p>
+                Das Hauptziel war es, die lokale Webanwendung sicher über das Internet erreichbar zu machen, ohne dabei Kompromisse bei der Sicherheit des Heimnetzwerks einzugehen.
+                Anstatt unsicherer Methoden wie Port-Forwarding wurde eine <strong>Reverse-Tunnel-Architektur</strong> mittels Cloudflare implementiert.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* --- 3. REQUEST FLOW (AKIŞ ŞEMASI - YUKARI TAŞINDI) --- */}
+        <section className="py-8 px-4 max-w-5xl mx-auto">
+          <div className="text-center mb-8">
+             <h2 className="text-2xl font-bold mb-2">Wie der Zugriff funktioniert</h2>
+             <p className="text-muted-foreground">Vom Besucher bis zum Raspberry Pi – sicher und verschlüsselt.</p>
+          </div>
+          <div className="glass rounded-xl p-4 md:p-8">
+            <ClickToZoomImage
+              src="/images/Zugriff_eines_Besuchers_auf_die_Website.jpg"
+              alt="Zugriff eines Besuchers auf die Website - Flow Chart"
+              caption="Diagramm: Request Flow - Der Verkehr wird über das Cloudflare Edge Network geroutet."
+            />
+          </div>
+        </section>
+
+        {/* --- 4. WHY REVERSE TUNNEL (YENİ BÖLÜM: GÜVENLİK & YÖNTEM) --- */}
+        <section className="py-12 px-4 max-w-4xl mx-auto space-y-8">
+           {/* Reverse Tunnel vs Port Forwarding */}
+           <div className="glass rounded-xl p-6 md:p-8 border-l-4 border-orange-500">
+             <h2 className="text-2xl font-bold mb-4 flex items-center gap-3">
+               <div className="bg-orange-500/10 p-2 rounded-lg">
+                  <Shield className="text-orange-500 w-6 h-6" />
+               </div>
+               Sicherheitskonzept: Reverse Tunnel vs. Port Forwarding
+             </h2>
+             <p className="text-muted-foreground mb-4 leading-relaxed">
+               Ein klassisches Port-Forwarding würde bedeuten, dass eingehende Ports am Router geöffnet werden müssen. 
+               Dies stellt ein erhebliches Sicherheitsrisiko dar, da Angreifer direkt auf das Heimnetzwerk zugreifen könnten.
+             </p>
+             <div className="bg-background/50 rounded-lg p-4">
+               <h3 className="font-semibold mb-2 text-foreground">Warum Cloudflare Tunnel (Reverse Tunnel)?</h3>
+               <ul className="space-y-3 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                     <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                     <span>
+                       <strong>Outbound-Only Verbindung:</strong> Der Tunnel wird vom Raspberry Pi nach außen zu Cloudflare aufgebaut. Es gibt keine eingehenden Ports.
+                     </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                     <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                     <span>
+                       <strong>DDOS Schutz:</strong> Die echte IP-Adresse des Anschlusses bleibt verborgen (Cloaking).
+                     </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                     <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                     <span>
+                       <strong>Resilienz gegen IP-Wechsel:</strong> Da der Tunnel softwareseitig verwaltet wird, funktioniert die Verbindung auch bei dynamischen öffentlichen IPs (ohne DynDNS).
+                     </span>
+                  </li>
+               </ul>
+             </div>
+           </div>
+        </section>
+
+        {/* --- 5. PROOF OF WORK (KANITLAR) --- */}
         <section className="py-12 px-4 bg-slate-50/50 dark:bg-slate-900/30 border-y border-border/50">
           <div className="max-w-6xl mx-auto">
              <div className="text-center mb-10">
                 <h2 className="text-2xl font-bold mb-2 flex items-center justify-center gap-2">
                    <Activity className="text-emerald-500" />
-                   System Status & Verifikation
+                   Technische Validierung & Status
                 </h2>
                 <p className="text-muted-foreground">Live-Daten aus der Produktionsumgebung (Docker & Cloudflare)</p>
              </div>
@@ -237,7 +327,7 @@ const ProjektWebHosting = () => {
                         <ClickToZoomImage 
                             src="/images/webhosting3.png" 
                             alt="Docker PS Output showing Nginx and Cloudflared"
-                            caption="Abb 1: Parallelbetrieb: Webserver (nginx) und Tunnel-Daemon (cloudflared) im selben Docker-Netzwerk."
+                            caption="Abb 1: Proof of Work - Nginx und Cloudflared laufen parallel im selben Docker-Netzwerk."
                             type="terminal"
                         />
                     </div>
@@ -254,13 +344,13 @@ const ProjektWebHosting = () => {
                         <ClickToZoomImage 
                             src="/images/webhosting2.png" 
                             alt="Cloudflared Logs showing Frankfurt Connection"
-                            caption="Abb 2: Verifizierte Verbindung zu Cloudflare Edge Servern (Rechenzentrum FRA/Frankfurt)."
+                            caption="Abb 2: Tunnel etabliert - Verbindung zu Cloudflare Edge Servern (Rechenzentrum FRA/Frankfurt) erfolgreich."
                             type="terminal"
                         />
                     </div>
                 </div>
 
-                {/* SAĞ KOLON: CLOUD & SECURITY (DASHBOARD & SSL) */}
+                {/* SAĞ KOLON: CLOUD & SSL (DASHBOARD) */}
                 <div className="space-y-8">
                     
                     {/* 3. Cloudflare Connector (webhosting4.png) */}
@@ -275,35 +365,20 @@ const ProjektWebHosting = () => {
                         <ClickToZoomImage 
                             src="/images/webhosting4.png" 
                             alt="Cloudflare Connector Diagnose Dashboard"
-                            caption="Abb 3: Tunnel-Diagnose bestätigt Verbindung von Private IP (172.18.0.3) zu Edge (fra07, fra08)."
+                            caption="Abb 3: Tunnel-Diagnose bestätigt Verbindung von Private IP (172.18.0.3) zu Edge."
                         />
                     </div>
 
-                     {/* 4. Domain Status (webhosting5.png - YENİ) */}
-                     <div className="glass rounded-xl p-5 border border-orange-500/20">
-                        <div className="flex items-center gap-2 mb-4 pb-2 border-b border-border/50">
-                            <Globe size={18} className="text-[#f38020]" />
-                            <div className="flex flex-col">
-                              <span className="text-xs font-bold uppercase text-foreground">Domain Management</span>
-                              <span className="text-[10px] text-muted-foreground">gokhanzehirlioglu.de</span>
-                            </div>
-                        </div>
-                        <ClickToZoomImage 
-                            src="/images/webhosting5.png" 
-                            alt="Cloudflare Domain Overview"
-                            caption="Abb 4: Domain Status ist aktiv. Routing erfolgt über Cloudflare DNS."
-                        />
-                    </div>
-
-                    {/* 5. SSL Card (CSS Tasarım - Senden aldığım veri ile) */}
+                    {/* 4. SSL DETAILED CARD (Geliştirilmiş Versiyon) */}
                     <div className="glass rounded-xl p-0 overflow-hidden border border-blue-500/20 flex flex-col">
                         <div className="bg-blue-500/10 p-4 border-b border-blue-500/10 flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <Lock size={18} className="text-blue-500" />
                                 <span className="text-sm font-bold text-blue-500 uppercase">SSL / TLS Verification</span>
                             </div>
-                            <div className="bg-blue-500/20 text-blue-600 dark:text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-500/20 font-mono">
-                                SHA-256 / RSA
+                            <div className="flex gap-2">
+                               <span className="bg-blue-500/20 text-blue-600 dark:text-blue-400 text-[10px] px-2 py-1 rounded border border-blue-500/20 font-mono">TLS 1.3</span>
+                               <span className="bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] px-2 py-1 rounded border border-emerald-500/20 font-mono">X25519</span>
                             </div>
                         </div>
                         
@@ -320,22 +395,27 @@ const ProjektWebHosting = () => {
                                 <CheckCircle2 size={20} className="text-emerald-500" />
                             </div>
                             
-                            {/* Gerçek Veriler (.crt dosyasından) */}
-                            <div className="space-y-3 text-sm bg-background/50 p-4 rounded-lg border border-border/50">
+                            {/* Detailed Tech Data */}
+                            <div className="space-y-2 text-sm bg-background/50 p-4 rounded-lg border border-border/50 font-mono text-xs">
                                 <div className="flex justify-between items-center border-b border-border/50 pb-2">
-                                    <span className="text-muted-foreground">Issued By:</span>
-                                    <span className="font-medium flex items-center gap-1.5">
-                                        <img src="https://cdn.simpleicons.org/google/4285F4" className="w-3 h-3" alt="G" />
-                                        Google Trust Services
-                                    </span>
+                                    <span className="text-muted-foreground">Issuer:</span>
+                                    <span className="font-medium text-foreground">Google Trust Services</span>
+                                </div>
+                                <div className="flex justify-between items-center border-b border-border/50 pb-2">
+                                    <span className="text-muted-foreground">Protocol:</span>
+                                    <span className="font-medium text-emerald-500">TLS 1.3 (Secure)</span>
+                                </div>
+                                <div className="flex justify-between items-center border-b border-border/50 pb-2">
+                                    <span className="text-muted-foreground">Cipher:</span>
+                                    <span className="text-[10px] opacity-80">AEAD-CHACHA20-POLY1305-SHA256</span>
                                 </div>
                                 <div className="flex justify-between items-center border-b border-border/50 pb-2">
                                     <span className="text-muted-foreground">Valid From:</span>
-                                    <span className="font-mono text-xs">11.12.2025</span>
+                                    <span>11.12.2025</span>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <span className="text-muted-foreground">Valid To:</span>
-                                    <span className="font-mono text-xs text-emerald-500 font-bold">11.03.2026</span>
+                                    <span className="font-bold text-emerald-500">11.03.2026</span>
                                 </div>
                             </div>
                         </div>
@@ -346,94 +426,25 @@ const ProjektWebHosting = () => {
           </div>
         </section>
 
-        {/* Content Section */}
-        <section className="py-12 px-4 max-w-4xl mx-auto space-y-12">
-          {/* Projektübersicht */}
-          <div className="glass rounded-xl p-6 md:p-8">
-            <h2 className="text-2xl font-bold mb-6 gradient-text">Projektübersicht</h2>
-            <p className="text-muted-foreground mb-4 leading-relaxed">
-              In diesem Projekt wurde eine zuvor ausschließlich im lokalen Netzwerk betriebene Docker-basierte Webanwendung
-              (Nginx) ohne Portweiterleitung sicher über das öffentliche Internet veröffentlicht. Hierfür kam Cloudflare
-              Tunnel als Reverse-Tunnel-Lösung zum Einsatz.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              Der Fokus lag auf einer sicheren, wartungsarmen und professionellen Veröffentlichung unter Verwendung einer
-              eigenen Domain, automatischem HTTPS (SSL/TLS) sowie einer sauberen www- und non-www-Weiterleitung.
-            </p>
-          </div>
-
-          {/* Tech Stack */}
-          <div>
-            <h2 className="text-2xl font-bold mb-6 gradient-text">Verwendete Technologien</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {/* --- 6. TECH STACK (RESMİ LOGOLARLA YENİLENDİ) --- */}
+        <section className="py-12 px-4 max-w-4xl mx-auto">
+            <h2 className="text-2xl font-bold mb-8 text-center">Eingesetzte Technologien</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {techStack.map((tech) => (
-                <div key={tech.title} className="glass rounded-xl p-4 hover:border-primary/50 transition-colors">
-                  <div className="text-3xl mb-2">{tech.icon}</div>
-                  <h3 className="font-semibold mb-1">{tech.title}</h3>
-                  <p className="text-xs text-muted-foreground">{tech.desc}</p>
+                <div key={tech.title} className="glass rounded-xl p-6 hover:border-primary/50 transition-colors flex flex-col items-center text-center gap-4 group">
+                  <div className="h-14 w-14 flex items-center justify-center p-1 bg-white/5 rounded-full group-hover:scale-110 transition-transform">
+                      <img src={tech.iconUrl} alt={tech.title} className="w-full h-full object-contain" />
+                  </div>
+                  <div>
+                      <h3 className="font-semibold text-sm mb-1">{tech.title}</h3>
+                      <p className="text-[10px] text-muted-foreground uppercase tracking-wide">{tech.desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* HATA ÇÖZÜMÜ BÖLÜMÜ (NETWORKING) */}
-          <div className="glass rounded-xl p-6 md:p-8 border-l-4 border-orange-500">
-            <h2 className="text-2xl font-bold mb-4 flex items-center gap-3">
-               <div className="bg-orange-500/10 p-2 rounded-lg">
-                  <LinkIcon className="text-orange-500 w-6 h-6" />
-               </div>
-               Technische Herausforderung: Docker Networking
-            </h2>
-            <p className="text-muted-foreground mb-4 leading-relaxed">
-               Während der Implementierung trat zunächst ein <strong>502 Bad Gateway</strong> Fehler auf. 
-               Die Analyse zeigte, dass der <code>cloudflared</code> Container und der <code>nginx</code> Container 
-               in unterschiedlichen Docker-Netzwerken isoliert waren.
-            </p>
-            <div className="bg-background/50 rounded-lg p-4 mb-4">
-               <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li className="flex items-center gap-2">
-                     <X className="w-4 h-4 text-red-500" />
-                     <span>Cloudflare (Bridge Network) ↛ Nginx (Custom Network)</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                     <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                     <span>Lösung: Cloudflare Container in das <code>webserver_default</code> Netzwerk integriert.</span>
-                  </li>
-               </ul>
-            </div>
-            <p className="text-sm text-muted-foreground italic">
-               * Der operative Nachweis der parallelen Ausführung ist in <strong>Abb 1</strong> (siehe oben) dargestellt.
-            </p>
-          </div>
-
-          {/* Benefits */}
-          <div>
-            <h2 className="text-2xl font-bold mb-6 gradient-text">Vorteile der Lösung</h2>
-            <div className="grid md:grid-cols-3 gap-4">
-              {benefits.map((benefit) => (
-                <div key={benefit.title} className="bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-6">
-                  <benefit.icon className="w-8 h-8 text-emerald-500 mb-3" />
-                  <h3 className="font-semibold mb-2">{benefit.title}</h3>
-                  <p className="text-sm text-muted-foreground">{benefit.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Security Notice */}
-          <div className="bg-blue-500/5 border-l-4 border-blue-500 rounded-r-xl p-6">
-            <h3 className="font-semibold mb-2 flex items-center gap-2 text-blue-500">
-              <Shield className="w-5 h-5" />
-              Sicherheitshinweis
-            </h3>
-            <p className="text-muted-foreground">
-              Durch Cloudflare Tunnel bleibt der Heimrouter vollständig geschlossen. Die Verbindung wird von innen nach außen
-              aufgebaut (Outbound-Only), wodurch keine eingehenden Ports am Router geöffnet werden müssen.
-            </p>
-          </div>
         </section>
 
-        {/* CI/CD Diagram */}
+        {/* --- 7. AUTOMATION & CI/CD --- */}
         <section className="py-12 px-4 max-w-4xl mx-auto">
           <div className="glass rounded-xl p-6 md:p-8">
             <h2 className="text-2xl font-bold mb-4 gradient-text">
@@ -451,21 +462,20 @@ const ProjektWebHosting = () => {
           </div>
         </section>
 
-        {/* Visitor Flow Diagram */}
+        {/* --- 8. BENEFITS & FAZIT --- */}
         <section className="py-12 px-4 max-w-4xl mx-auto">
-          <div className="glass rounded-xl p-6 md:p-8">
-            <h2 className="text-2xl font-bold mb-4 gradient-text">Request Flow (Besucherzugriff)</h2>
-            <p className="text-muted-foreground mb-6 leading-relaxed">
-              Der Zugriff erfolgt verschlüsselt über das Cloudflare Global Edge Network direkt in den isolierten Tunnel.
-              Der Webserver selbst hat keine öffentliche IP-Adresse.
-            </p>
-
-            <ClickToZoomImage
-              src="/images/Zugriff_eines_Besuchers_auf_die_Website.jpg"
-              alt="Zugriff eines Besuchers auf die Website"
-            />
-          </div>
+            <h2 className="text-2xl font-bold mb-6 gradient-text text-center">Vorteile der Architektur</h2>
+            <div className="grid md:grid-cols-3 gap-4">
+              {benefits.map((benefit) => (
+                <div key={benefit.title} className="bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-6 hover:bg-emerald-500/10 transition-colors">
+                  <benefit.icon className="w-8 h-8 text-emerald-500 mb-3" />
+                  <h3 className="font-semibold mb-2">{benefit.title}</h3>
+                  <p className="text-sm text-muted-foreground">{benefit.desc}</p>
+                </div>
+              ))}
+            </div>
         </section>
+
       </div>
     </Layout>
   );
