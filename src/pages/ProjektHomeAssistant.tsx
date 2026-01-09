@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "@/components/Layout";
 import {
   Download,
   Calendar,
   Server,
-  Wifi,
+  Network,
   ShieldCheck,
   TerminalSquare,
   Cpu,
@@ -16,14 +16,17 @@ import {
   CheckCircle2,
   AlertTriangle,
   Lightbulb,
-  Layers,
-  Network,
-  GlobeLock
+  Globe, // Internet için
+  X,     // Kapatma ikonu
+  Maximize2 // Büyütme ikonu
 } from "lucide-react";
 
 const ProjektHomeAssistant = () => {
-  // --- KONFİGÜRASYON & SABİTLER ---
+  // --- STATE: LIGHTBOX (Resim Büyütme) ---
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
+  // --- KONFİGÜRASYON ---
+  
   // Proje Künyesi
   const projectStats = [
     { icon: Calendar, label: "Projektzeitraum", value: "02.10.25 – 29.11.25" },
@@ -40,38 +43,52 @@ const ProjektHomeAssistant = () => {
     { label: "OS / Kernel", value: "Debian Bookworm (Headless Optimized)" },
   ];
 
-  // Tech Stack (İkonlar CDN)
+  // Tech Stack (Logolar CDN)
   const techStackIcons = [
     { name: "Docker", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
     { name: "Home Assistant", url: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/home-assistant.svg" },
     { name: "Zigbee2MQTT", url: "https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/images/logo.png" },
-    { name: "Tailscale", url: "https://cdn.simpleicons.org/tailscale/121212" },
+    { name: "Tailscale", url: "https://cdn.simpleicons.org/tailscale/white/121212" }, // Dark theme için white versiyon
     { name: "Linux", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
     { name: "Mosquitto MQTT", url: "https://cdn.simpleicons.org/eclipse-mosquitto/3C5280" },
   ];
 
-   // Challenges
-   const challenges = [
+  // Challenges
+  const challenges = [
     {
         title: "Interoperabilität & Protokolle",
-        icon: Wifi,
+        icon: Wifi, // Zigbee için Wifi ikonu temsili kalabilir veya logo kullanılabilir
         problem: "Inkompatibilitäten beim Initial-Handshake bestimmter Zigbee-Endgeräte (Sonoff) im Mesh-Netzwerk.",
         solution: "Analyse der Zigbee-Frames via Z2M-Logs, Durchführung gezielter 'Re-Interviews' und Firmware-Upgrade des Coordinators zur Stabilisierung der Mesh-Topologie."
     },
     {
         title: "Datenstruktur & UX-Design",
-        icon: Layers,
+        icon: Activity,
         problem: "Überflutung des Dashboards durch unstrukturierte Auto-Discovery-Entitäten, was die Usability (WAF) beeinträchtigte.",
         solution: "Implementierung einer strengen Trennung zwischen Admin-Backend (Monitoring) und User-Frontend (Steuerung) sowie logische Gruppierung aller Sensoren."
     }
    ];
 
-
   return (
     <Layout>
+      {/* --- LIGHTBOX OVERLAY (Büyütülmüş Resim) --- */}
+      {selectedImage && (
+        <div className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200" onClick={() => setSelectedImage(null)}>
+          <button className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors bg-white/10 p-2 rounded-full">
+            <X size={32} />
+          </button>
+          <img 
+            src={selectedImage} 
+            alt="Fullscreen Preview" 
+            className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl border border-white/10"
+            onClick={(e) => e.stopPropagation()} // Resme tıklayınca kapanmasın
+          />
+        </div>
+      )}
+
       {/* HERO SECTION */}
       <section className="pt-20 pb-16 px-4 bg-gradient-to-b from-primary/5 to-transparent relative overflow-hidden">
-        {/* Arka plan: Foto4 (Dashboard) */}
+        {/* Arka plan */}
         <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none">
              <img src="/images/home-assistant-foto4.png" alt="" className="w-full h-full object-cover blur-lg" />
         </div>
@@ -112,9 +129,10 @@ const ProjektHomeAssistant = () => {
       <section className="py-16 px-4 max-w-5xl mx-auto space-y-20">
         <div className="grid md:grid-cols-2 gap-12 items-start">
           <div className="space-y-6">
+            {/* ALMANCA BAŞLIK GÜNCELLENDİ */}
             <h2 className="text-2xl font-bold flex items-center gap-3">
               <Lightbulb className="text-primary w-6 h-6" />
-              Ausgangslage: Das "Vendor Lock-in" Problem
+              Ausgangslage: Die Herstellerabhängigkeit
             </h2>
             <div className="text-muted-foreground leading-relaxed space-y-4">
               <p>
@@ -148,7 +166,6 @@ const ProjektHomeAssistant = () => {
                     </div>
                 ))}
              </div>
-             {/* Tech Stack */}
              <div className="flex flex-wrap gap-4 mt-8 justify-center relative z-10">
                 {techStackIcons.map((tech) => (
                     <img key={tech.name} src={tech.url} alt={tech.name} className="h-8 w-8 object-contain opacity-80 hover:opacity-100 transition-opacity" title={tech.name} />
@@ -157,43 +174,64 @@ const ProjektHomeAssistant = () => {
           </div>
         </div>
 
-        {/* SYSTEMARCHITEKTUR ŞEMASI */}
+        {/* SYSTEMARCHITEKTUR & DATENFLUSS (ORİJİNAL LOGOLAR İLE) */}
         <div className="glass p-8 rounded-2xl border-primary/10 text-center">
-            <h3 className="text-xl font-bold mb-8 flex items-center justify-center gap-3">
+            <h3 className="text-xl font-bold mb-10 flex items-center justify-center gap-3">
                 <Network className="text-primary w-6 h-6" />
                 Systemarchitektur & Datenfluss
             </h3>
 
-            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mb-10 overflow-x-auto py-4">
-                <div className="flex flex-col items-center gap-2 min-w-[120px]">
-                    <div className="bg-muted/50 p-4 rounded-full"><GlobeLock size={24} className="text-muted-foreground" /></div>
-                    <span className="text-xs font-medium text-muted-foreground">WAN / Internet</span>
-                </div>
-                <ArrowRight className="text-muted-foreground hidden md:block" />
-
-                <div className="flex flex-col items-center gap-2 min-w-[120px]">
-                    <div className="bg-primary/10 p-4 rounded-full border border-primary/30 relative">
-                        <ShieldCheck size={24} className="text-primary" />
-                        <span className="absolute -top-2 -right-2 bg-primary text-[10px] text-background font-bold px-1.5 py-0.5 rounded-full">VPN</span>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 mb-12 overflow-x-auto py-6 px-4">
+                {/* 1. Internet */}
+                <div className="flex flex-col items-center gap-3 min-w-[120px] group">
+                    <div className="bg-blue-500/10 p-5 rounded-full ring-1 ring-blue-500/30 group-hover:scale-110 transition-transform">
+                         <Globe size={32} className="text-blue-500" />
                     </div>
-                    <span className="text-xs font-bold text-primary">Tailscale Mesh</span>
+                    <span className="text-xs font-bold text-muted-foreground">WAN / Internet</span>
                 </div>
-                <ArrowRight className="text-muted-foreground hidden md:block" />
 
-                <div className="flex flex-col items-center gap-2 min-w-[140px]">
-                     <div className="glass p-4 rounded-xl border-primary/20 text-center">
-                        <Server size={24} className="text-foreground mx-auto mb-2" />
-                        <span className="text-sm font-bold">Docker Host</span>
-                        <span className="block text-[10px] text-muted-foreground">(Home Assistant Core)</span>
+                <ArrowRight className="text-muted-foreground/50 hidden md:block" />
+
+                {/* 2. Tailscale (VPN) - Logo */}
+                <div className="flex flex-col items-center gap-3 min-w-[120px] group">
+                    <div className="bg-zinc-900 p-5 rounded-full ring-1 ring-white/20 relative group-hover:scale-110 transition-transform">
+                        <img 
+                            src="https://cdn.simpleicons.org/tailscale/white" 
+                            alt="Tailscale VPN" 
+                            className="w-8 h-8 object-contain" 
+                        />
+                        <span className="absolute -top-2 -right-3 bg-emerald-500 text-[9px] text-white font-bold px-1.5 py-0.5 rounded-full shadow-lg">ENC</span>
+                    </div>
+                    <span className="text-xs font-bold text-foreground">Tailscale Mesh</span>
+                </div>
+
+                <ArrowRight className="text-muted-foreground/50 hidden md:block" />
+
+                {/* 3. Docker Host (RPi) - Logo */}
+                <div className="flex flex-col items-center gap-3 min-w-[140px] group">
+                     <div className="glass p-4 rounded-2xl border-primary/20 text-center group-hover:border-primary/50 transition-colors">
+                        <img 
+                            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" 
+                            alt="Docker Host" 
+                            className="w-10 h-10 mx-auto mb-2 drop-shadow-lg" 
+                        />
+                        <span className="text-sm font-bold block">Docker Host</span>
+                        <span className="text-[10px] text-muted-foreground">RPi 5 / Debian</span>
                      </div>
                 </div>
-                <ArrowRight className="text-muted-foreground hidden md:block" />
 
-                <div className="flex flex-col items-center gap-2 min-w-[140px]">
-                    <div className="bg-orange-500/10 p-4 rounded-full border border-orange-500/30">
-                        <Layers size={24} className="text-orange-500" />
+                <ArrowRight className="text-muted-foreground/50 hidden md:block" />
+
+                {/* 4. IoT Network (Zigbee) - Logo */}
+                <div className="flex flex-col items-center gap-3 min-w-[140px] group">
+                    <div className="bg-orange-500/10 p-5 rounded-full ring-1 ring-orange-500/30 group-hover:scale-110 transition-transform">
+                        <img 
+                            src="https://raw.githubusercontent.com/Koenkk/zigbee2mqtt/master/images/logo.png" 
+                            alt="Zigbee2MQTT" 
+                            className="w-8 h-8 object-contain" 
+                        />
                     </div>
-                    <span className="text-xs font-bold text-orange-500">Zigbee / IoT</span>
+                    <span className="text-xs font-bold text-orange-500">Zigbee Mesh</span>
                 </div>
             </div>
 
@@ -204,7 +242,6 @@ const ProjektHomeAssistant = () => {
                     <p className="text-sm text-muted-foreground leading-snug">
                         Es wurde bewusst auf <strong>Port-Forwarding</strong> verzichtet, um die Angriffsfläche zu minimieren.
                         Der Zugriff erfolgt ausschließlich authentifiziert über das Tailscale-Overlay-Netzwerk (ZTNA-Ansatz).
-                        Die Segmentierung der IoT-Geräte in separate VLANs ist als nächster Projektschritt definiert.
                     </p>
                 </div>
             </div>
@@ -212,7 +249,7 @@ const ProjektHomeAssistant = () => {
       </section>
 
 
-      {/* TERMINAL & BACKEND (ENGINE ROOM) */}
+      {/* TERMINAL & BACKEND */}
       <section className="py-16 px-4 bg-background/50 border-y border-primary/5">
         <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
@@ -227,46 +264,70 @@ const ProjektHomeAssistant = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-                {/* SSH */}
-                <div className="group relative rounded-xl overflow-hidden shadow-lg border border-white/10 bg-[#1e1e1e]">
+                {/* SSH - CLICKABLE */}
+                <div className="group relative rounded-xl overflow-hidden shadow-lg border border-white/10 bg-[#1e1e1e] cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto9.png")}>
                     <div className="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2 border-b border-white/5">
-                        <span className="text-xs text-muted-foreground font-mono">ssh pi@homeassistant</span>
+                         <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-green-500/50"></div></div>
+                        <span className="text-xs text-muted-foreground font-mono ml-2">ssh pi@homeassistant</span>
                     </div>
-                    <img src="/images/home-assistant-foto9.png" alt="SSH Login Debian" className="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm p-3 border-t border-white/10">
+                    <div className="relative">
+                        <img src="/images/home-assistant-foto9.png" alt="SSH Login Debian" className="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
+                            <Maximize2 className="text-white w-8 h-8 drop-shadow-md" />
+                        </div>
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm p-3 border-t border-white/10 pointer-events-none">
                         <p className="text-xs text-white/90 font-mono">OS Hardening & Access Control</p>
                     </div>
                 </div>
 
-                 {/* Docker */}
-                 <div className="group relative rounded-xl overflow-hidden shadow-lg border border-white/10 bg-[#1e1e1e]">
+                 {/* Docker - CLICKABLE */}
+                 <div className="group relative rounded-xl overflow-hidden shadow-lg border border-white/10 bg-[#1e1e1e] cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto7.png")}>
                     <div className="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2 border-b border-white/5">
-                        <span className="text-xs text-muted-foreground font-mono">docker stats</span>
+                        <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-green-500/50"></div></div>
+                        <span className="text-xs text-muted-foreground font-mono ml-2">docker stats</span>
                     </div>
-                    <img src="/images/home-assistant-foto7.png" alt="Docker Container Stats" className="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm p-3 border-t border-white/10">
+                    <div className="relative">
+                        <img src="/images/home-assistant-foto7.png" alt="Docker Container Stats" className="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
+                            <Maximize2 className="text-white w-8 h-8 drop-shadow-md" />
+                        </div>
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm p-3 border-t border-white/10 pointer-events-none">
                         <p className="text-xs text-white/90 font-mono">Container Resource Management</p>
                     </div>
                 </div>
 
-                 {/* Network / IP */}
-                 <div className="group relative rounded-xl overflow-hidden shadow-lg border border-white/10 bg-[#1e1e1e]">
+                 {/* Network / IP - CLICKABLE */}
+                 <div className="group relative rounded-xl overflow-hidden shadow-lg border border-white/10 bg-[#1e1e1e] cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto8.png")}>
                     <div className="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2 border-b border-white/5">
-                        <span className="text-xs text-muted-foreground font-mono">ip a</span>
+                        <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-green-500/50"></div></div>
+                        <span className="text-xs text-muted-foreground font-mono ml-2">ip a</span>
                     </div>
-                    <img src="/images/home-assistant-foto8.png" alt="Network Interfaces" className="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm p-3 border-t border-white/10">
+                    <div className="relative">
+                        <img src="/images/home-assistant-foto8.png" alt="Network Interfaces" className="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
+                            <Maximize2 className="text-white w-8 h-8 drop-shadow-md" />
+                        </div>
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm p-3 border-t border-white/10 pointer-events-none">
                         <p className="text-xs text-white/90 font-mono">Interface Analysis (Tailscale & VLANs)</p>
                     </div>
                 </div>
 
-                 {/* Htop */}
-                 <div className="group relative rounded-xl overflow-hidden shadow-lg border border-white/10 bg-[#1e1e1e]">
+                 {/* Htop - CLICKABLE */}
+                 <div className="group relative rounded-xl overflow-hidden shadow-lg border border-white/10 bg-[#1e1e1e] cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto10.png")}>
                     <div className="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2 border-b border-white/5">
-                        <span className="text-xs text-muted-foreground font-mono">htop</span>
+                        <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-green-500/50"></div></div>
+                        <span className="text-xs text-muted-foreground font-mono ml-2">htop</span>
                     </div>
-                    <img src="/images/home-assistant-foto10.jpg" alt="Htop Process Monitor" className="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm p-3 border-t border-white/10">
+                    <div className="relative">
+                        <img src="/images/home-assistant-foto10.png" alt="Htop Process Monitor" className="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
+                            <Maximize2 className="text-white w-8 h-8 drop-shadow-md" />
+                        </div>
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm p-3 border-t border-white/10 pointer-events-none">
                         <p className="text-xs text-white/90 font-mono">Realtime Process Monitoring</p>
                     </div>
                 </div>
@@ -275,7 +336,7 @@ const ProjektHomeAssistant = () => {
       </section>
 
 
-      {/* LOGIC & PRIVACY (KAMERA & OTOMASYON) */}
+      {/* LOGIC & PRIVACY */}
       <section className="py-16 px-4 max-w-5xl mx-auto">
          <div className="text-center mb-12">
             <h2 className="text-2xl font-bold flex items-center justify-center gap-3 mb-4">
@@ -310,14 +371,18 @@ const ProjektHomeAssistant = () => {
                 </div>
             </div>
 
-            {/* Camera Privacy Card */}
-            <div className="glass p-0 rounded-2xl border-primary/10 overflow-hidden hover:border-primary/30 transition-colors flex flex-col">
-                <div className="relative h-56 overflow-hidden group">
+            {/* Camera Privacy Card - CLICKABLE */}
+            <div className="glass p-0 rounded-2xl border-primary/10 overflow-hidden hover:border-primary/30 transition-colors flex flex-col group cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto11.jpeg")}>
+                <div className="relative h-56 overflow-hidden">
                     <img src="/images/home-assistant-foto11.jpeg" alt="Indoor Kamera" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     <div className="absolute top-3 right-3 flex gap-2">
                         <div className="bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
                             <EyeOff size={12} className="text-red-400" /> Geo-Fencing Active
                         </div>
+                    </div>
+                    {/* Büyütme İkonu */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
+                         <Maximize2 className="text-white w-8 h-8 drop-shadow-md" />
                     </div>
                 </div>
                 <div className="p-6 flex-grow flex flex-col justify-between bg-gradient-to-b from-transparent to-background/50">
@@ -328,8 +393,7 @@ const ProjektHomeAssistant = () => {
                         </h3>
                         <p className="text-sm text-muted-foreground leading-relaxed">
                             Innenkameras sind physisch stromlos geschaltet (Smart Plug), solange berechtigte Personen
-                            (via WLAN/GPS-Tracking) im Haus sind. Bilddaten verlassen niemals das lokale Netzwerk
-                            und werden nicht in einer Hersteller-Cloud gespeichert.
+                            (via WLAN/GPS-Tracking) im Haus sind. Bilddaten verlassen niemals das lokale Netzwerk.
                         </p>
                     </div>
                 </div>
@@ -337,12 +401,12 @@ const ProjektHomeAssistant = () => {
          </div>
       </section>
 
-      {/* TAILSCALE SECTION (YENİ EKLENEN KISIM) */}
+      {/* TAILSCALE SECTION */}
       <section className="py-16 px-4 bg-primary/5 border-y border-primary/10">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
                 <h2 className="text-2xl font-bold flex items-center gap-3">
-                    <GlobeLock className="text-primary w-8 h-8" />
+                    <Globe className="text-primary w-8 h-8" />
                     Secure Remote Access (Tailscale)
                 </h2>
                 <p className="text-muted-foreground leading-relaxed">
@@ -352,24 +416,22 @@ const ProjektHomeAssistant = () => {
                 <ul className="space-y-3">
                     <li className="flex items-start gap-3 text-sm text-foreground/80">
                         <CheckCircle2 className="text-emerald-500 w-5 h-5 flex-shrink-0 mt-0.5" />
-                        <span><strong>Zero Configuration Networking:</strong> Direkte Peer-to-Peer Verbindungen (NAT Traversal).</span>
+                        <span><strong>Zero Configuration Networking:</strong> Direkte Peer-to-Peer Verbindungen.</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm text-foreground/80">
                         <CheckCircle2 className="text-emerald-500 w-5 h-5 flex-shrink-0 mt-0.5" />
-                        <span><strong>ACL-Steuerung:</strong> Nur autorisierte Geräte im Tailnet (siehe Screenshot) haben Zugriff auf den Docker-Host.</span>
-                    </li>
-                    <li className="flex items-start gap-3 text-sm text-foreground/80">
-                        <CheckCircle2 className="text-emerald-500 w-5 h-5 flex-shrink-0 mt-0.5" />
-                        <span><strong>CGNAT-Resistent:</strong> Funktioniert auch hinter DS-Lite Anschlüssen zuverlässig.</span>
+                        <span><strong>ACL-Steuerung:</strong> Nur autorisierte Geräte im Tailnet haben Zugriff auf den Docker-Host.</span>
                     </li>
                 </ul>
             </div>
-            {/* TAILSCALE FOTO */}
-            <div className="glass p-2 rounded-xl border-primary/20 shadow-2xl rotate-1 hover:rotate-0 transition-transform duration-500">
+            {/* TAILSCALE FOTO - CLICKABLE */}
+            <div className="glass p-2 rounded-xl border-primary/20 shadow-2xl rotate-1 hover:rotate-0 transition-transform duration-500 cursor-pointer group" onClick={() => setSelectedImage("/images/home-assistant-foto12.jpeg")}>
                 <div className="relative overflow-hidden rounded-lg">
                     <img src="/images/home-assistant-foto12.jpeg" alt="Tailscale Admin Console" className="w-full h-auto object-cover" />
-                    {/* Overlay IP açıklama */}
-                    <div className="absolute bottom-0 left-0 right-0 bg-black/70 backdrop-blur-sm p-2 text-center">
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
+                         <Maximize2 className="text-white w-8 h-8 drop-shadow-md" />
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/70 backdrop-blur-sm p-2 text-center pointer-events-none">
                          <span className="text-[10px] text-white/80 font-mono">Tailnet Admin Console - Authenticated Devices Only</span>
                     </div>
                 </div>
@@ -391,47 +453,67 @@ const ProjektHomeAssistant = () => {
                 </p>
             </div>
 
-            {/* Dashboard */}
+            {/* Dashboard - CLICKABLE */}
             <div className="mb-16">
                 <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
                     <Server size={20} className="text-primary" />
                     Infrastructure Health Dashboard
                 </h3>
-                <div className="rounded-2xl overflow-hidden shadow-2xl border border-primary/20 group relative">
+                <div className="rounded-2xl overflow-hidden shadow-2xl border border-primary/20 group relative cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto4.png")}>
                     <img src="/images/home-assistant-foto4.png" alt="Home Assistant Admin Dashboard" className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]" />
-                    <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2 shadow-lg">
+                    {/* Büyütme İkonu */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
+                         <Maximize2 className="text-white w-10 h-10 drop-shadow-md" />
+                    </div>
+                    <div className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2 shadow-lg pointer-events-none">
                         <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></div>
                         <span className="text-xs text-white/90 font-medium">System Status: Healthy</span>
                     </div>
                 </div>
-                <p className="text-sm text-muted-foreground mt-3 text-center">
-                    Echtzeit-Überwachung von Server-Metriken (Load, RAM, Storage) und Zigbee-Signalqualität.
-                </p>
             </div>
 
-            {/* Tablet UI */}
+            {/* Tablet UI - FRONTEND UX BÖLÜMÜ - CLICKABLE */}
             <div className="mb-16">
                 <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                    <Layout className="text-primary w-5 h-5" />
+                    {/* İkonun rengi ve boyutu garantiye alındı */}
+                    <Activity className="text-primary w-6 h-6" />
                     Frontend UX (Tablet & Mobile)
                 </h3>
                 <div className="grid md:grid-cols-3 gap-4">
-                    <div className="glass p-2 rounded-xl border-primary/10 hover:border-primary/30 transition-all hover:-translate-y-1">
-                        <img src="/images/home-assistant-foto1.png" alt="Tablet UI Main Control" className="w-full h-auto rounded-lg shadow-sm" />
+                    {/* Foto 1 */}
+                    <div className="glass p-2 rounded-xl border-primary/10 hover:border-primary/30 transition-all hover:-translate-y-1 cursor-pointer group" onClick={() => setSelectedImage("/images/home-assistant-foto1.png")}>
+                        <div className="relative">
+                             <img src="/images/home-assistant-foto1.png" alt="Tablet UI - Beleuchtung & Szenen" className="w-full h-auto rounded-lg shadow-sm" />
+                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
+                                <Maximize2 className="text-white w-8 h-8" />
+                             </div>
+                        </div>
                         <p className="text-xs text-muted-foreground text-center mt-2 font-medium">Beleuchtung & Szenen</p>
                     </div>
-                    <div className="glass p-2 rounded-xl border-primary/10 hover:border-primary/30 transition-all hover:-translate-y-1">
-                        <img src="/images/home-assistant-foto2.png" alt="Tablet UI Climate" className="w-full h-auto rounded-lg shadow-sm" />
+                    {/* Foto 2 */}
+                    <div className="glass p-2 rounded-xl border-primary/10 hover:border-primary/30 transition-all hover:-translate-y-1 cursor-pointer group" onClick={() => setSelectedImage("/images/home-assistant-foto2.png")}>
+                        <div className="relative">
+                            <img src="/images/home-assistant-foto2.png" alt="Tablet UI - Klimasteuerung" className="w-full h-auto rounded-lg shadow-sm" />
+                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
+                                <Maximize2 className="text-white w-8 h-8" />
+                             </div>
+                        </div>
                         <p className="text-xs text-muted-foreground text-center mt-2 font-medium">Klimasteuerung</p>
                     </div>
-                    <div className="glass p-2 rounded-xl border-primary/10 hover:border-primary/30 transition-all hover:-translate-y-1">
-                        <img src="/images/home-assistant-foto3.png" alt="Tablet UI Map" className="w-full h-auto rounded-lg shadow-sm" />
+                    {/* Foto 3 */}
+                    <div className="glass p-2 rounded-xl border-primary/10 hover:border-primary/30 transition-all hover:-translate-y-1 cursor-pointer group" onClick={() => setSelectedImage("/images/home-assistant-foto3.png")}>
+                        <div className="relative">
+                            <img src="/images/home-assistant-foto3.png" alt="Tablet UI - Präsenz & Geofencing" className="w-full h-auto rounded-lg shadow-sm" />
+                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
+                                <Maximize2 className="text-white w-8 h-8" />
+                             </div>
+                        </div>
                         <p className="text-xs text-muted-foreground text-center mt-2 font-medium">Präsenz & Geofencing</p>
                     </div>
                 </div>
             </div>
 
-             {/* Enerji Analizi */}
+             {/* Enerji Analizi - CLICKABLE */}
             <div>
                 <h3 className="text-xl font-bold mb-6 flex items-center gap-2 gradient-text">
                     <Activity size={20} />
@@ -449,8 +531,20 @@ const ProjektHomeAssistant = () => {
                             </p>
                         </div>
                         <div className="space-y-4 order-1 md:order-2">
-                            <img src="/images/home-assistant-foto5.jpg" alt="Energy Graph Weekly" className="w-full h-auto rounded-lg border border-white/10 shadow-md hover:shadow-primary/20 transition-shadow" />
-                            <img src="/images/home-assistant-foto6.jpg" alt="Device Energy List" className="w-full h-auto rounded-lg border border-white/10 shadow-md hover:shadow-primary/20 transition-shadow" />
+                            {/* Grafik 1 */}
+                            <div className="cursor-pointer group relative" onClick={() => setSelectedImage("/images/home-assistant-foto5.jpg")}>
+                                <img src="/images/home-assistant-foto5.jpg" alt="Energy Graph Weekly" className="w-full h-auto rounded-lg border border-white/10 shadow-md transition-transform" />
+                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
+                                    <Maximize2 className="text-white w-8 h-8" />
+                                </div>
+                            </div>
+                            {/* Grafik 2 */}
+                             <div className="cursor-pointer group relative" onClick={() => setSelectedImage("/images/home-assistant-foto6.jpg")}>
+                                <img src="/images/home-assistant-foto6.jpg" alt="Device Energy List" className="w-full h-auto rounded-lg border border-white/10 shadow-md transition-transform" />
+                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
+                                    <Maximize2 className="text-white w-8 h-8" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
