@@ -25,7 +25,8 @@ import {
   Zap,
   ToggleLeft,
   Tablet,
-  Smartphone
+  Smartphone,
+  LineChart // Monitoring için ikon
 } from "lucide-react";
 
 const ProjektHomeAssistant = () => {
@@ -311,7 +312,7 @@ const ProjektHomeAssistant = () => {
 
       {/* =========================================================================================
           ORTA BÖLÜM: YENİDEN SIRALANDI
-          Sıra: Deep Dive -> Frontend UX -> Data Analytics -> Logic -> Dashboard
+          Sıra: Deep Dive -> Frontend UX -> Monitoring -> Logic -> Dashboard -> Tailscale
           ========================================================================================= */}
 
       {/* 1. DEEP DIVE (SERVICE MANAGEMENT) */}
@@ -429,12 +430,12 @@ const ProjektHomeAssistant = () => {
         </div>
       </section>
 
-      {/* 3. DATA ANALYTICS & ENERGY MANAGEMENT */}
+      {/* 3. MONITORING & ENERGY MANAGEMENT (Başlık Değişti & PNG Düzeltmesi) */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
             <h3 className="text-xl font-bold mb-6 flex items-center justify-center gap-2 gradient-text">
-                <Activity size={20} />
-                Data Analytics & Energy Management
+                <LineChart size={20} />
+                Monitoring & Energie-Analyse
             </h3>
             <div className="bg-[#121212] rounded-2xl p-6 md:p-8 border border-white/5 shadow-2xl relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0 opacity-70"></div>
@@ -448,16 +449,16 @@ const ProjektHomeAssistant = () => {
                         </p>
                     </div>
                     <div className="space-y-4 order-1 md:order-2">
-                        {/* Grafik 1 - Dosya uzantısı kontrol edildi: .jpg */}
-                        <div className="cursor-pointer group relative" onClick={() => setSelectedImage("/images/home-assistant-foto5.jpg")}>
-                            <img src="/images/home-assistant-foto5.jpg" alt="Energy Graph Weekly" className="w-full h-auto rounded-lg border border-white/10 shadow-md transition-transform" />
+                        {/* Grafik 1 - UZANTI .PNG OLARAK GÜNCELLENDİ */}
+                        <div className="cursor-pointer group relative" onClick={() => setSelectedImage("/images/home-assistant-foto5.png")}>
+                            <img src="/images/home-assistant-foto5.png" alt="Energy Graph Weekly" className="w-full h-auto rounded-lg border border-white/10 shadow-md transition-transform" />
                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
                                 <Maximize2 className="text-white w-8 h-8" />
                             </div>
                         </div>
-                        {/* Grafik 2 - Dosya uzantısı kontrol edildi: .jpg */}
-                            <div className="cursor-pointer group relative" onClick={() => setSelectedImage("/images/home-assistant-foto6.jpg")}>
-                            <img src="/images/home-assistant-foto6.jpg" alt="Device Energy List" className="w-full h-auto rounded-lg border border-white/10 shadow-md transition-transform" />
+                        {/* Grafik 2 - UZANTI .PNG OLARAK GÜNCELLENDİ */}
+                            <div className="cursor-pointer group relative" onClick={() => setSelectedImage("/images/home-assistant-foto6.png")}>
+                            <img src="/images/home-assistant-foto6.png" alt="Device Energy List" className="w-full h-auto rounded-lg border border-white/10 shadow-md transition-transform" />
                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
                                 <Maximize2 className="text-white w-8 h-8" />
                             </div>
