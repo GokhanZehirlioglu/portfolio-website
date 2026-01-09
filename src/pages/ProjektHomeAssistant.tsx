@@ -26,7 +26,7 @@ import {
   ToggleLeft,
   Tablet,
   Smartphone,
-  LineChart // Monitoring için ikon
+  LineChart
 } from "lucide-react";
 
 const ProjektHomeAssistant = () => {
@@ -310,11 +310,6 @@ const ProjektHomeAssistant = () => {
       </section>
 
 
-      {/* =========================================================================================
-          ORTA BÖLÜM: YENİDEN SIRALANDI
-          Sıra: Deep Dive -> Frontend UX -> Monitoring -> Logic -> Dashboard -> Tailscale
-          ========================================================================================= */}
-
       {/* 1. DEEP DIVE (SERVICE MANAGEMENT) */}
       <section className="py-16 px-4">
         <div className="max-w-5xl mx-auto">
@@ -330,7 +325,7 @@ const ProjektHomeAssistant = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-                {/* SSH - CLICKABLE */}
+                {/* SSH */}
                 <div className="group relative rounded-xl overflow-hidden shadow-lg border border-white/10 bg-[#1e1e1e] cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto9.png")}>
                     <div className="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2 border-b border-white/5">
                          <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-green-500/50"></div></div>
@@ -342,7 +337,7 @@ const ProjektHomeAssistant = () => {
                     </div>
                 </div>
 
-                 {/* Docker - CLICKABLE */}
+                 {/* Docker */}
                  <div className="group relative rounded-xl overflow-hidden shadow-lg border border-white/10 bg-[#1e1e1e] cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto7.png")}>
                     <div className="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2 border-b border-white/5">
                         <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-green-500/50"></div></div>
@@ -354,7 +349,7 @@ const ProjektHomeAssistant = () => {
                     </div>
                 </div>
 
-                 {/* Network / IP - CLICKABLE */}
+                 {/* Network / IP */}
                  <div className="group relative rounded-xl overflow-hidden shadow-lg border border-white/10 bg-[#1e1e1e] cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto8.png")}>
                     <div className="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2 border-b border-white/5">
                         <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-green-500/50"></div></div>
@@ -366,7 +361,7 @@ const ProjektHomeAssistant = () => {
                     </div>
                 </div>
 
-                 {/* Htop - CLICKABLE */}
+                 {/* Htop */}
                  <div className="group relative rounded-xl overflow-hidden shadow-lg border border-white/10 bg-[#1e1e1e] cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto10.png")}>
                     <div className="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2 border-b border-white/5">
                         <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-green-500/50"></div></div>
@@ -430,7 +425,7 @@ const ProjektHomeAssistant = () => {
         </div>
       </section>
 
-      {/* 3. MONITORING & ENERGY MANAGEMENT (Başlık Değişti & PNG Düzeltmesi) */}
+      {/* 3. MONITORING & ENERGIE-ANALYSE */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
             <h3 className="text-xl font-bold mb-6 flex items-center justify-center gap-2 gradient-text">
@@ -449,14 +444,14 @@ const ProjektHomeAssistant = () => {
                         </p>
                     </div>
                     <div className="space-y-4 order-1 md:order-2">
-                        {/* Grafik 1 - UZANTI .PNG OLARAK GÜNCELLENDİ */}
+                        {/* Grafik 1 - PNG */}
                         <div className="cursor-pointer group relative" onClick={() => setSelectedImage("/images/home-assistant-foto5.png")}>
                             <img src="/images/home-assistant-foto5.png" alt="Energy Graph Weekly" className="w-full h-auto rounded-lg border border-white/10 shadow-md transition-transform" />
                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
                                 <Maximize2 className="text-white w-8 h-8" />
                             </div>
                         </div>
-                        {/* Grafik 2 - UZANTI .PNG OLARAK GÜNCELLENDİ */}
+                        {/* Grafik 2 - PNG */}
                             <div className="cursor-pointer group relative" onClick={() => setSelectedImage("/images/home-assistant-foto6.png")}>
                             <img src="/images/home-assistant-foto6.png" alt="Device Energy List" className="w-full h-auto rounded-lg border border-white/10 shadow-md transition-transform" />
                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-lg">
@@ -504,7 +499,7 @@ const ProjektHomeAssistant = () => {
                 </div>
             </div>
 
-            {/* Camera Privacy Card - CLICKABLE */}
+            {/* Camera Privacy Card */}
             <div className="glass p-0 rounded-2xl border-primary/10 overflow-hidden hover:border-primary/30 transition-colors flex flex-col group cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto11.jpeg")}>
                 <div className="relative h-56 overflow-hidden">
                     <img src="/images/home-assistant-foto11.jpeg" alt="Indoor Kamera" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -558,15 +553,15 @@ const ProjektHomeAssistant = () => {
         </div>
       </section>
 
-      {/* --- SYSTEMARCHITEKTUR & DATENFLUSS (EN SON) --- */}
+      {/* 6. SYSTEMARCHITEKTUR & TAILSCALE (DÜZELTİLDİ: ORTALI METİN) */}
       <div className="py-16 px-4 bg-primary/5 border-y border-primary/10">
         <div className="max-w-6xl mx-auto glass p-8 rounded-2xl border-primary/10 text-center">
             <h3 className="text-xl font-bold mb-10 flex items-center justify-center gap-3">
                 <Network className="text-primary w-6 h-6" />
-                Systemarchitektur & Remote Access (Tailscale)
+                Systemarchitektur & Remote Access
             </h3>
 
-            {/* ŞEMA (5 Adım) */}
+            {/* ŞEMA */}
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 mb-12 overflow-x-auto py-6 px-4">
                 {/* 1. Internet */}
                 <div className="flex flex-col items-center gap-3 min-w-[100px] group">
@@ -620,23 +615,35 @@ const ProjektHomeAssistant = () => {
                 </div>
             </div>
 
-            {/* TAILSCALE AÇIKLAMA */}
-            <div className="grid md:grid-cols-2 gap-8 text-left mt-8 bg-black/20 p-6 rounded-xl border border-white/5">
-                <div>
-                    <h4 className="text-lg font-bold flex items-center gap-2 mb-3">
-                        <Globe className="text-emerald-500 w-5 h-5" /> Sicherer Fernzugriff
+            {/* TAILSCALE AÇIKLAMA (ORTALANDI) */}
+            <div className="grid md:grid-cols-2 gap-12 items-center mt-12 bg-black/20 p-8 rounded-xl border border-white/5">
+                <div className="flex flex-col justify-center text-center">
+                    <h4 className="text-xl font-bold flex items-center justify-center gap-2 mb-4">
+                        <Globe className="text-emerald-500 w-6 h-6" /> Sicherer Fernzugriff
                     </h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                        Sollte ein Zugriff von außerhalb notwendig sein (z.B. im Urlaub), kommt <strong>Tailscale</strong> zum Einsatz.
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                        Ob im Büro, im Urlaub oder unterwegs: Dank <strong>Tailscale</strong> ist das Smart Home jederzeit sicher erreichbar.
                         Dies ermöglicht eine verschlüsselte Verbindung zum Heimnetzwerk, ohne dass Router-Ports geöffnet werden müssen (No Port-Forwarding).
-                        Das System bleibt im öffentlichen Internet unsichtbar.
+                        Das System verhält sich für das Endgerät so, als wäre es direkt im lokalen WLAN ("wie zu Hause").
                     </p>
+                    <div className="flex justify-center">
+                        <ul className="space-y-2 text-left inline-block">
+                            <li className="flex items-center gap-2 text-xs text-foreground/80">
+                                <CheckCircle2 className="text-emerald-500 w-4 h-4 flex-shrink-0" />
+                                <span><strong>Ende-zu-Ende Verschlüsselung</strong> (WireGuard)</span>
+                            </li>
+                            <li className="flex items-center gap-2 text-xs text-foreground/80">
+                                <CheckCircle2 className="text-emerald-500 w-4 h-4 flex-shrink-0" />
+                                <span><strong>Zero Trust Access:</strong> Authentifizierte Geräte only</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 {/* Tailscale Screenshot */}
-                <div className="relative group overflow-hidden rounded-lg border border-white/10 cursor-pointer h-32 md:h-auto" onClick={() => setSelectedImage("/images/home-assistant-foto12.jpeg")}>
-                     <img src="/images/home-assistant-foto12.jpeg" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" alt="Tailscale Admin" />
+                <div className="relative group overflow-hidden rounded-lg border border-white/10 cursor-pointer max-w-sm mx-auto shadow-2xl rotate-1 hover:rotate-0 transition-transform duration-500" onClick={() => setSelectedImage("/images/home-assistant-foto12.jpeg")}>
+                     <img src="/images/home-assistant-foto12.jpeg" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" alt="Tailscale Admin" />
                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
-                        <Maximize2 className="text-white w-6 h-6" />
+                        <Maximize2 className="text-white w-8 h-8" />
                     </div>
                 </div>
             </div>
