@@ -48,9 +48,35 @@ const Index = () => {
 
               {/* Stats */}
               <div className="flex flex-wrap gap-8 pt-4">
-                <div className="flex flex-col items-center gap-1">
+                <div className="relative group flex flex-col items-center gap-1 cursor-pointer">
                   <span className="text-3xl font-semibold gradient-text">4</span>
                   <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Projekte</span>
+
+                  {/* Tooltip */}
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 min-w-[280px] bg-card border border-border rounded-xl p-4 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                    <div className="text-xs font-mono uppercase tracking-wider text-primary mb-3 pb-2 border-b border-border">
+                      Abgeschlossene Projekte
+                    </div>
+                    <ul className="space-y-2">
+                      <li className="flex items-center gap-2 text-sm">
+                        <Check className="w-4 h-4 text-primary" />
+                        Home Server Infrastructure
+                      </li>
+                      <li className="flex items-center gap-2 text-sm">
+                        <Check className="w-4 h-4 text-primary" />
+                        Home Assistant (Smart Home)
+                      </li>
+                      <li className="flex items-center gap-2 text-sm">
+                        <Check className="w-4 h-4 text-primary" />
+                        Web Server (Nginx)
+                      </li>
+                      <li className="flex items-center gap-2 text-sm">
+                        <Check className="w-4 h-4 text-primary" />
+                        Web Hosting (Cloudflare)
+                      </li>
+                    </ul>
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-card" />
+                  </div>
                 </div>
 
                 <div className="relative group flex flex-col items-center gap-1 cursor-pointer">
