@@ -49,7 +49,7 @@ const Index = () => {
               {/* Stats */}
               <div className="flex flex-wrap gap-8 pt-4">
                 <div className="flex flex-col gap-1">
-                  <span className="text-3xl font-semibold gradient-text">3</span>
+                  <span className="text-3xl font-semibold gradient-text">4</span>
                   <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Projekte</span>
                 </div>
 
