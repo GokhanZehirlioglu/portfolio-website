@@ -191,9 +191,9 @@ docker --version`;
             </ul>
           </div>
           
-          {/* SSH LOGIN GÖRSELİ (Tıklanabilir) */}
+          {/* Network Configuration Foto (Tıklanabilir) */}
           <div 
-            className="relative group cursor-zoom-in"
+            className="relative group cursor-zoom-in min-h-[400px]"
             onClick={() => setZoomedImage("/images/HomeServer_Foto6.png")}
           >
             <div className="absolute inset-0 bg-[#2496ED]/20 blur-2xl rounded-3xl -z-10 group-hover:bg-[#2496ED]/30 transition-all duration-500" />
@@ -209,6 +209,12 @@ docker --version`;
                 </div>
                 <Maximize2 size={14} className="text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
+              <img 
+                src="/images/HomeServer_Foto6.png" 
+                alt="Network Configuration (ifconfig)" 
+                loading="lazy"
+                className="w-full min-h-[350px] object-cover opacity-90 group-hover:opacity-100 transition-opacity bg-black"
+              />
             </div>
           </div>
         </div>
