@@ -193,11 +193,11 @@ docker --version`;
           
           {/* Network Configuration Foto (Tıklanabilir) */}
           <div 
-            className="relative group cursor-zoom-in min-h-[400px]"
+            className="relative group cursor-zoom-in"
             onClick={() => setZoomedImage("/images/HomeServer_Foto6.png")}
           >
             <div className="absolute inset-0 bg-[#2496ED]/20 blur-2xl rounded-3xl -z-10 group-hover:bg-[#2496ED]/30 transition-all duration-500" />
-            <div className="glass overflow-hidden rounded-2xl border border-white/10 shadow-2xl transition-transform duration-300 group-hover:scale-[1.02]">
+            <div className="glass overflow-hidden rounded-2xl border border-white/10 shadow-2xl transition-all duration-300 group-hover:scale-[1.03]">
               <div className="bg-[#1a1b26] p-3 flex items-center justify-between border-b border-white/5">
                 <div className="flex items-center gap-2">
                    <div className="flex gap-1.5">
@@ -213,7 +213,7 @@ docker --version`;
                 src="/images/HomeServer_Foto6.png" 
                 alt="Network Configuration (ifconfig)" 
                 loading="lazy"
-                className="w-full min-h-[350px] object-cover opacity-90 group-hover:opacity-100 transition-opacity bg-black"
+                className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity bg-black"
               />
             </div>
           </div>
