@@ -9,7 +9,7 @@ interface TechLogosProps {
 
 const TechLogos = ({ logos, className = "" }: TechLogosProps) => {
   return (
-    <div className={`flex flex-wrap justify-center gap-5 p-4 px-6 bg-card/90 backdrop-blur-xl border border-border rounded-2xl shadow-xl ${className}`}>
+    <div className={`flex flex-wrap justify-center gap-6 py-3 px-8 bg-card/80 backdrop-blur-md border border-primary/20 rounded-full shadow-lg shadow-primary/5 ${className}`}>
       {logos.map((logo, index) => (
         <img
           key={logo.alt}

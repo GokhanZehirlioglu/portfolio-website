@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Sun, Moon, Home, Server, Cloud, HardDrive } from "lucide-react";
+import { Menu, X, ChevronDown, Sun, Moon } from "lucide-react";
 import Logo from "./Logo";
+import { featuredProjects } from "@/data/portfolio";
 
 const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -33,13 +34,7 @@ const Navigation = () => {
     { path: "/kontakt", label: "Kontakt" },
   ];
 
-  const projectLinks = [
-    { path: "/projekt/home-server", label: "Home Server Infrastructure", icon: HardDrive },
-    { path: "/projekt/home-assistant", label: "Home Assistant", icon: Home },
-    { path: "/projekt/web-server", label: "Web Server", icon: Server },
-    { path: "/projekt/web-hosting", label: "Web Hosting", icon: Cloud },
-    { path: "/projekt/switching-vlan-einrichten", label: "Switching VLAN einrichten", icon: Server },
-  ];
+  const projectLinks = featuredProjects;
 
   return (
     <>
@@ -70,10 +65,13 @@ const Navigation = () => {
 
             {/* Projects Dropdown */}
             <div className="relative group">
-              <button className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+              <Link
+                to="/projekte"
+                className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-primary transition-colors py-2"
+              >
                 Projekte
                 <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
-              </button>
+              </Link>
               <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
                 <div className="bg-card border border-border rounded-xl p-2 min-w-[240px] shadow-xl">
                   {projectLinks.map((project) => (
@@ -82,7 +80,7 @@ const Navigation = () => {
                       to={project.path}
                       className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-foreground hover:bg-secondary transition-colors"
                     >
-                      <project.icon className="w-4 h-4 text-primary" />
+                      <img src={project.logos[0]} alt="" className="w-4 h-4 object-contain" />
                       {project.label}
                     </Link>
                   ))}
@@ -132,7 +130,13 @@ const Navigation = () => {
             </Link>
           ))}
           <div className="border-t border-border my-2" />
-          <p className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase">Projekte</p>
+          <Link
+            to="/projekte"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="block px-4 py-2 text-xs font-semibold text-muted-foreground uppercase hover:text-primary transition-colors"
+          >
+            Projekte
+          </Link>
           {projectLinks.map((project) => (
             <Link
               key={project.path}
@@ -140,7 +144,7 @@ const Navigation = () => {
               onClick={() => setIsMobileMenuOpen(false)}
               className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-secondary transition-colors"
             >
-              <project.icon className="w-4 h-4 text-primary" />
+              <img src={project.logos[0]} alt="" className="w-4 h-4 object-contain" />
               {project.label}
             </Link>
           ))}

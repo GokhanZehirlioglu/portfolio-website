@@ -66,6 +66,12 @@ const Index = () => {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
+                  to="/projekte"
+                  className="inline-flex items-center gap-2 px-7 py-4 border border-primary/20 bg-primary/5 text-primary font-medium text-sm uppercase tracking-wider rounded-lg hover:bg-primary/10 hover:border-primary transition-all"
+                >
+                  Projekte ansehen
+                </Link>
+                <Link
                   to="/kontakt"
                   className="inline-flex items-center gap-2 px-7 py-4 border border-border text-foreground font-medium text-sm uppercase tracking-wider rounded-lg hover:bg-secondary/50 hover:border-primary transition-all"
                 >
@@ -75,7 +81,7 @@ const Index = () => {
             </div>
 
             {/* Hero Image Area */}
-            <div className="relative h-[500px] lg:h-[650px] flex items-end justify-center">
+            <div className="relative h-[450px] lg:h-[550px] flex items-end justify-center">
               <div className="relative w-full h-full rounded-3xl overflow-hidden border border-border">
                 {/* HERO IMAGE */}
                 <img
@@ -90,7 +96,7 @@ const Index = () => {
               </div>
 
               {/* Tech Logos */}
-              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2">
+              <div className="absolute bottom-16 left-1/2 -translate-x-1/2">
                 <TechLogos logos={techLogos} />
               </div>
             </div>
