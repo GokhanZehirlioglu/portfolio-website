@@ -73,5 +73,34 @@ export const featuredProjects = [
     },
 ];
 
+export const linuxProjects = [
+    {
+        path: "/projekt/linux/user-management-lab",
+        label: "Challenge Lab A: User Management",
+        description: "Linux Administrator Projekt: Implementierung eines sicheren Multi-User-Systems mit Fokus auf Benutzerverwaltung (useradd/groupadd), Berechtigungskonfiguration (chmod/chown/Sticky Bit), und Security-Härtung für isolierte Abteilungsstrukturen.",
+        logos: [
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ubuntu/ubuntu-original.svg"
+        ],
+        previewScript: `# quick-preview.sh
+sudo groupadd produktion
+sudo useradd -m -s /bin/bash -g produktion prod_admin
+sudo chmod 770 /produktion
+sudo chmod +t /produktion
+ls -ld /produktion  # drwxrwx--T`
+    },
+    {
+        path: "#", // Placeholder
+        label: "Challenge Lab B: [Coming Soon]",
+        description: "Projektstruktur wird erstellt. Fortsetzung folgt...",
+        logos: [
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg"
+        ],
+        previewScript: `# Future Lab Preview
+sudo systemctl status firewalld
+sudo ufw allow 22/tcp
+# Network Hardening...`
+    }
+];
+
 // Keep for compatibility
 export const projects = featuredProjects.map(p => p.label);

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, Sun, Moon } from "lucide-react";
 import Logo from "./Logo";
-import { featuredProjects } from "@/data/portfolio";
+import { featuredProjects, linuxProjects } from "@/data/portfolio";
 
 const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -88,6 +88,31 @@ const Navigation = () => {
               </div>
             </div>
 
+            {/* Linux Projects Dropdown */}
+            <div className="relative group">
+              <Link
+                to="/linux-projekte"
+                className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-primary transition-colors py-2"
+              >
+                Linux
+                <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
+              </Link>
+              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                <div className="bg-card border border-border rounded-xl p-2 min-w-[240px] shadow-xl">
+                  {linuxProjects.map((project) => (
+                    <Link
+                      key={project.path}
+                      to={project.path}
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-foreground hover:bg-secondary transition-colors"
+                    >
+                      <img src={project.logos[0]} alt="" className="w-4 h-4 object-contain" />
+                      {project.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             <Link
               to="/kontakt"
               className={`text-sm font-medium transition-colors ${isActive("/kontakt") ? "text-primary" : "text-muted-foreground hover:text-primary"
@@ -138,6 +163,25 @@ const Navigation = () => {
             Projekte
           </Link>
           {projectLinks.map((project) => (
+            <Link
+              key={project.path}
+              to={project.path}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-secondary transition-colors"
+            >
+              <img src={project.logos[0]} alt="" className="w-4 h-4 object-contain" />
+              {project.label}
+            </Link>
+          ))}
+          <div className="border-t border-border my-2" />
+          <Link
+            to="/linux-projekte"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="block px-4 py-2 text-xs font-semibold text-muted-foreground uppercase hover:text-primary transition-colors"
+          >
+            Linux
+          </Link>
+          {linuxProjects.map((project) => (
             <Link
               key={project.path}
               to={project.path}
