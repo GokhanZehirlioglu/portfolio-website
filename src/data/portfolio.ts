@@ -89,16 +89,21 @@ sudo chmod +t /produktion
 ls -ld /produktion  # drwxrwx--T`
     },
     {
-        path: "#", // Placeholder
-        label: "Challenge Lab B: [Coming Soon]",
-        description: "Projektstruktur wird erstellt. Fortsetzung folgt...",
+        path: "/projekt/linux/bash-scripting-lab",
+        label: "Challenge Lab B: Bash Scripting & Automation",
+        description: "Entwicklung eines Bash-Scripts zur Automatisierung der Benutzerverwaltung. Features: Duplikat-Kontrolle, automatische Verzeichnis-Erstellung und komplexe Berechtigungssteuerung (Sticky Bit). Ziel: Effizienzsteigerung und Fehlervermeidung.",
         logos: [
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg"
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg"
         ],
-        previewScript: `# Future Lab Preview
-sudo systemctl status firewalld
-sudo ufw allow 22/tcp
-# Network Hardening...`
+        previewScript: `# user_management.sh
+if getent group "$GRUPPENNAME" > /dev/null 2>&1; then
+    echo "Gruppe existiert bereits."
+else
+    sudo groupadd "$GRUPPENNAME"
+fi
+sudo useradd -m -s /bin/bash -g "$GRUPPENNAME" "$BENUTZERNAME"
+sudo chmod 770 "/$BENUTZERNAME"
+sudo chmod +t "/$BENUTZERNAME"`
     }
 ];
 

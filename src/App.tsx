@@ -16,6 +16,7 @@ import ProjektSwitchingVlanEintichten from "./pages/ProjektSwitchingVlanEinticht
 import Projekte from "./pages/Projekte";
 import LinuxProjekte from "./pages/LinuxProjekte";
 import ProjektLinuxUserManagement from "./pages/ProjektLinuxUserManagement";
+import ProjektLinuxBashScripting from "./pages/ProjektLinuxBashScripting";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ const App = () => {
               <Route path="/projekt/web-hosting" element={<ProjektWebHosting />} />
               <Route path="/projekt/switching-vlan-einrichten" element={<ProjektSwitchingVlanEintichten />} />
               <Route path="/projekt/linux/user-management-lab" element={<ProjektLinuxUserManagement />} />
+              <Route path="/projekt/linux/bash-scripting-lab" element={<ProjektLinuxBashScripting />} />
               <Route path="/linux-projekte" element={<LinuxProjekte />} />
               <Route path="/projekte" element={<Projekte />} />
               <Route path="*" element={<NotFound />} />
