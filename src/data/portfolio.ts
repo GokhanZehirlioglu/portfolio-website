@@ -104,6 +104,19 @@ fi
 sudo useradd -m -s /bin/bash -g "$GRUPPENNAME" "$BENUTZERNAME"
 sudo chmod 770 "/$BENUTZERNAME"
 sudo chmod +t "/$BENUTZERNAME"`
+    },
+    {
+        path: "/projekt/linux/lab-c",
+        label: "Challenge Lab C: Log Archiving",
+        description: "Systemadministration: Implementierung einer Log-Archivierungsstrategie mit tar. Umfasst Verzeichnismanagement, Pfadmanipulation und Backup-Verifizierung zur Sicherung kritischer Systemdaten.",
+        logos: [
+            "https://api.iconify.design/flat-color-icons:opened-folder.svg"
+        ],
+        previewScript: `# log_backup.sh
+mkdir ~/archive ~/backup
+sudo tar -cvf ~/archive/log.tar -C /var/log $(cd /var/log && ls *.log)
+tar -tf ~/archive/log.tar
+tar -xvf ~/archive/log.tar -C ~/backup`
     }
 ];
 
