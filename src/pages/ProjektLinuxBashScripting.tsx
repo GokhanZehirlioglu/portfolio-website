@@ -85,20 +85,23 @@ const ProjektLinuxBashScripting = () => {
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-200">Automation</span>
                         </h1>
                         <p className="text-xl text-slate-400 max-w-2xl leading-relaxed mb-8">
-                            In diesem Projekt wird ein Bash-Script entwickelt, das die manuelle Benutzerverwaltung automatisiert. 
-                            Es umfasst Duplikat-Kontrolle, automatische Verzeichniserstellung im Root-Dateisystem, 
+                            In diesem Projekt wird ein Bash-Script entwickelt, das die manuelle Benutzerverwaltung automatisiert.
+                            Es umfasst Duplikat-Kontrolle, automatische Verzeichniserstellung im Root-Dateisystem,
                             und das Setzen von komplexen Berechtigungen (770 + Sticky Bit).
                             Ziel ist es, Fehleranfälligkeit zu minimieren und administrative Prozesse effizienter zu gestalten.
                         </p>
 
                         <div className="flex flex-wrap gap-4">
-                            <a
-                                href="/Challenge_Lab_B_Bash_Scripting.docx"
-                                download
-                                className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-500 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg hover:shadow-orange-500/20"
-                            >
-                                <Download size={18} /> Projektbericht (.docx)
-                            </a>
+                            <div className="flex items-center gap-4">
+                                <a
+                                    href="/Challenge_Lab_B_Bash_Scripting.docx"
+                                    download
+                                    className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-500 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg hover:shadow-orange-500/20"
+                                >
+                                    <Download size={18} /> Projektbericht (.docx)
+                                </a>
+                                <span className="text-slate-400 font-mono text-sm">30.01.2026</span>
+                            </div>
                             <div className="flex flex-wrap items-center gap-3">
                                 <span className="flex items-center gap-2 text-slate-300 font-mono text-sm px-4 py-2 rounded-lg border border-white/10 bg-white/5">
                                     <Server size={16} className="text-orange-500" /> Ubuntu Server 24.04 LTS
@@ -127,8 +130,8 @@ const ProjektLinuxBashScripting = () => {
                         <DocSection title="1. Projektübersicht" id="overview">
                             <h3 className="text-xl font-bold text-white mb-3">Szenario (Case Scenario)</h3>
                             <p>
-                                Im vorherigen Challenge Lab A wurde die manuelle Erstellung von Benutzern und Gruppen durchgeführt. 
-                                Diese einzelnen Befehle auf der Kommandozeile sind ein zeitaufwändiger Prozess und können zu möglichen Syntaxfehlern führen. 
+                                Im vorherigen Challenge Lab A wurde die manuelle Erstellung von Benutzern und Gruppen durchgeführt.
+                                Diese einzelnen Befehle auf der Kommandozeile sind ein zeitaufwändiger Prozess und können zu möglichen Syntaxfehlern führen.
                                 Als Administrator ist es Ihre Aufgabe, diesen Prozess so reibungslos und effizient wie möglich zu gestalten.
                             </p>
 
@@ -156,7 +159,7 @@ const ProjektLinuxBashScripting = () => {
                                     <li>• Script-Datei: user_management.sh</li>
                                 </ul>
                             </div>
-                             <p>
+                            <p>
                                 <strong>Systemvoraussetzungen:</strong> Root- oder Sudo-Zugriff, SSH-Verbindung, grundlegende Linux-Kenntnisse, Verständnis von Bash-Scripting (Variablen, If-Else, Exit Status) sowie Unix-Dateiberechtigungen (rwx).
                             </p>
                         </DocSection>
@@ -380,35 +383,35 @@ drwxrwx--T 2 anna_schmidt    IT  4096 Jan 30 22:30 /anna_schmidt`}
                                 </div>
                             </div>
 
-                             <div className="bg-slate-800/30 p-6 rounded-xl border border-white/5 space-y-6 mt-8">
+                            <div className="bg-slate-800/30 p-6 rounded-xl border border-white/5 space-y-6 mt-8">
                                 <h3 className="text-xl font-bold text-white">Gesamtergebnis</h3>
                                 <div className="space-y-4">
-                                     <div className="flex items-center gap-3 text-slate-300">
+                                    <div className="flex items-center gap-3 text-slate-300">
                                         <CheckCircle2 className="text-emerald-500" />
                                         <span>Alle 16 Benutzer erfolgreich erstellt</span>
-                                     </div>
-                                     <div className="flex items-center gap-3 text-slate-300">
+                                    </div>
+                                    <div className="flex items-center gap-3 text-slate-300">
                                         <CheckCircle2 className="text-emerald-500" />
                                         <span>Alle 4 Gruppen (IT, Marketing, Personal, Finanzen) existieren</span>
-                                     </div>
-                                      <div className="flex items-center gap-3 text-slate-300">
+                                    </div>
+                                    <div className="flex items-center gap-3 text-slate-300">
                                         <CheckCircle2 className="text-emerald-500" />
                                         <span>Rechte 770 & Sticky Bit auf allen Verzeichnissen aktiv</span>
-                                     </div>
+                                    </div>
                                 </div>
                             </div>
                         </DocSection>
 
                         {/* 9. FAZIT */}
                         <DocSection title="9. Fazit" id="conclusion">
-                             <p>
-                                Dieses Projekt demonstriert die erfolgreiche Automatisierung der Benutzerverwaltung mittels eines Bash-Scripts auf einem Ubuntu-Server. 
-                                Durch die Verwendung von Variablen, Parameterübergabe und logischer Fehlerbehandlung wurde ein flexibles Script entwickelt, 
+                            <p>
+                                Dieses Projekt demonstriert die erfolgreiche Automatisierung der Benutzerverwaltung mittels eines Bash-Scripts auf einem Ubuntu-Server.
+                                Durch die Verwendung von Variablen, Parameterübergabe und logischer Fehlerbehandlung wurde ein flexibles Script entwickelt,
                                 das für beliebige Benutzernamen und Gruppennamen verwendet werden kann.
                             </p>
                             <p className="mt-4">
-                                Im Vergleich zu Challenge Lab A reduziert das Script den Zeitaufwand erheblich und minimiert das Risiko von Syntaxfehlern. 
-                                Die implementierte Duplikat-Kontrolle stellt sicher, dass das System konsistent bleibt. 
+                                Im Vergleich zu Challenge Lab A reduziert das Script den Zeitaufwand erheblich und minimiert das Risiko von Syntaxfehlern.
+                                Die implementierte Duplikat-Kontrolle stellt sicher, dass das System konsistent bleibt.
                                 Die modulare Herangehensweise erleichtert sowohl die Fehlersuche als auch die zukünftige Erweiterung des Scripts.
                             </p>
                         </DocSection>

@@ -98,13 +98,16 @@ const ProjektLinuxLabC = () => {
                         </p>
 
                         <div className="flex flex-wrap gap-4">
-                            <a
-                                href="/Challenge_Lab_C_Log_Archiving.docx"
-                                download
-                                className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-500 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg hover:shadow-orange-500/20"
-                            >
-                                <Download size={18} /> Projektbericht (.docx)
-                            </a>
+                            <div className="flex items-center gap-4">
+                                <a
+                                    href="/Challenge_Lab_C_Log_Archiving.docx"
+                                    download
+                                    className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-500 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg hover:shadow-orange-500/20"
+                                >
+                                    <Download size={18} /> Projektbericht (.docx)
+                                </a>
+                                <span className="text-slate-400 font-mono text-sm">03.02.2026</span>
+                            </div>
                             <div className="flex flex-wrap items-center gap-3">
                                 <span className="flex items-center gap-2 text-slate-300 font-mono text-sm px-4 py-2 rounded-lg border border-white/10 bg-white/5">
                                     <Server size={16} className="text-orange-500" /> Ubuntu Server 24.04 LTS

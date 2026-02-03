@@ -79,7 +79,7 @@ export const linuxProjects = [
         label: "Challenge Lab A: User Management",
         description: "Linux Administrator Projekt: Implementierung eines sicheren Multi-User-Systems mit Fokus auf Benutzerverwaltung (useradd/groupadd), Berechtigungskonfiguration (chmod/chown/Sticky Bit), und Security-Härtung für isolierte Abteilungsstrukturen.",
         logos: [
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ubuntu/ubuntu-original.svg"
+            "/images/linux-lab-a.png"
         ],
         previewScript: `# quick-preview.sh
 sudo groupadd produktion
@@ -93,7 +93,7 @@ ls -ld /produktion  # drwxrwx--T`
         label: "Challenge Lab B: Bash Scripting & Automation",
         description: "Entwicklung eines Bash-Scripts zur Automatisierung der Benutzerverwaltung. Features: Duplikat-Kontrolle, automatische Verzeichnis-Erstellung und komplexe Berechtigungssteuerung (Sticky Bit). Ziel: Effizienzsteigerung und Fehlervermeidung.",
         logos: [
-            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg"
+            "/images/linux-lab-b.png"
         ],
         previewScript: `# user_management.sh
 if getent group "$GRUPPENNAME" > /dev/null 2>&1; then
@@ -110,13 +110,27 @@ sudo chmod +t "/$BENUTZERNAME"`
         label: "Challenge Lab C: Log Archiving",
         description: "Systemadministration: Implementierung einer Log-Archivierungsstrategie mit tar. Umfasst Verzeichnismanagement, Pfadmanipulation und Backup-Verifizierung zur Sicherung kritischer Systemdaten.",
         logos: [
-            "https://api.iconify.design/flat-color-icons:opened-folder.svg"
+            "/images/linux-lab-c.png"
         ],
         previewScript: `# log_backup.sh
 mkdir ~/archive ~/backup
 sudo tar -cvf ~/archive/log.tar -C /var/log $(cd /var/log && ls *.log)
 tar -tf ~/archive/log.tar
 tar -xvf ~/archive/log.tar -C ~/backup`
+    },
+    {
+        path: "/projekt/linux/lab-d",
+        label: "Challenge Lab D: Text Processing",
+        description: "Datenanalyse-Pipeline: Extraktion von Systemdiensten aus /etc/services ohne Zwischendateien. Einsatz von grep, awk, sort und uniq zur Filterung und Aufbereitung von Rohdaten.",
+        logos: [
+            "/images/linux-lab-d.png"
+        ],
+        previewScript: `# text_processing.sh
+grep -v '^#' /etc/services | \\
+grep -v '^$' | \\
+awk '{print $1}' | \\
+sort | uniq > uniqueservices.txt && \\
+wc -l uniqueservices.txt`
     }
 ];
 

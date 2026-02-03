@@ -47,11 +47,11 @@ const LinuxProjekte = () => {
                                 >
                                     <div className="p-6 flex flex-col md:flex-row items-start gap-6 w-full relative z-10 bg-[#1a1a1a] group-hover:bg-[#202020] transition-colors">
                                         {/* Logo Section */}
-                                        <div className="flex-shrink-0 flex items-center justify-center bg-white/5 rounded-lg border border-white/10 w-16 h-16 group-hover:bg-white/10 transition-colors">
+                                        <div className="flex-shrink-0 flex items-center justify-center bg-white/5 rounded-lg border border-white/10 w-32 h-24 group-hover:bg-white/10 transition-colors">
                                             {project.logos && project.logos[0] ? (
-                                                <img src={project.logos[0]} alt="Tech Logo" className="w-10 h-10 object-contain" />
+                                                <img src={project.logos[0]} alt="Tech Logo" className="w-28 h-20 object-contain p-1" />
                                             ) : (
-                                                <Terminal size={24} className="text-slate-500" />
+                                                <Terminal size={32} className="text-slate-500" />
                                             )}
                                         </div>
 

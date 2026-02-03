@@ -18,6 +18,7 @@ import LinuxProjekte from "./pages/LinuxProjekte";
 import ProjektLinuxUserManagement from "./pages/ProjektLinuxUserManagement";
 import ProjektLinuxBashScripting from "./pages/ProjektLinuxBashScripting";
 import ProjektLinuxLabC from "./pages/ProjektLinuxLabC";
+import ProjektLinuxLabD from "./pages/ProjektLinuxLabD";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -46,6 +47,7 @@ const App = () => {
               <Route path="/projekt/linux/user-management-lab" element={<ProjektLinuxUserManagement />} />
               <Route path="/projekt/linux/bash-scripting-lab" element={<ProjektLinuxBashScripting />} />
               <Route path="/projekt/linux/lab-c" element={<ProjektLinuxLabC />} />
+              <Route path="/projekt/linux/lab-d" element={<ProjektLinuxLabD />} />
               <Route path="/linux-projekte" element={<LinuxProjekte />} />
               <Route path="/projekte" element={<Projekte />} />
               <Route path="*" element={<NotFound />} />
