@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import Layout from "@/components/Layout";
 import {
   Calendar,
@@ -156,20 +157,13 @@ const ProjektWebHosting = () => {
 
   return (
     <Layout>
-      <style jsx global>{`
-        .no-motion *,
-        .no-motion *::before,
-        .no-motion *::after {
-          animation: none !important;
-          transition: none !important;
-          scroll-behavior: auto !important;
-        }
-        .no-motion .glass {
-          backdrop-filter: none !important;
-          -webkit-backdrop-filter: none !important;
-        }
-      `}</style>
-
+      <Helmet>
+        <title>Web Hosting — Gökhan Zehirlioglu</title>
+        <meta name="description" content="Öffentliches Webhosting ohne Port-Forwarding: Cloudflare Tunnel mit eigenem SSL-Zertifikat." />
+        <meta property="og:title" content="Web Hosting — Gökhan Zehirlioglu" />
+        <meta property="og:description" content="Öffentliches Webhosting ohne Port-Forwarding: Cloudflare Tunnel mit eigenem SSL-Zertifikat." />
+        <meta property="og:type" content="article" />
+      </Helmet>
       <div className="no-motion">
         <Lightbox />
 

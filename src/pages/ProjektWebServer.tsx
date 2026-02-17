@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import { Helmet } from "react-helmet-async";
 import Layout from "@/components/Layout";
-import { 
-  Calendar, 
+import Lightbox from "@/components/Lightbox";
+import {
+  Calendar,
   Server as ServerIcon, 
   CheckCircle2, 
   ArrowRight, 
@@ -14,13 +16,13 @@ import {
   ShieldCheck,
   Activity,
   Zap,
-  X,
   Maximize2
 } from "lucide-react";
 
 const ProjektWebServer = () => {
   // --- STATE: RESİM BÜYÜTME (LIGHTBOX) ---
   const [zoomedImage, setZoomedImage] = useState<string | null>(null);
+  const closeLightbox = useCallback(() => setZoomedImage(null), []);
 
   // --- PROJE İSTATİSTİKLERİ ---
   const stats = [
@@ -44,22 +46,14 @@ a1b2c3d4e5f6   nginx:stable-alpine   Up 3 weeks      0.0.0.0:8082->80/tcp`;
 
   return (
     <Layout>
-      {/* --- LIGHTBOX OVERLAY (Büyütülmüş Resim) --- */}
-      {zoomedImage && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 cursor-zoom-out animate-in fade-in duration-200"
-          onClick={() => setZoomedImage(null)}
-        >
-          <button className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors">
-            <X size={32} />
-          </button>
-          <img 
-            src={zoomedImage} 
-            alt="Zoomed Preview" 
-            className="max-w-full max-h-[90vh] rounded-lg shadow-2xl object-contain"
-          />
-        </div>
-      )}
+      <Helmet>
+        <title>Web Server — Gökhan Zehirlioglu</title>
+        <meta name="description" content="Nginx Web Server auf Docker: Lokales Webhosting mit Raspberry Pi 5." />
+        <meta property="og:title" content="Web Server — Gökhan Zehirlioglu" />
+        <meta property="og:description" content="Nginx Web Server auf Docker: Lokales Webhosting mit Raspberry Pi 5." />
+        <meta property="og:type" content="article" />
+      </Helmet>
+      <Lightbox src={zoomedImage} onClose={closeLightbox} />
 
       {/* --- HERO SECTION --- */}
       <section className="py-20 px-4 text-center bg-gradient-to-b from-[#009639]/5 to-transparent relative overflow-hidden">
@@ -194,10 +188,11 @@ a1b2c3d4e5f6   nginx:stable-alpine   Up 3 weeks      0.0.0.0:8082->80/tcp`;
                 </div>
                 <Maximize2 size={14} className="text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
-              <img 
-                src="/images/webserver-foto1.png" 
-                alt="SSH Access Raspberry Pi" 
+              <img
+                src="/images/webserver-foto1.png"
+                alt="SSH Access Raspberry Pi"
                 className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity"
+                loading="lazy"
               />
             </div>
           </div>
@@ -272,10 +267,11 @@ a1b2c3d4e5f6   nginx:stable-alpine   Up 3 weeks      0.0.0.0:8082->80/tcp`;
                   <Maximize2 size={12} className="text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
                 
-                <img 
-                  src="/images/webserver-foto4.png" 
-                  alt="Curl Header Check" 
+                <img
+                  src="/images/webserver-foto4.png"
+                  alt="Curl Header Check"
                   className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity"
+                  loading="lazy"
                 />
               </div>
 
@@ -320,10 +316,11 @@ a1b2c3d4e5f6   nginx:stable-alpine   Up 3 weeks      0.0.0.0:8082->80/tcp`;
 
             {/* Browser Content - DÜZELTİLDİ: .png uzantılı dosya */}
             <div className="relative aspect-video bg-slate-50">
-              <img 
-                src="/images/webserver-foto5.png" 
-                alt="Browser Network Analysis" 
+              <img
+                src="/images/webserver-foto5.png"
+                alt="Browser Network Analysis"
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
               
               {/* Overlay Annotations */}

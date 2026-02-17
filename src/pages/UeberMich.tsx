@@ -84,7 +84,7 @@ const UeberMich: React.FC = () => {
         </div>
       </section>
 
-      <section className="pb-16 px-4 max-w-5xl mx-auto space-y-24">
+      <section className="pb-16 px-4 max-w-5xl mx-auto space-y-20">
 
         {/* 2. GEÇMİŞ (HINTERGRUND) */}
         <div className="grid md:grid-cols-[1fr_3fr] gap-8 items-start">

@@ -16,8 +16,8 @@ const Projekte = () => {
                 <div className="max-w-4xl mx-auto">
 
                     <div className="mb-12">
-                        <h1 className="text-4xl md:text-5xl font-light mb-4">
-                            Meine <span className="font-semibold gradient-text">Projekte</span>
+                        <h1 className="text-4xl md:text-5xl font-normal mb-4">
+                            Meine <span className="font-bold gradient-text">Projekte</span>
                         </h1>
                         <p className="text-lg text-muted-foreground max-w-2xl">
                             Hier finden Sie eine Auswahl meiner aktuellen Projekte und Infrastruktur-Setups,
@@ -30,7 +30,7 @@ const Projekte = () => {
                             <Link
                                 key={index}
                                 to={project.path}
-                                className="group relative bg-card/50 backdrop-blur-sm border border-border rounded-xl p-6 hover:bg-card hover:border-primary/50 transition-all duration-300 hover:shadow-lg flex items-center gap-6"
+                                className="group relative card-base p-6 flex items-center gap-6"
                             >
                                 {/* Loogs Layout */}
                                 <div className="flex-shrink-0 flex items-center gap-3 w-24 justify-center">

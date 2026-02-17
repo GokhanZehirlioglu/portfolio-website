@@ -7,4 +7,10 @@ describe("App Smoke Test", () => {
         const { container } = render(<App />);
         expect(container).toBeTruthy();
     });
+
+    it("renders the home page by default", async () => {
+        render(<App />);
+        const headings = await screen.findAllByText(/gökhan zehirlioglu/i);
+        expect(headings.length).toBeGreaterThan(0);
+    });
 });

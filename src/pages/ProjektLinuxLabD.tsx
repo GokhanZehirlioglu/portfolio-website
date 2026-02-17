@@ -1,5 +1,7 @@
 import React from "react";
 import Layout from "@/components/Layout";
+import DocSection from "@/components/DocSection";
+import CommandBlock from "@/components/CommandBlock";
 import {
     Terminal,
     Shield,
@@ -8,7 +10,6 @@ import {
     Download,
     ChevronRight,
     Play,
-    Info,
     CheckCircle2,
     Cpu,
     Monitor,
@@ -20,58 +21,6 @@ import {
     ArrowRight
 } from "lucide-react";
 import { Helmet } from "react-helmet-async";
-
-/**
- * DocSection Component
- * Wrapper for documentation sections with consistent styling
- */
-const DocSection: React.FC<{ title: string; id: string; children: React.ReactNode }> = ({ title, id, children }) => (
-    <div id={id} className="mb-16 scroll-mt-24">
-        <h2 className="text-2xl md:text-3xl font-bold text-slate-100 mb-6 flex items-center gap-3">
-            <span className="w-1.5 h-8 bg-orange-500 rounded-full" />
-            {title}
-        </h2>
-        <div className="space-y-6 text-slate-300 leading-relaxed text-lg">
-            {children}
-        </div>
-    </div>
-);
-
-/**
- * CommandBlock Component
- * Displays code with explanation
- */
-const CommandBlock: React.FC<{ title?: string; command: string; explanation?: string; output?: string }> = ({ title, command, explanation, output }) => (
-    <div className="my-6 rounded-xl overflow-hidden border border-slate-700/50 bg-[#1e1e1e] shadow-xl">
-        {title && (
-            <div className="bg-slate-800/50 px-4 py-2 border-b border-slate-700/50 flex items-center justify-between">
-                <span className="text-xs font-mono text-orange-400 font-bold uppercase tracking-wider">{title}</span>
-                <div className="flex gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/20" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/20" />
-                </div>
-            </div>
-        )}
-        <div className="p-5 font-mono text-sm md:text-base cursor-text selection:bg-orange-500/30">
-            <div className="text-emerald-400 whitespace-pre-wrap">{command}</div>
-        </div>
-
-        {output && (
-            <div className="bg-black/40 p-4 border-t border-slate-700/30 font-mono text-sm text-slate-400">
-                <div className="text-xs uppercase text-slate-500 mb-2 font-bold tracking-wider">// OUTPUT / VERIFICATION</div>
-                <div className="whitespace-pre-wrap opacity-90">{output}</div>
-            </div>
-        )}
-
-        {explanation && (
-            <div className="bg-slate-800/20 p-4 border-t border-slate-700/50 flex gap-3 text-sm text-slate-400">
-                <Info className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
-                <p>{explanation}</p>
-            </div>
-        )}
-    </div>
-);
 
 const ProjektLinuxLabD = () => {
     return (

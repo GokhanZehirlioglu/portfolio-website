@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import { Helmet } from "react-helmet-async";
 import Layout from "@/components/Layout";
+import Lightbox from "@/components/Lightbox";
 import {
   Download,
   Calendar,
@@ -16,8 +18,7 @@ import {
   CheckCircle2,
   AlertTriangle,
   Lightbulb,
-  Globe, 
-  X,     
+  Globe,
   Maximize2,
   Wifi,
   Layers,
@@ -32,6 +33,7 @@ import {
 const ProjektHomeAssistant = () => {
   // --- STATE: LIGHTBOX (Resim Büyütme) ---
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const closeLightbox = useCallback(() => setSelectedImage(null), []);
 
   // --- KONFİGÜRASYON ---
   
@@ -85,20 +87,14 @@ const ProjektHomeAssistant = () => {
 
   return (
     <Layout>
-      {/* --- LIGHTBOX OVERLAY --- */}
-      {selectedImage && (
-        <div className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200" onClick={() => setSelectedImage(null)}>
-          <button className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors bg-white/10 p-2 rounded-full">
-            <X size={32} />
-          </button>
-          <img 
-            src={selectedImage} 
-            alt="Fullscreen Preview" 
-            className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl border border-white/10"
-            onClick={(e) => e.stopPropagation()} 
-          />
-        </div>
-      )}
+      <Helmet>
+        <title>Home Assistant — Gökhan Zehirlioglu</title>
+        <meta name="description" content="Smart Home mit Home Assistant, Zigbee2MQTT und Docker auf Raspberry Pi 5." />
+        <meta property="og:title" content="Home Assistant — Gökhan Zehirlioglu" />
+        <meta property="og:description" content="Smart Home mit Home Assistant, Zigbee2MQTT und Docker auf Raspberry Pi 5." />
+        <meta property="og:type" content="article" />
+      </Helmet>
+      <Lightbox src={selectedImage} onClose={closeLightbox} />
 
       {/* HERO SECTION */}
       <section className="pt-20 pb-16 px-4 bg-gradient-to-b from-primary/5 to-transparent relative overflow-hidden">
@@ -262,7 +258,7 @@ const ProjektHomeAssistant = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[150px]">
                 {/* Dongle */}
                 <div className="relative group overflow-hidden rounded-xl border border-white/10 cursor-pointer md:col-span-2 md:row-span-2" onClick={() => setSelectedImage("/images/home-assistant-foto17.jpeg")}>
-                    <img src="/images/home-assistant-foto17.jpeg" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Zigbee Dongle" />
+                    <img src="/images/home-assistant-foto17.jpeg" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" alt="Zigbee Dongle" />
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <Maximize2 className="text-white w-8 h-8" />
                     </div>
@@ -271,7 +267,7 @@ const ProjektHomeAssistant = () => {
 
                 {/* Thermostats */}
                 <div className="relative group overflow-hidden rounded-xl border border-white/10 cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto13.jpeg")}>
-                    <img src="/images/home-assistant-foto13.jpeg" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Thermostate" />
+                    <img src="/images/home-assistant-foto13.jpeg" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" alt="Thermostate" />
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <Maximize2 className="text-white w-6 h-6" />
                     </div>
@@ -279,7 +275,7 @@ const ProjektHomeAssistant = () => {
 
                 {/* Sonoff Boxes */}
                 <div className="relative group overflow-hidden rounded-xl border border-white/10 cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto14.jpeg")}>
-                    <img src="/images/home-assistant-foto14.jpeg" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Sonoff ZBMINI" />
+                    <img src="/images/home-assistant-foto14.jpeg" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" alt="Sonoff ZBMINI" />
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <Maximize2 className="text-white w-6 h-6" />
                     </div>
@@ -287,7 +283,7 @@ const ProjektHomeAssistant = () => {
 
                 {/* Wiring 1 */}
                 <div className="relative group overflow-hidden rounded-xl border border-white/10 cursor-pointer md:row-span-2" onClick={() => setSelectedImage("/images/home-assistant-foto19.jpeg")}>
-                    <img src="/images/home-assistant-foto19.jpeg" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Wiring Example" />
+                    <img src="/images/home-assistant-foto19.jpeg" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" alt="Wiring Example" />
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <Maximize2 className="text-white w-6 h-6" />
                     </div>
@@ -296,7 +292,7 @@ const ProjektHomeAssistant = () => {
 
                 {/* Plugs */}
                 <div className="relative group overflow-hidden rounded-xl border border-white/10 cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto16.jpeg")}>
-                    <img src="/images/home-assistant-foto16.jpeg" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Smart Plugs" />
+                    <img src="/images/home-assistant-foto16.jpeg" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" alt="Smart Plugs" />
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <Maximize2 className="text-white w-6 h-6" />
                     </div>
@@ -304,7 +300,7 @@ const ProjektHomeAssistant = () => {
 
                 {/* Sensors */}
                 <div className="relative group overflow-hidden rounded-xl border border-white/10 cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto15.jpeg")}>
-                    <img src="/images/home-assistant-foto15.jpeg" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Sensoren" />
+                    <img src="/images/home-assistant-foto15.jpeg" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" alt="Sensoren" />
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <Maximize2 className="text-white w-6 h-6" />
                     </div>
@@ -506,7 +502,7 @@ const ProjektHomeAssistant = () => {
             {/* Camera Privacy Card */}
             <div className="glass p-0 rounded-2xl border-primary/10 overflow-hidden hover:border-primary/30 transition-colors flex flex-col group cursor-pointer" onClick={() => setSelectedImage("/images/home-assistant-foto11.jpeg")}>
                 <div className="relative h-56 overflow-hidden">
-                    <img src="/images/home-assistant-foto11.jpeg" alt="Indoor Kamera" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <img src="/images/home-assistant-foto11.jpeg" alt="Indoor Kamera" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                     <div className="absolute top-3 right-3 flex gap-2">
                         <div className="bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
                             <EyeOff size={12} className="text-red-400" /> Geo-Fencing Active

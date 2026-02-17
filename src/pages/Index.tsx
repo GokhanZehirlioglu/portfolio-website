@@ -18,8 +18,8 @@ const Index = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Hero Content */}
             <div className="flex flex-col gap-8">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-light leading-tight">
-                <span className="font-semibold gradient-text">Fachinformatiker für Systemintegration</span>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal leading-tight tracking-tight">
+                <span className="font-bold gradient-text">Fachinformatiker für Systemintegration</span>
               </h1>
 
               <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
@@ -86,14 +86,15 @@ const Index = () => {
             </div>
 
             {/* Hero Image Area */}
-            {/* Hero Image Area */}
             <div className="flex flex-col gap-6 w-full items-center">
               <div className="relative w-full h-[450px] lg:h-[550px] rounded-3xl overflow-hidden border border-border group shadow-2xl shadow-primary/5 transition-all duration-500 hover:shadow-primary/30 hover:border-primary/50">
                 {/* HERO IMAGE */}
                 <img
                   src="/images/hero.jpg"
-                  alt="Hero"
+                  alt="Gökhan Zehirlioglu — Fachinformatiker für Systemintegration, HomeLab und Netzwerk-Projekte"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  // @ts-expect-error React 18 doesn't support fetchPriority prop yet
+                  fetchpriority="high"
                 />
 
                 {/* Overlays */}

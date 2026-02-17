@@ -1,5 +1,29 @@
+// ============================================
+// TYPE DEFINITIONS
+// ============================================
 
-export const techLogos = [
+export interface TechLogo {
+    src: string;
+    alt: string;
+    title: string;
+}
+
+export interface Project {
+    path: string;
+    label: string;
+    description: string;
+    logos: string[];
+}
+
+export interface LinuxProject extends Project {
+    previewScript?: string;
+}
+
+// ============================================
+// DATA
+// ============================================
+
+export const techLogos: TechLogo[] = [
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg", alt: "Azure", title: "Microsoft Azure" },
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg", alt: "Linux", title: "Linux" },
     { src: "https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg", alt: "Cisco", title: "Cisco" },
@@ -10,14 +34,14 @@ export const techLogos = [
     { src: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/zigbee2mqtt.svg", alt: "Zigbee", title: "Zigbee" },
 ];
 
-export const certificates = [
+export const certificates: string[] = [
     "MS Azure Administrator (AZ-104)",
     "MS Windows Server 2022 & Powershell",
     "Linux Essentials",
     "ITIL v4 Foundation",
 ];
 
-export const badges = [
+export const badges: string[] = [
     "CCNA: Introduction to Networks",
     "Cisco Networking Basics",
     "Cisco Operating Systems Support",
@@ -28,12 +52,11 @@ export const badges = [
     "Linux Unhatched",
 ];
 
-export const featuredProjects = [
+export const featuredProjects: Project[] = [
     {
         path: "/projekt/home-server",
         label: "Home Server & Infrastruktur Einrichten (Docker-Basis)",
         description: "Zentralisiertes Heimnetzwerk mit Raspberry Pi 5 und Docker Containern.",
-        // Two logos: Raspberry Pi + Docker
         logos: [
             "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg",
             "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
@@ -68,19 +91,17 @@ export const featuredProjects = [
         label: "Switching Layer 2 VLAN & Netz-Segmentierung",
         description: "Netzwerksegmentierung und VLAN Konfiguration für erhöhte Sicherheit.",
         logos: [
-            "https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg" // Cisco usually fits switching well
+            "https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg"
         ]
     },
 ];
 
-export const linuxProjects = [
+export const linuxProjects: LinuxProject[] = [
     {
         path: "/projekt/linux/user-management-lab",
         label: "Challenge Lab A: User Management",
         description: "Linux Administrator Projekt: Implementierung eines sicheren Multi-User-Systems mit Fokus auf Benutzerverwaltung (useradd/groupadd), Berechtigungskonfiguration (chmod/chown/Sticky Bit), und Security-Härtung für isolierte Abteilungsstrukturen.",
-        logos: [
-            "/images/linux-lab-a.png"
-        ],
+        logos: ["/images/linux-lab-a.png"],
         previewScript: `# quick-preview.sh
 sudo groupadd produktion
 sudo useradd -m -s /bin/bash -g produktion prod_admin
@@ -92,9 +113,7 @@ ls -ld /produktion  # drwxrwx--T`
         path: "/projekt/linux/bash-scripting-lab",
         label: "Challenge Lab B: Bash Scripting & Automation",
         description: "Entwicklung eines Bash-Scripts zur Automatisierung der Benutzerverwaltung. Features: Duplikat-Kontrolle, automatische Verzeichnis-Erstellung und komplexe Berechtigungssteuerung (Sticky Bit). Ziel: Effizienzsteigerung und Fehlervermeidung.",
-        logos: [
-            "/images/linux-lab-b.png"
-        ],
+        logos: ["/images/linux-lab-b.png"],
         previewScript: `# user_management.sh
 if getent group "$GRUPPENNAME" > /dev/null 2>&1; then
     echo "Gruppe existiert bereits."
@@ -109,9 +128,7 @@ sudo chmod +t "/$BENUTZERNAME"`
         path: "/projekt/linux/lab-c",
         label: "Challenge Lab C: Log Archiving",
         description: "Systemadministration: Implementierung einer Log-Archivierungsstrategie mit tar. Umfasst Verzeichnismanagement, Pfadmanipulation und Backup-Verifizierung zur Sicherung kritischer Systemdaten.",
-        logos: [
-            "/images/linux-lab-c.png"
-        ],
+        logos: ["/images/linux-lab-c.png"],
         previewScript: `# log_backup.sh
 mkdir ~/archive ~/backup
 sudo tar -cvf ~/archive/log.tar -C /var/log $(cd /var/log && ls *.log)
@@ -122,9 +139,7 @@ tar -xvf ~/archive/log.tar -C ~/backup`
         path: "/projekt/linux/lab-d",
         label: "Challenge Lab D: Text Processing",
         description: "Datenanalyse-Pipeline: Extraktion von Systemdiensten aus /etc/services ohne Zwischendateien. Einsatz von grep, awk, sort und uniq zur Filterung und Aufbereitung von Rohdaten.",
-        logos: [
-            "/images/linux-lab-d.png"
-        ],
+        logos: ["/images/linux-lab-d.png"],
         previewScript: `# text_processing.sh
 grep -v '^#' /etc/services | \\
 grep -v '^$' | \\
@@ -134,5 +149,19 @@ wc -l uniqueservices.txt`
     }
 ];
 
-// Keep for compatibility
-export const projects = featuredProjects.map(p => p.label);
+export const ciscoProjects: Project[] = [
+    {
+        path: "/projekt/cisco/lab-1-6-2",
+        label: "Lab 1.6.2: Grundlegende Router-Einstellungen",
+        description: "Initialkonfiguration eines Cisco 4321 Routers: Hostname, Banner, IPv4/IPv6-Adressierung und SSH-Zugriffssicherung im Packet Tracer Physical Mode.",
+        logos: ["/images/cisco/lab-1.6.2.png"],
+    },
+    {
+        path: "/projekt/cisco/lab-3-6-1",
+        label: "Lab 3.6.1: VLANs und Trunking",
+        description: "Cisco Packet Tracer Lab 3.6.1 - VLANs implementieren und Trunking konfigurieren mit drei Switches.",
+        logos: ["/images/cisco/lab-3.6.1.png"],
+    }
+];
+
+export const projects: string[] = featuredProjects.map(p => p.label);

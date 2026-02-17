@@ -1,19 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import { Helmet } from "react-helmet-async";
 import Layout from "@/components/Layout";
-import { 
-  Calendar, 
-  Server as ServerIcon, 
-  CheckCircle2, 
-  ArrowRight, 
-  Code, 
-  Database, 
-  FileText, 
+import Lightbox from "@/components/Lightbox";
+import {
+  Calendar,
+  Server as ServerIcon,
+  CheckCircle2,
+  ArrowRight,
+  Code,
+  Database,
+  FileText,
   Download,
   Terminal,
   ShieldCheck,
   Activity,
   Zap,
-  X,
   Maximize2,
   HardDrive,
   Cpu,
@@ -21,8 +22,8 @@ import {
 } from "lucide-react";
 
 const ProjektHomeServer = () => {
-  // --- STATE: RESİM BÜYÜTME (LIGHTBOX) ---
   const [zoomedImage, setZoomedImage] = useState<string | null>(null);
+  const closeLightbox = useCallback(() => setZoomedImage(null), []);
 
   // --- PROJE İSTATİSTİKLERİ ---
   const stats = [
@@ -56,22 +57,14 @@ docker --version`;
 
   return (
     <Layout>
-      {/* --- LIGHTBOX OVERLAY (Büyütülmüş Resim) --- */}
-      {zoomedImage && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 cursor-zoom-out animate-in fade-in duration-200"
-          onClick={() => setZoomedImage(null)}
-        >
-          <button className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors">
-            <X size={32} />
-          </button>
-          <img 
-            src={zoomedImage} 
-            alt="Zoomed Preview" 
-            className="max-w-full max-h-[90vh] rounded-lg shadow-2xl object-contain"
-          />
-        </div>
-      )}
+      <Helmet>
+        <title>Home Server — Gökhan Zehirlioglu</title>
+        <meta name="description" content="Raspberry Pi 5 Docker Home Server: 24/7 Self-Hosting mit Container-Infrastruktur." />
+        <meta property="og:title" content="Home Server — Gökhan Zehirlioglu" />
+        <meta property="og:description" content="Raspberry Pi 5 Docker Home Server: 24/7 Self-Hosting mit Container-Infrastruktur." />
+        <meta property="og:type" content="article" />
+      </Helmet>
+      <Lightbox src={zoomedImage} onClose={closeLightbox} />
 
       {/* --- HERO SECTION --- */}
       <section className="py-20 px-4 text-center bg-gradient-to-b from-[#2496ED]/5 to-transparent relative overflow-hidden">
@@ -106,7 +99,7 @@ docker --version`;
           {/* DOKÜMAN İNDİRME BUTONU - Docker Mavisi */}
           <div className="flex justify-center mb-16">
             <a 
-              href="/home_server.docx" 
+              href="/homeServer_dokumnatation.docx"
               download 
               className="
                 group relative inline-flex items-center gap-4 px-8 py-4 

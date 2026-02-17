@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { Check, ChevronDown } from "lucide-react";
 
 interface StatCardProps {
@@ -11,10 +11,40 @@ interface StatCardProps {
 
 const StatCard = ({ value, label, tooltipTitle, items, children }: StatCardProps) => {
     const hasTooltip = tooltipTitle || items || children;
+    const num = parseInt(value, 10);
+    const isNumeric = !isNaN(num);
+    const [displayValue, setDisplayValue] = useState(isNumeric ? "0" : value);
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!isNumeric) return;
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (!entries[0].isIntersecting) return;
+                observer.disconnect();
+                let start = 0;
+                const steps = 24;
+                const interval = 700 / steps;
+                const increment = num / steps;
+                const timer = setInterval(() => {
+                    start += increment;
+                    if (start >= num) {
+                        setDisplayValue(value);
+                        clearInterval(timer);
+                    } else {
+                        setDisplayValue(Math.floor(start).toString());
+                    }
+                }, interval);
+            },
+            { threshold: 0.5 }
+        );
+        if (ref.current) observer.observe(ref.current);
+        return () => observer.disconnect();
+    }, [value, num, isNumeric]);
 
     return (
-        <div className={`flex flex-col items-center gap-1 transition-transform duration-200 ${hasTooltip ? "relative group cursor-pointer hover:-translate-y-1" : ""}`}>
-            <span className="text-3xl font-semibold gradient-text">{value}</span>
+        <div ref={ref} className={`flex flex-col items-center gap-1 transition-transform duration-200 ${hasTooltip ? "relative group cursor-pointer hover:-translate-y-1" : ""}`}>
+            <span className="text-3xl font-semibold gradient-text">{displayValue}</span>
             <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground flex items-center gap-1 group-hover:text-primary transition-colors">
                 {label}
                 {hasTooltip && <ChevronDown className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />}
