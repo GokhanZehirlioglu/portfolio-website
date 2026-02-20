@@ -87,11 +87,21 @@ export const featuredProjects: Project[] = [
         ]
     },
     {
-        path: "/projekt/switching-vlan-einrichten",
-        label: "Switching Layer 2 VLAN & Netz-Segmentierung",
-        description: "Netzwerksegmentierung und VLAN Konfiguration für erhöhte Sicherheit.",
+        path: "/projekt/ssd-upgrade",
+        label: "Raspberry Pi 5 SSD Upgrade & Pironman 5 MAX",
+        description: "Hardware-Upgrade: Migration von SD-Karte auf NVMe SSD, Installation Pironman 5 MAX Gehäuse mit PWM-Kühlung & OLED-Monitoring.",
         logos: [
-            "https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg"
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg",
+            "https://cdn.simpleicons.org/python/3776AB"
+        ]
+    },
+    {
+        path: "/projekt/openvpn-gateway",
+        label: "OpenVPN Gateway auf Raspberry Pi 5",
+        description: "Sichere Fernzugriffsarchitektur mit Defense-in-Depth-Modell für eine Heim-Infrastruktur. 7 Sicherheitsschichten, VPN-Tunneling und Firewalling.",
+        logos: [
+            "https://cdn.simpleicons.org/openvpn/EA7E20",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg"
         ]
     },
 ];

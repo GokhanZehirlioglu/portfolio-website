@@ -12,7 +12,7 @@ const ProjektHomeServer = lazy(() => import("./pages/ProjektHomeServer"));
 const ProjektHomeAssistant = lazy(() => import("./pages/ProjektHomeAssistant"));
 const ProjektWebServer = lazy(() => import("./pages/ProjektWebServer"));
 const ProjektWebHosting = lazy(() => import("./pages/ProjektWebHosting"));
-const ProjektSwitchingVlanEintichten = lazy(() => import("./pages/ProjektSwitchingVlanEintichten"));
+
 const Projekte = lazy(() => import("./pages/Projekte"));
 const LinuxProjekte = lazy(() => import("./pages/LinuxProjekte"));
 const ProjektLinuxUserManagement = lazy(() => import("./pages/ProjektLinuxUserManagement"));
@@ -22,6 +22,8 @@ const ProjektLinuxLabD = lazy(() => import("./pages/ProjektLinuxLabD"));
 const CiscoProjekte = lazy(() => import("./pages/CiscoProjekte"));
 const ProjektCiscoLab162 = lazy(() => import("./pages/ProjektCiscoLab162"));
 const Lab361VlansUndTrunking = lazy(() => import("./pages/Lab361VlansUndTrunking"));
+const ProjektOpenVPN = lazy(() => import("./pages/ProjektOpenVPN"));
+const ProjektSSDUpgrade = lazy(() => import("./pages/ProjektSSDUpgrade"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const PageLoader = () => (
@@ -53,7 +55,7 @@ const App = () => {
               <Route path="/projekt/home-assistant" element={<ProjektHomeAssistant />} />
               <Route path="/projekt/web-server" element={<ProjektWebServer />} />
               <Route path="/projekt/web-hosting" element={<ProjektWebHosting />} />
-              <Route path="/projekt/switching-vlan-einrichten" element={<ProjektSwitchingVlanEintichten />} />
+
               <Route path="/projekt/linux/user-management-lab" element={<ProjektLinuxUserManagement />} />
               <Route path="/projekt/linux/bash-scripting-lab" element={<ProjektLinuxBashScripting />} />
               <Route path="/projekt/linux/lab-c" element={<ProjektLinuxLabC />} />
@@ -63,6 +65,8 @@ const App = () => {
               <Route path="/cisco-projekte" element={<CiscoProjekte />} />
               <Route path="/projekt/cisco/lab-1-6-2" element={<ProjektCiscoLab162 />} />
               <Route path="/projekt/cisco/lab-3-6-1" element={<Lab361VlansUndTrunking />} />
+              <Route path="/projekt/openvpn-gateway" element={<ProjektOpenVPN />} />
+              <Route path="/projekt/ssd-upgrade" element={<ProjektSSDUpgrade />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
