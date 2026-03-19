@@ -24,6 +24,10 @@ const ProjektCiscoLab162 = lazy(() => import("./pages/ProjektCiscoLab162"));
 const Lab361VlansUndTrunking = lazy(() => import("./pages/Lab361VlansUndTrunking"));
 const ProjektOpenVPN = lazy(() => import("./pages/ProjektOpenVPN"));
 const ProjektSSDUpgrade = lazy(() => import("./pages/ProjektSSDUpgrade"));
+const ProjektLemyeOgreniyor = lazy(() => import("./pages/ProjektLemyeOgreniyor"));
+const WindowsProjekte = lazy(() => import("./pages/WindowsProjekte"));
+const ProjektWin10Upgrade = lazy(() => import("./pages/ProjektWin10Upgrade"));
+const ProjektADSetup = lazy(() => import("./pages/ProjektADSetup"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const PageLoader = () => (
@@ -67,6 +71,10 @@ const App = () => {
               <Route path="/projekt/cisco/lab-3-6-1" element={<Lab361VlansUndTrunking />} />
               <Route path="/projekt/openvpn-gateway" element={<ProjektOpenVPN />} />
               <Route path="/projekt/ssd-upgrade" element={<ProjektSSDUpgrade />} />
+              <Route path="/projekt/lemye-ogreniyor" element={<ProjektLemyeOgreniyor />} />
+              <Route path="/windows-projekte" element={<WindowsProjekte />} />
+              <Route path="/projekt/windows/win10-upgrade" element={<ProjektWin10Upgrade />} />
+              <Route path="/projekt/windows/ad-setup" element={<ProjektADSetup />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

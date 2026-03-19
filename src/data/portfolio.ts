@@ -72,7 +72,7 @@ export const featuredProjects: Project[] = [
     },
     {
         path: "/projekt/web-server",
-        label: "Web-Server Einrichten (Ngnix)",
+        label: "Web-Server Einrichten (Nginx)",
         description: "Konfiguration und Verwaltung eines Nginx Web Servers.",
         logos: [
             "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg"
@@ -80,8 +80,8 @@ export const featuredProjects: Project[] = [
     },
     {
         path: "/projekt/web-hosting",
-        label: "Web-Hosting Einrichten (Cloudflare)",
-        description: "Selfhosting-Lösungen und Cloudflare Integration.",
+        label: "Reverse Tunneling & Web Hosting (Cloudflare)",
+        description: "Selfhosting-Lösungen mit Cloudflare Tunnel und DNS-Integration.",
         logos: [
             "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg"
         ]
@@ -173,5 +173,37 @@ export const ciscoProjects: Project[] = [
         logos: ["/images/cisco/lab-3.6.1.png"],
     }
 ];
+
+export const windowsModul1Projects: Project[] = [
+    {
+        path: "/projekt/windows/win10-upgrade",
+        label: "Projekt 01: Upgrade Windows 10 \u2192 Windows 11",
+        description: "In-Place Upgrade in Hyper-V: Windows 10 Pro (22H2) \u2192 Windows 11 Pro (21H2) ohne Datenverlust. Dokumentiert mit Screenshots, Logs und Troubleshooting.",
+        logos: ["https://cdn.simpleicons.org/windows11/0078D4"],
+    }
+];
+
+export const windowsModul2Projects: Project[] = [
+    {
+        path: "/projekt/windows/ad-setup",
+        label: "Projekt 05: Active Directory Setup & Domain Join",
+        description: "Active Directory Domain Services auf Windows Server 2019 einrichten und Windows 11 Clients verschiedener Editionen (Home, Pro, Enterprise) in die Dom\u00e4ne integrieren.",
+        logos: ["https://cdn.simpleicons.org/windows11/0078D4"],
+    }
+];
+
+export const windowsProjects: Project[] = [...windowsModul1Projects, ...windowsModul2Projects];
+
+// ============================================
+// CATEGORY GROUPINGS (for navigation)
+// ============================================
+
+export const homelabProjects: Project[] = featuredProjects.filter(p =>
+    ["/projekt/home-server", "/projekt/home-assistant", "/projekt/web-server", "/projekt/web-hosting", "/projekt/ssd-upgrade"].includes(p.path)
+);
+
+export const cloudSecurityProjects: Project[] = featuredProjects.filter(p =>
+    p.path === "/projekt/openvpn-gateway"
+);
 
 export const projects: string[] = featuredProjects.map(p => p.label);
