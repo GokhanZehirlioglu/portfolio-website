@@ -24,6 +24,23 @@ const ProjektCiscoLab162 = lazy(() => import("./pages/ProjektCiscoLab162"));
 const Lab361VlansUndTrunking = lazy(() => import("./pages/Lab361VlansUndTrunking"));
 const ProjektOpenVPN = lazy(() => import("./pages/ProjektOpenVPN"));
 const ProjektSSDUpgrade = lazy(() => import("./pages/ProjektSSDUpgrade"));
+const ProjektLemyeOgreniyor = lazy(() => import("./pages/ProjektLemyeOgreniyor"));
+const WindowsProjekte = lazy(() => import("./pages/WindowsProjekte"));
+const ProjektWin10Upgrade = lazy(() => import("./pages/ProjektWin10Upgrade"));
+const ProjektADSetup = lazy(() => import("./pages/ProjektADSetup"));
+const ProjektUSMTMigration = lazy(() => import("./pages/ProjektUSMTMigration"));
+const ProjektWindowsNetzwerk = lazy(() => import("./pages/ProjektWindowsNetzwerk"));
+const ProjektRBACGPO = lazy(() => import("./pages/ProjektRBACGPO"));
+const ProjektClientHardening = lazy(() => import("./pages/ProjektClientHardening"));
+const Projekt09 = lazy(() => import("./pages/Projekt09"));
+const ProjektOPNsenseIntro = lazy(() => import("./pages/ProjektOPNsenseIntro"));
+const ProjektOPNsensePart1 = lazy(() => import("./pages/ProjektOPNsensePart1"));
+const ProjektOPNsensePart2 = lazy(() => import("./pages/ProjektOPNsensePart2"));
+const ProjektOPNsensePart3 = lazy(() => import("./pages/ProjektOPNsensePart3"));
+const ProjektOPNsensePart4 = lazy(() => import("./pages/ProjektOPNsensePart4"));
+const ProjektOPNsensePart5 = lazy(() => import("./pages/ProjektOPNsensePart5"));
+const ProjektOPNsensePart6 = lazy(() => import("./pages/ProjektOPNsensePart6"));
+const PlaceholderPage = lazy(() => import("./pages/PlaceholderPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const PageLoader = () => (
@@ -67,6 +84,22 @@ const App = () => {
               <Route path="/projekt/cisco/lab-3-6-1" element={<Lab361VlansUndTrunking />} />
               <Route path="/projekt/openvpn-gateway" element={<ProjektOpenVPN />} />
               <Route path="/projekt/ssd-upgrade" element={<ProjektSSDUpgrade />} />
+              <Route path="/projekt/lemye-ogreniyor" element={<ProjektLemyeOgreniyor />} />
+              <Route path="/windows-projekte" element={<WindowsProjekte />} />
+              <Route path="/projekt/windows/win10-upgrade" element={<ProjektWin10Upgrade />} />
+              <Route path="/projekt/windows/ad-setup" element={<ProjektADSetup />} />
+              <Route path="/projekt/windows/usmt-migration" element={<ProjektUSMTMigration />} />
+              <Route path="/projekt/windows/netzwerk-infrastruktur" element={<ProjektWindowsNetzwerk />} />
+              <Route path="/projekt/windows/rbac-gpo" element={<ProjektRBACGPO />} />
+              <Route path="/projekt/windows/client-hardening" element={<ProjektClientHardening />} />
+              <Route path="/projekt/windows/storage-management" element={<Projekt09 />} />
+              <Route path="/projekt/security/opnsense" element={<ProjektOPNsenseIntro />} />
+              <Route path="/projekt/security/opnsense/part-1" element={<ProjektOPNsensePart1 />} />
+              <Route path="/projekt/security/opnsense/part-2" element={<ProjektOPNsensePart2 />} />
+              <Route path="/projekt/security/opnsense/part-3" element={<ProjektOPNsensePart3 />} />
+              <Route path="/projekt/security/opnsense/part-4" element={<ProjektOPNsensePart4 />} />
+              <Route path="/projekt/security/opnsense/part-5" element={<ProjektOPNsensePart5 />} />
+              <Route path="/projekt/security/opnsense/part-6" element={<ProjektOPNsensePart6 />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

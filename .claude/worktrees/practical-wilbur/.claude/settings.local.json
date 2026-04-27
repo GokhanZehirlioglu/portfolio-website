@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(timeout 5 npm run dev)",
+      "Bash(powershell -Command \"Get-Content ''C:\\\\Users\\\\Student\\\\Desktop\\\\portfolio-website\\\\.claude\\\\worktrees\\\\practical-wilbur\\\\src\\\\data\\\\portfolio.ts'' -Head 100\")",
+      "Bash(npm run dev)",
+      "Bash(curl -s http://localhost:3001)",
+      "Bash(npm run build)",
+      "Bash(powershell -Command \"Get-ChildItem ''C:\\\\Users\\\\Student\\\\Desktop\\\\portfolio-website\\\\src\\\\pages\\\\'' -Filter ''Projekt*.tsx'' | Select-Object Name\")",
+      "Bash(done)",
+      "Bash(grep -n \"\\\\\\\\u[0-9A-Fa-f]\" *.tsx)",
+      "Bash(grep -P '\\\\\\\\u[0-9A-Fa-f]{4}' *.tsx)",
+      "Bash(grep -P '\\\\\\\\u[0-9A-Fa-f]{4}' ProjektWin10Upgrade.tsx ProjektUSMTMigration.tsx ProjektADSetup.tsx ProjektWindowsNetzwerk.tsx ProjektRBACGPO.tsx ProjektClientHardening.tsx)",
+      "Bash(python3:*)",
+      "Bash(unzip -q -c \"public/downloads/Anleitung_IAM_Active_Directory.docx\" word/document.xml)",
+      "Bash(python scripts/office/unpack.py \"C:\\\\Users\\\\Student\\\\Desktop\\\\portfolio-website\\\\public\\\\downloads\\\\Anleitung_IAM_Active_Directory.docx\" unpacked_p07/)",
+      "Bash(pip install defusedxml)",
+      "Bash(python -c \":*)",
+      "Bash(python scripts/office/unpack.py \"C:\\\\Users\\\\Student\\\\Desktop\\\\portfolio-website\\\\public\\\\Projekt 06 Schrit für schrit Anleitung .docx\" unpacked_p06/)"
+    ]
+  }
+}

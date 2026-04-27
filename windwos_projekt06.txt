@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projekt 06: Netzwerkautomatisierung & IT-Infrastruktur | Microsoft Enterprise IT | Gokhan Zehirlioglu</title>
+<meta name="description" content="DHCP-Automatisierung, Active Directory Domain Join, File Server mit ABE — Aufbau einer skalierbaren Unternehmensinfrastruktur auf Windows Server 2019.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cascadia+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--win-blue:#0078D4;--win-blue-dark:#005A9E;--win-blue-light:#4EA8DE;--win-blue-subtle:#E8F4FD;--win-blue-bg:#F0F6FC;--win-green:#107C10;--win-orange:#D83B01;--win-red:#C42B1C;--bg-body:#FAFBFC;--bg-white:#FFFFFF;--bg-gray-50:#F5F7FA;--bg-gray-100:#EEF1F5;--bg-hero:#001D3D;--bg-hero-mid:#002B5C;--text-primary:#1A1A1A;--text-secondary:#4A5568;--text-muted:#7A8599;--text-white:#FFFFFF;--text-white-dim:rgba(255,255,255,0.7);--border-light:#E1E5EB;--shadow-sm:0 1px 3px rgba(0,0,0,0.06);--shadow-md:0 4px 16px rgba(0,0,0,0.08);--shadow-lg:0 8px 32px rgba(0,0,0,0.1);--radius:8px;--radius-lg:12px;--radius-xl:16px;--font-body:'Inter','Segoe UI',system-ui,sans-serif;--font-mono:'Cascadia Code','Consolas',monospace;--max-w:820px}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:var(--font-body);background:var(--bg-body);color:var(--text-primary);line-height:1.75;font-size:16px;-webkit-font-smoothing:antialiased}::selection{background:var(--win-blue);color:#fff}img{max-width:100%;height:auto}code{font-family:var(--font-mono);font-size:12.5px;background:var(--bg-gray-100);padding:2px 8px;border-radius:4px;color:var(--win-blue-dark);border:1px solid var(--border-light)}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--bg-hero) 0%,var(--bg-hero-mid) 50%,var(--win-blue-dark) 100%);color:var(--text-white);padding:60px 0 56px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.hero::after{content:'';position:absolute;top:-120px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,120,212,.2) 0%,transparent 70%);pointer-events:none}
+.hero-inner{position:relative;z-index:2}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-white-dim);margin-bottom:28px;flex-wrap:wrap}
+.breadcrumb a{color:var(--text-white-dim);text-decoration:none;transition:color .2s}.breadcrumb a:hover{color:#fff}
+.breadcrumb .sep{opacity:.4}.breadcrumb .current{color:var(--win-blue-light);font-weight:500}
+.hero h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;line-height:1.2;letter-spacing:-.02em;margin-bottom:12px}
+.hero-subtitle{font-size:1.05rem;font-weight:300;color:var(--text-white-dim);line-height:1.6;max-width:600px;margin-bottom:32px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:28px}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-white-dim)}
+.hero-meta-item svg{width:16px;height:16px;opacity:.6;flex-shrink:0}
+.hero-meta-item strong{color:#fff;font-weight:500}
+.project-nav{display:flex;gap:8px;margin-top:32px;flex-wrap:wrap}
+.project-pill{padding:6px 14px;border-radius:100px;font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;border:1px solid rgba(255,255,255,.15);color:var(--text-white-dim)}
+.project-pill:hover{border-color:rgba(255,255,255,.3);color:#fff}
+.project-pill.active{background:var(--win-blue);border-color:var(--win-blue);color:#fff}
+
+/* SECTIONS */
+.content-section{padding:56px 0;border-bottom:1px solid var(--border-light)}
+.content-section:last-of-type{border-bottom:none}
+.section-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.section-number{flex-shrink:0;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:var(--win-blue);color:#fff;border-radius:10px;font-size:16px;font-weight:700;margin-top:2px}
+.section-header h2{font-size:1.5rem;font-weight:700;letter-spacing:-.01em;line-height:1.3}
+.section-tagline{font-size:14px;color:var(--text-muted);font-weight:400;margin-top:2px}
+.body-text{font-size:15.5px;color:var(--text-secondary);line-height:1.8;margin-bottom:16px}
+.body-text strong{color:var(--text-primary);font-weight:600}
+
+/* SPEC TABLE */
+.spec-table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--border-light);border-radius:var(--radius-lg);overflow:hidden;margin:24px 0;box-shadow:var(--shadow-sm)}
+.spec-table tr{transition:background .15s}.spec-table tbody tr:hover{background:var(--bg-gray-50)}
+.spec-table th{padding:10px 20px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);background:var(--bg-gray-100);border-bottom:1px solid var(--border-light);font-weight:600}
+.spec-table td{padding:11px 20px;font-size:14px;border-bottom:1px solid var(--border-light)}
+.spec-table tbody tr:last-child td{border-bottom:none}
+.spec-table td:first-child{font-weight:600;color:var(--win-blue-dark);width:200px;white-space:nowrap;font-size:13px}
+.spec-table td:last-child{color:var(--text-secondary)}
+
+/* SCREENSHOTS */
+.proof-figure{margin:28px 0;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border-light);background:var(--bg-white);box-shadow:var(--shadow-md);cursor:zoom-in;transition:box-shadow .3s,transform .2s}
+.proof-figure:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.proof-figure img{width:100%;display:block}
+.proof-caption{padding:14px 20px;display:flex;align-items:center;gap:12px;background:var(--bg-gray-50);border-top:1px solid var(--border-light)}
+.proof-num{background:var(--win-blue);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px;white-space:nowrap;font-family:var(--font-mono)}
+.proof-text{font-size:13px;color:var(--text-secondary);line-height:1.5}
+
+/* ARCH CARDS */
+.arch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+.arch-card{padding:20px;background:var(--bg-white);border:1px solid var(--border-light);border-radius:var(--radius-lg);transition:border-color .2s,box-shadow .2s}
+.arch-card:hover{border-color:var(--win-blue);box-shadow:0 2px 12px rgba(0,120,212,.1)}
+.arch-icon{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--win-blue-subtle);border-radius:8px;margin-bottom:12px;font-size:18px}
+.arch-title{font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px}
+.arch-desc{font-size:12.5px;color:var(--text-muted);line-height:1.5}
+
+/* STEPS */
+.phase-label{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--win-blue);text-transform:uppercase;letter-spacing:.5px;margin:36px 0 20px;padding:6px 16px;background:var(--win-blue-subtle);border-radius:100px}
+.step-list{margin:20px 0}
+.step-item{display:flex;gap:16px;margin-bottom:20px;align-items:flex-start}
+.step-num{flex-shrink:0;width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:var(--win-blue);color:#fff;border-radius:50%;font-size:13px;font-weight:700;margin-top:1px}
+.step-content{flex:1}
+.step-title{font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:4px}
+.step-desc{font-size:14px;color:var(--text-secondary);line-height:1.7}
+
+/* PROBLEM / SOLUTION */
+.issue-card{margin:24px 0;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border-light);box-shadow:var(--shadow-sm)}
+.issue-header{padding:16px 24px;display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600}
+.issue-header svg{width:20px;height:20px;flex-shrink:0}
+.issue-header.problem{background:#FEF2F2;color:var(--win-red);border-bottom:1px solid #FECACA}
+.issue-header.solution{background:#F0FFF4;color:var(--win-green);border-bottom:1px solid #C6F6D5}
+.issue-body{padding:20px 24px;background:var(--bg-white);font-size:14px;color:var(--text-secondary);line-height:1.8}
+.note-block{margin:16px 0;padding:16px 20px;background:#FFFBEB;border-left:3px solid var(--win-orange);border-radius:0 var(--radius) var(--radius) 0}
+.note-block-title{font-size:13px;font-weight:600;color:var(--win-orange);margin-bottom:4px}
+.note-block-text{font-size:14px;color:var(--text-secondary);line-height:1.7}
+
+/* RESULT TABLE */
+.result-table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--border-light);border-radius:var(--radius-lg);overflow:hidden;margin:24px 0;box-shadow:var(--shadow-sm)}
+.result-table thead th{padding:12px 20px;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:#fff;background:var(--win-blue);text-align:left;font-weight:600}
+.result-table thead th:nth-child(2),.result-table thead th:nth-child(3){text-align:center}
+.result-table td{padding:12px 20px;font-size:14px;color:var(--text-secondary);background:var(--bg-white);border-bottom:1px solid var(--border-light)}
+.result-table tbody tr:last-child td{border-bottom:none}
+.result-table tbody tr:nth-child(even) td{background:var(--bg-gray-50)}
+.result-table tbody tr:hover td{background:var(--win-blue-bg)}
+.result-table td:nth-child(2),.result-table td:nth-child(3){text-align:center}
+.badge-ok{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;padding:3px 12px;border-radius:100px;background:#DCFCE7;color:var(--win-green)}
+.badge-ok::before{content:'✓';font-size:11px}
+.ref-link{font-family:var(--font-mono);font-size:11px;color:var(--text-muted)}
+
+/* FAZIT */
+.fazit-box{margin:32px 0;padding:28px 32px;background:linear-gradient(135deg,var(--win-blue-subtle),#F0F6FC);border:1px solid rgba(0,120,212,.2);border-radius:var(--radius-xl)}
+.fazit-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--win-blue);margin-bottom:10px}
+.fazit-box p{font-size:15px;color:var(--text-secondary);line-height:1.8}.fazit-box p+p{margin-top:12px}
+
+/* FOOTER */
+.page-footer{padding:40px 0;text-align:center;background:var(--bg-gray-100);border-top:1px solid var(--border-light)}
+.page-footer p{font-size:13px;color:var(--text-muted)}.page-footer a{color:var(--win-blue);text-decoration:none}.page-footer a:hover{text-decoration:underline}
+
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:10000;cursor:zoom-out;align-items:center;justify-content:center;padding:32px;backdrop-filter:blur(4px)}
+.lightbox.active{display:flex}
+.lightbox img{max-width:96%;max-height:92vh;border-radius:var(--radius);box-shadow:0 16px 48px rgba(0,0,0,.4)}
+
+/* RESPONSIVE */
+@media(max-width:768px){.arch-grid{grid-template-columns:1fr 1fr}.hero-meta{gap:16px}}
+@media(max-width:560px){.hero{padding:40px 0}.arch-grid{grid-template-columns:1fr}.hero-meta{flex-direction:column;gap:10px}.content-section{padding:40px 0}.section-header{flex-direction:column;gap:10px}.spec-table td:first-child{width:auto;white-space:normal}}
+</style>
+</head>
+<body>
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('active')"><img id="lb-img" src="" alt=""></div>
+
+<header class="hero">
+<div class="container hero-inner">
+<nav class="breadcrumb">
+<a href="#">System & Server Administration</a><span class="sep">›</span>
+<a href="#">Microsoft Enterprise IT</a><span class="sep">›</span>
+<a href="#">Modul 2: Identity & Server Administration</a><span class="sep">›</span>
+<span class="current">Projekt 06</span>
+</nav>
+<h1>Netzwerkautomatisierung<br>& IT-Infrastruktur</h1>
+<p class="hero-subtitle">DHCP, Domain Join und zentraler File Server — eine skalierbare Unternehmensinfrastruktur auf Windows Server 2019 aufbauen und dokumentieren.</p>
+<div class="hero-meta">
+<div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><strong>24.03.2026</strong></div>
+<div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><strong>Hyper-V</strong>&nbsp;auf Remote Desktop</div>
+<div class="hero-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><strong>Gokhan Zehirlioglu</strong></div>
+</div>
+<nav class="project-nav">
+<a href="#" class="project-pill">05 Active Directory</a>
+<a href="#" class="project-pill active">06 Netzwerk & Infrastruktur</a>
+</nav>
+</div>
+</header>
+
+<!-- 1. ZIEL -->
+<section class="content-section">
+<div class="container">
+<div class="section-header"><div class="section-number">1</div><div><h2>Ziel</h2><div class="section-tagline">Was wird hier aufgebaut und warum?</div></div></div>
+<p class="body-text">In diesem Projekt wird eine <strong>skalierbare und isolierte Unternehmensnetzwerk-Architektur</strong> auf Basis von Windows Server 2019 und Windows 11 Clients aufgebaut. Es simuliert ein reales Szenario: Ein Unternehmen mit mehreren Abteilungen benötigt eine zentral verwaltete IT-Infrastruktur — von der automatischen IP-Vergabe bis zum sicheren Dateiserver.</p>
+<p class="body-text">Die drei Kernziele des Projekts sind: <strong>Automatisierung der IP-Vergabe</strong> mittels DHCP, <strong>Standardisierung und Domänenintegration</strong> der Endgeräte über Active Directory sowie die <strong>Bereitstellung eines zentralen File Servers</strong> mit Access-Based Enumeration (ABE) — damit jeder Benutzer nur die Ordner sieht, auf die er Zugriff hat.</p>
+<p class="body-text">Der gesamte Prozess wird nach dem <strong>Proof-Driven-Prinzip</strong> dokumentiert — jeder Konfigurationsschritt wird durch Screenshots belegt. Das Ergebnis ist eine produktionsnahe Infrastruktur, wie sie in realen Unternehmen eingesetzt wird.</p>
+</div>
+</section>
+
+<!-- 2. AUSGANGSSITUATION -->
+<section class="content-section">
+<div class="container">
+<div class="section-header"><div class="section-number">2</div><div><h2>Ausgangssituation</h2><div class="section-tagline">Bestehende Infrastruktur vor dem Projekt</div></div></div>
+<p class="body-text">Das Projekt baut auf der in <strong>Projekt 05</strong> erstellten Active-Directory-Umgebung auf. Der Domain Controller ist bereits konfiguriert und die Domäne <code>gfn_lab.local</code> existiert. Allerdings fehlen noch automatische Netzwerkkonfiguration, standardisierte Clients und ein zentraler Dateispeicher.</p>
+
+<table class="spec-table">
+<thead><tr><th>Komponente</th><th>Details</th></tr></thead>
+<tbody>
+<tr><td>Domain Controller</td><td>Windows Server 2019 Standard Evaluation (WIN-QLN9UGPDOEA)</td></tr>
+<tr><td>Server-IP (statisch)</td><td>192.168.10.10 / 24</td></tr>
+<tr><td>Domäne</td><td>gfn_lab.local</td></tr>
+<tr><td>Virtualisierung</td><td>Hyper-V auf Remote Desktop (WIN-DSQN5G5QED1)</td></tr>
+<tr><td>Clients (geplant)</td><td>6× Windows 11 Pro / Enterprise — verschiedene Abteilungen</td></tr>
+<tr><td>Netzwerkbereich</td><td>192.168.10.0 / 24</td></tr>
+<tr><td>IP-Vergabe (aktuell)</td><td>Manuell — kein DHCP vorhanden</td></tr>
+<tr><td>Dateiserver</td><td>Nicht vorhanden — keine zentrale Ablage</td></tr>
+</tbody>
+</table>
+
+<p class="body-text">Das Ziel ist es, diese bestehende AD-Umgebung um drei wesentliche Infrastruktur-Dienste zu erweitern: <strong>DHCP</strong> für automatische IP-Vergabe, <strong>standardisierte Domain-Clients</strong> und einen <strong>File Server</strong> mit abteilungsbasiertem Zugriffsschutz.</p>
+</div>
+</section>
+
+<!-- 3. ARCHITEKTUR -->
+<section class="content-section">
+<div class="container">
+<div class="section-header"><div class="section-number">3</div><div><h2>Architektur</h2><div class="section-tagline">Netzwerkdesign und Infrastrukturkomponenten</div></div></div>
+<p class="body-text">Die gesamte Infrastruktur wurde auf einem <strong>Remote Desktop Server</strong> mit Hyper-V aufgebaut. Der Windows Server 2019 übernimmt mehrere Rollen gleichzeitig — Domain Controller, DHCP-Server, DNS-Server und File Server:</p>
+
+<div class="arch-grid">
+<div class="arch-card"><div class="arch-icon">🖥️</div><div class="arch-title">Domain Controller</div><div class="arch-desc">Windows Server 2019 mit AD DS, DNS — IP: 192.168.10.10</div></div>
+<div class="arch-card"><div class="arch-icon">📡</div><div class="arch-title">DHCP-Server</div><div class="arch-desc">Scope: 192.168.10.51–100, Gateway: .254, DNS: .10</div></div>
+<div class="arch-card"><div class="arch-icon">🌐</div><div class="arch-title">DNS-Server</div><div class="arch-desc">Zone: gfn_lab.local — Namensauflösung im Netzwerk</div></div>
+<div class="arch-card"><div class="arch-icon">📁</div><div class="arch-title">File Server</div><div class="arch-desc">SMB-Freigabe mit ABE — 5 Abteilungsordner</div></div>
+<div class="arch-card"><div class="arch-icon">💻</div><div class="arch-title">6 Clients</div><div class="arch-desc">Win11 Pro/Enterprise — DHCP, Domain Joined, standardisiert</div></div>
+<div class="arch-card"><div class="arch-icon">🔒</div><div class="arch-title">Sicherheit</div><div class="arch-desc">ABE: Benutzer sehen nur autorisierte Ordner</div></div>
+</div>
+
+<p class="body-text">Die <strong>Clients</strong> wurden nach einem einheitlichen Namensschema benannt, das sofort die Abteilungszugehörigkeit erkennen lässt: <code>W11P-Finanz1</code>, <code>W11P-Vertrieb2</code>, <code>W11P-Betrieb</code>, <code>W11ENT-IT</code> usw. So wird eine professionelle NetBIOS-konforme Benennung sichergestellt.</p>
+</div>
+</section>
+
+<!-- 4. DURCHFÜHRUNG -->
+<section class="content-section">
+<div class="container">
+<div class="section-header"><div class="section-number">4</div><div><h2>Durchführung</h2><div class="section-tagline">Drei Phasen — von DHCP über Domain Join bis zum File Server</div></div></div>
+
+<!-- PHASE 1 -->
+<div class="phase-label">Phase 1 — DHCP-Server einrichten</div>
+<p class="body-text">Um die manuelle IP-Konfiguration abzulösen und IP-Konflikte im Netzwerk zu vermeiden, wurde ein zentraler <strong>DHCP-Server</strong> auf dem Windows Server 2019 eingerichtet.</p>
+
+<div class="step-list">
+<div class="step-item"><div class="step-num">1</div><div class="step-content"><div class="step-title">DHCP-Rolle installieren</div><div class="step-desc">Im Server-Manager wurde über „Rollen und Features hinzufügen" die Rolle <strong>DHCP-Server</strong> installiert. Nach der Installation erscheint im Server-Manager die Benachrichtigung, dass die DHCP-Konfiguration noch abgeschlossen werden muss.</div></div></div>
+<div class="step-item"><div class="step-num">2</div><div class="step-content"><div class="step-title">DHCP im Active Directory autorisieren</div><div class="step-desc">Über den DHCP-Konfigurations-Assistenten wurde der Server mit den Anmeldeinformationen <code>GFN_LAB\Administrator</code> im Active Directory autorisiert. Ohne diese Autorisierung darf ein DHCP-Server in einer AD-Domäne keine Adressen vergeben — ein wichtiger Sicherheitsmechanismus.</div></div></div>
+<div class="step-item"><div class="step-num">3</div><div class="step-content"><div class="step-title">IPv4-Bereich (Scope) erstellen</div><div class="step-desc">In der DHCP-Konsole wurde ein neuer IPv4-Bereich <strong>„GFN_Lab_Clients"</strong> erstellt: Start-IP <code>192.168.10.51</code>, End-IP <code>192.168.10.100</code>, Subnetzmaske <code>255.255.255.0</code> (/24). Damit stehen 50 dynamische Adressen für Clients zur Verfügung.</div></div></div>
+<div class="step-item"><div class="step-num">4</div><div class="step-content"><div class="step-title">Bereichsoptionen konfigurieren</div><div class="step-desc">Als <strong>Standardgateway</strong> (Router) wurde <code>192.168.10.254</code> eingetragen. Als <strong>DNS-Server</strong> wurde <code>192.168.10.10</code> (der Domain Controller) und als <strong>Übergeordnete Domäne</strong> <code>gfn_lab.local</code> angegeben. Damit erhalten alle Clients automatisch die korrekten Routing- und DNS-Informationen.</div></div></div>
+</div>
+
+<figure class="proof-figure" onclick="openLB(this)"><img src="images/Projekt6_2.png" alt="Server-Manager DHCP Rolle installiert" loading="lazy"><figcaption class="proof-caption"><span class="proof-num">Abb. 1</span><span class="proof-text">Server-Manager — DHCP-Rolle erfolgreich installiert. Benachrichtigung: „Konfiguration ist für DHCP-Server erforderlich".</span></figcaption></figure>
+
+<figure class="proof-figure" onclick="openLB(this)"><img src="images/Projekt6_4.png" alt="DHCP Autorisierung" loading="lazy"><figcaption class="proof-caption"><span class="proof-num">Abb. 2</span><span class="proof-text">DHCP-Konfigurations-Assistent — Autorisierung mit GFN_LAB\Administrator. Der Server wird im AD als legitimer DHCP-Server registriert.</span></figcaption></figure>
+
+<figure class="proof-figure" onclick="openLB(this)"><img src="images/Projekt6_5.png" alt="DHCP Konfiguration abgeschlossen" loading="lazy"><figcaption class="proof-caption"><span class="proof-num">Abb. 3</span><span class="proof-text">DHCP-Konfiguration — Zusammenfassung: Sicherheitsgruppen erstellt, DHCP-Server autorisiert. Status: Fertig.</span></figcaption></figure>
+
+<figure class="proof-figure" onclick="openLB(this)"><img src="images/Projekt6_6.png" alt="DHCP Scope IP-Bereich" loading="lazy"><figcaption class="proof-caption"><span class="proof-num">Abb. 4</span><span class="proof-text">Bereichserstellungs-Assistent — IP-Adressbereich: 192.168.10.51 bis 192.168.10.100, Subnetzmaske: /24.</span></figcaption></figure>
+
+<figure class="proof-figure" onclick="openLB(this)"><img src="images/Projekt6_7.png" alt="Standardgateway" loading="lazy"><figcaption class="proof-caption"><span class="proof-num">Abb. 5</span><span class="proof-text">Bereichsoptionen — Router (Standardgateway): 192.168.10.254.</span></figcaption></figure>
+
+<figure class="proof-figure" onclick="openLB(this)"><img src="images/Projekt6_8.png" alt="DNS-Server Konfiguration" loading="lazy"><figcaption class="proof-caption"><span class="proof-num">Abb. 6</span><span class="proof-text">Bereichsoptionen — DNS-Server: 192.168.10.10, Übergeordnete Domäne: gfn_lab.local.</span></figcaption></figure>
+
+<figure class="proof-figure" onclick="openLB(this)"><img src="images/Projekt6_9.png" alt="Scope erfolgreich erstellt" loading="lazy"><figcaption class="proof-caption"><span class="proof-num">Abb. 7</span><span class="proof-text">Bereichserstellungs-Assistent — „Der Bereichserstellungs-Assistent wurde erfolgreich abgeschlossen."</span></figcaption></figure>
+
+<!-- PHASE 2 -->
+<div class="phase-label">Phase 2 — Client-Standardisierung & Domain Join</div>
+<p class="body-text">Alle Windows 11 Clients wurden nach einem <strong>einheitlichen Namensschema</strong> benannt und in die Active-Directory-Domäne aufgenommen. Ziel ist eine zentrale Verwaltbarkeit aller Endgeräte.</p>
+
+<div class="step-list">
+<div class="step-item"><div class="step-num">1</div><div class="step-content"><div class="step-title">IPv4 auf DHCP umstellen</div><div class="step-desc">Auf jedem Client wurde über <code>ncpa.cpl</code> → Ethernet → IPv4-Eigenschaften die Option <strong>„IP-Adresse automatisch beziehen"</strong> aktiviert. Der DNS-Server wurde manuell auf <code>192.168.10.10</code> gesetzt, um die Domänenauflösung sicherzustellen.</div></div></div>
+<div class="step-item"><div class="step-num">2</div><div class="step-content"><div class="step-title">DHCP-Lease überprüfen</div><div class="step-desc">Über <code>ipconfig /all</code> wurde auf jedem Client bestätigt, dass die IP-Adresse vom DHCP-Server bezogen wurde. Beispiel: Hostname <strong>Win11_Pro</strong>, IP <code>192.168.10.52</code>, DHCP-Server <code>192.168.10.10</code>, DNS-Suffix <code>gfn_lab.local</code>, Lease gültig bis 31.03.2026.</div></div></div>
+<div class="step-item"><div class="step-num">3</div><div class="step-content"><div class="step-title">Computerumbenennung (NetBIOS-konform)</div><div class="step-desc">Jeder Client wurde über <code>sysdm.cpl</code> nach einem professionellen Schema umbenannt: <strong>W11P-Finanz1</strong>, <strong>W11P-Finanz2</strong>, <strong>W11P-Vertrieb1</strong>, <strong>W11P-Vertrieb2</strong>, <strong>W11P-Betrieb</strong>, <strong>W11ENT-IT</strong>. Die Namen sind maximal 15 Zeichen lang (NetBIOS-Limit) und zeigen auf den ersten Blick die Abteilung.</div></div></div>
+<div class="step-item"><div class="step-num">4</div><div class="step-content"><div class="step-title">Domain Join</div><div class="step-desc">Über <code>sysdm.cpl</code> → „Ändern" → „Domäne" wurde jeder Client der Domäne <strong>gfn_lab.local</strong> hinzugefügt. Nach dem Neustart wird die erfolgreiche Integration in der ADUC-Konsole (Active Directory-Benutzer und -Computer) unter dem Container „Computers" sichtbar.</div></div></div>
+</div>
+
+<figure class="proof-figure" onclick="openLB(this)"><img src="images/Projekt6_11.png" alt="Client IPv4 DHCP Einstellung" loading="lazy"><figcaption class="proof-caption"><span class="proof-num">Abb. 8</span><span class="proof-text">Client-Netzwerkkonfiguration — „IP-Adresse automatisch beziehen" aktiviert, DNS-Server: 192.168.10.10, Domäne: gfn_lab.local.</span></figcaption></figure>
+
+<figure class="proof-figure" onclick="openLB(this)"><img src="images/Projekt6_12.png" alt="ipconfig /all auf Client" loading="lazy"><figcaption class="proof-caption"><span class="proof-num">Abb. 9</span><span class="proof-text">ipconfig /all — DHCP aktiviert: Ja, IPv4: 192.168.10.52, Gateway: .254, DHCP-Server: .10, Lease bis 31.03.2026.</span></figcaption></figure>
+
+<figure class="proof-figure" onclick="openLB(this)"><img src="images/Projekt6_15.png" alt="Active Directory Computers" loading="lazy"><figcaption class="proof-caption"><span class="proof-num">Abb. 10</span><span class="proof-text">Active Directory-Benutzer und -Computer — 6 standardisierte Clients im Container „Computers" sichtbar.</span></figcaption></figure>
+
+<figure class="proof-figure" onclick="openLB(this)"><img src="images/Projekt6_16.png" alt="DHCP Adressleases final" loading="lazy"><figcaption class="proof-caption"><span class="proof-num">Abb. 11</span><span class="proof-text">DHCP Adressleases — 6 Clients mit standardisierten Namen und automatisch zugewiesenen IPs (.52–.60).</span></figcaption></figure>
+
+<!-- PHASE 3 -->
+<div class="phase-label">Phase 3 — Zentraler File Server mit ABE</div>
+<p class="body-text">Für die abteilungsübergreifende Zusammenarbeit wurde ein <strong>zentraler Dateiserver</strong> eingerichtet, der höchste Sicherheits- und Usability-Standards erfüllt. Jeder Benutzer soll nur die Ordner sehen, auf die er Zugriff hat.</p>
+
+<div class="step-list">
+<div class="step-item"><div class="step-num">1</div><div class="step-content"><div class="step-title">Ordnerstruktur erstellen</div><div class="step-desc">Auf dem Server wurde unter <code>C:\Unternehmensdaten</code> eine professionelle Ordnerstruktur mit 5 Abteilungen angelegt: <strong>IT_Abteilung</strong>, <strong>Finanz_Abteilung</strong>, <strong>Vertrieb_Abteilung</strong>, <strong>Betrieb_Abteilung</strong> und <strong>Gemeinsam</strong> (für abteilungsübergreifende Dokumente).</div></div></div>
+<div class="step-item"><div class="step-num">2</div><div class="step-content"><div class="step-title">SMB-Freigabe konfigurieren</div><div class="step-desc">Der Stammordner wurde als Netzwerkfreigabe über „Erweiterte Freigabe" konfiguriert. Der Freigabename lautet <strong>Unternehmensdaten</strong>, der UNC-Pfad ist <code>\\WIN-QLN9UGPDOEA\Unternehmensdaten</code>. Auf der Freigabe-Ebene wurde die Gruppe „Jeder" mit Vollzugriff berechtigt — die granulare Steuerung erfolgt über NTFS-Berechtigungen.</div></div></div>
+<div class="step-item"><div class="step-num">3</div><div class="step-content"><div class="step-title">Access-Based Enumeration (ABE) aktivieren</div><div class="step-desc">Im Server-Manager unter <strong>Datei- und Speicherdienste → Freigaben</strong> wurde die Funktion „Zugriffsbasierte Aufzählung aktivieren" eingeschaltet. Dadurch werden Benutzern nur die Ordner angezeigt, für die sie tatsächlich Lese- oder Schreibrechte besitzen — ein unverzichtbares Sicherheitsfeature in Unternehmensumgebungen.</div></div></div>
+</div>
+
+<figure class="proof-figure" onclick="openLB(this)"><img src="images/Projekt6_17_1.png" alt="Unternehmensdaten Ordnerstruktur" loading="lazy"><figcaption class="proof-caption"><span class="proof-num">Abb. 12</span><span class="proof-text">C:\Unternehmensdaten — 5 Abteilungsordner: Betrieb, Finanz, Gemeinsam, IT, Vertrieb (Server 2019).</span></figcaption></figure>
+
+<figure class="proof-figure" onclick="openLB(this)"><img src="images/Projekt6_17_2.png" alt="SMB Freigabe und Berechtigungen" loading="lazy"><figcaption class="proof-caption"><span class="proof-num">Abb. 13</span><span class="proof-text">Freigabe-Konfiguration — Netzwerkpfad: \\WIN-QLN9UGPDOEA\Unternehmensdaten, Berechtigungen: Jeder = Vollzugriff.</span></figcaption></figure>
+
+<figure class="proof-figure" onclick="openLB(this)"><img src="images/Projekt6_17_3.png" alt="ABE aktiviert" loading="lazy"><figcaption class="proof-caption"><span class="proof-num">Abb. 14</span><span class="proof-text">Server-Manager — Zugriffsbasierte Aufzählung aktivieren (ABE): Ja. Benutzer sehen nur autorisierte Ordner.</span></figcaption></figure>
+
+</div>
+</section>
+
+<!-- 5. PROBLEME & LÖSUNG -->
+<section class="content-section">
+<div class="container">
+<div class="section-header"><div class="section-number">5</div><div><h2>Probleme & Lösungen</h2><div class="section-tagline">Herausforderungen im Prozess und wie sie gelöst wurden</div></div></div>
+
+<div class="issue-card">
+<div class="issue-header problem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Problem 1: Falsches Standardgateway in den Bereichsoptionen</div>
+<div class="issue-body">Nach der Erstellung des DHCP-Scopes wurde festgestellt, dass in den <strong>Bereichsoptionen unter „003 Router"</strong> eine falsche IP-Adresse eingetragen war: <code>10.100.15.41</code> — eine Adresse aus dem externen Lab-Netzwerk des Remote Desktop Servers, nicht aus dem internen 192.168.10.x-Netz. Clients, die diese Option erhielten, konnten keine Verbindung zum Internet aufbauen.</div>
+</div>
+
+<div class="issue-card">
+<div class="issue-header solution"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Lösung: Gateway-Adresse manuell korrigieren</div>
+<div class="issue-body">In der DHCP-Konsole unter <strong>Bereichsoptionen → 003 Router</strong> wurde die falsche Adresse <code>10.100.15.41</code> entfernt und durch die korrekte Gateway-Adresse <code>192.168.10.254</code> ersetzt. Anschließend wurde auf den betroffenen Clients <code>ipconfig /release</code> und <code>ipconfig /renew</code> ausgeführt, um die korrigierte Konfiguration sofort zu übernehmen.<br><br><strong style="color:var(--win-blue)">Praxishinweis:</strong> In virtualisierten Umgebungen existieren häufig mehrere Netzwerkbereiche parallel. Es ist entscheidend, die Bereichsoptionen nach der Erstellung zu überprüfen — insbesondere den Router-Eintrag. Ein falsches Gateway führt dazu, dass Clients zwar intern kommunizieren können, aber keinen Zugang zum Internet oder zu anderen Subnetzen erhalten.</div>
+</div>
+
+<figure class="proof-figure" onclick="openLB(this)"><img src="images/Projekt6_14.png" alt="Bereichsoptionen mit falschem Router" loading="lazy"><figcaption class="proof-caption"><span class="proof-num">Abb. 15</span><span class="proof-text">Bereichsoptionen — Sichtbar: 003 Router mit der falschen externen IP 10.100.15.41 (markiert). DNS und Domäne korrekt.</span></figcaption></figure>
+
+<div class="issue-card" style="margin-top:32px">
+<div class="issue-header problem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Problem 2: Domain Join schlägt fehl — DNS-Auflösung</div>
+<div class="issue-body">Beim Versuch, einen Client der Domäne <code>gfn_lab.local</code> hinzuzufügen, erschien die Fehlermeldung: <strong>„Die Domäne konnte nicht kontaktiert werden"</strong>. Der Client konnte den Domänennamen nicht auflösen, weil er noch den externen DNS-Server (z.&nbsp;B. den des ISP) als bevorzugten DNS-Server eingetragen hatte.</div>
+</div>
+
+<div class="issue-card">
+<div class="issue-header solution"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Lösung: DNS-Server manuell auf den DC setzen</div>
+<div class="issue-body">In den IPv4-Eigenschaften des Clients wurde der <strong>bevorzugte DNS-Server</strong> manuell auf <code>192.168.10.10</code> (den Domain Controller) gesetzt. Alternativ kann die IP auf DHCP umgestellt werden — vorausgesetzt, die DHCP-Bereichsoptionen enthalten den korrekten DNS-Eintrag. Nach der Änderung war der Domain Join sofort erfolgreich.<br><br><strong style="color:var(--win-blue)">Praxishinweis:</strong> In einer Active-Directory-Umgebung muss der Client den Domain Controller als DNS-Server verwenden, da AD-Dienste (SRV-Records) nur über den internen DNS aufgelöst werden können. Dies ist eine der häufigsten Fehlerquellen beim Domain Join.</div>
+</div>
+
+<p class="body-text" style="margin-top:32px"><strong>Abweichungen vom Standardvorgehen:</strong></p>
+<div class="note-block"><div class="note-block-title">Client-Benennung</div><div class="note-block-text">Statt generischer Namen wie „PC-01", „PC-02" wurden abteilungsbezogene Namen gewählt (W11P-Finanz1, W11ENT-IT etc.). Dies entspricht dem NetBIOS-Limit von 15 Zeichen und ist praxisnäher für reale Unternehmensumgebungen.</div></div>
+<div class="note-block"><div class="note-block-title">Freigabe-Berechtigungen</div><div class="note-block-text">Auf der Freigabe-Ebene wurde „Jeder = Vollzugriff" gesetzt. Die granulare Zugriffskontrolle erfolgt ausschließlich über NTFS-Berechtigungen. Dieses Vorgehen entspricht der Microsoft Best Practice: Freigabe weit öffnen, NTFS steuert.</div></div>
+</div>
+</section>
+
+<!-- 6. ERGEBNIS -->
+<section class="content-section">
+<div class="container">
+<div class="section-header"><div class="section-number">6</div><div><h2>Ergebnis</h2><div class="section-tagline">Alle Erfolgskriterien auf einen Blick</div></div></div>
+<p class="body-text">Die Netzwerkautomatisierung und der Aufbau der IT-Infrastruktur wurden <strong>erfolgreich abgeschlossen</strong>. Alle drei Phasen — DHCP, Domain Join und File Server — sind produktionsbereit:</p>
+
+<table class="result-table">
+<thead><tr><th>Kriterium</th><th>Status</th><th>Nachweis</th></tr></thead>
+<tbody>
+<tr><td>DHCP-Server installiert und autorisiert</td><td><span class="badge-ok">Erfüllt</span></td><td><span class="ref-link">Abb. 1–3</span></td></tr>
+<tr><td>IPv4-Bereich (Scope) erstellt und aktiv</td><td><span class="badge-ok">Erfüllt</span></td><td><span class="ref-link">Abb. 4–7</span></td></tr>
+<tr><td>Bereichsoptionen korrekt (Gateway, DNS, Domäne)</td><td><span class="badge-ok">Erfüllt</span></td><td><span class="ref-link">Abb. 5, 6</span></td></tr>
+<tr><td>Clients erhalten IP automatisch via DHCP</td><td><span class="badge-ok">Erfüllt</span></td><td><span class="ref-link">Abb. 8, 9</span></td></tr>
+<tr><td>6 Clients standardisiert und in Domäne aufgenommen</td><td><span class="badge-ok">Erfüllt</span></td><td><span class="ref-link">Abb. 10, 11</span></td></tr>
+<tr><td>Ordnerstruktur auf Server erstellt (5 Abteilungen)</td><td><span class="badge-ok">Erfüllt</span></td><td><span class="ref-link">Abb. 12</span></td></tr>
+<tr><td>SMB-Freigabe konfiguriert und erreichbar</td><td><span class="badge-ok">Erfüllt</span></td><td><span class="ref-link">Abb. 13</span></td></tr>
+<tr><td>Access-Based Enumeration (ABE) aktiviert</td><td><span class="badge-ok">Erfüllt</span></td><td><span class="ref-link">Abb. 14</span></td></tr>
+<tr><td>Gateway-Problem erkannt und behoben</td><td><span class="badge-ok">Erfüllt</span></td><td><span class="ref-link">Abb. 15</span></td></tr>
+</tbody>
+</table>
+
+<div class="fazit-box">
+<div class="fazit-label">Fazit</div>
+<p>Dieses Projekt zeigt den Aufbau einer <strong>vollständigen Unternehmensinfrastruktur</strong> in drei Schritten: Netzwerkautomatisierung (DHCP), zentrales Client-Management (AD Domain Join) und sichere Dateiablage (File Server mit ABE). Alle Komponenten arbeiten zusammen und bilden eine skalierbare Basis für weitere Erweiterungen wie Group Policies, Druckdienste oder Backup-Strategien.</p>
+<p>Das Projekt demonstriert praxisnah, dass die <strong>Kombination aus DHCP, DNS, Active Directory und File Services</strong> das Rückgrat jeder Windows-Unternehmensinfrastruktur bildet. Die aufgetretenen Probleme — insbesondere das falsche Gateway — sind typische Fehlerquellen in der Praxis und wurden eigenständig analysiert und behoben.</p>
+</div>
+</div>
+</section>
+
+<!-- 7. SCREENSHOT-ÜBERSICHT -->
+<section class="content-section" style="border-bottom:none">
+<div class="container">
+<div class="section-header"><div class="section-number">7</div><div><h2>Screenshots (Proof)</h2><div class="section-tagline">Vollständige Übersicht aller Nachweise</div></div></div>
+
+<table class="spec-table">
+<thead><tr><th>Abb.</th><th>Beschreibung</th></tr></thead>
+<tbody>
+<tr><td>Abb. 1</td><td>Server-Manager — DHCP-Rolle installiert, Konfiguration erforderlich</td></tr>
+<tr><td>Abb. 2</td><td>DHCP-Konfigurations-Assistent — Autorisierung mit GFN_LAB\Administrator</td></tr>
+<tr><td>Abb. 3</td><td>DHCP-Konfiguration — Zusammenfassung: Sicherheitsgruppen erstellt, autorisiert</td></tr>
+<tr><td>Abb. 4</td><td>Bereichserstellungs-Assistent — IP-Bereich: 192.168.10.51–100</td></tr>
+<tr><td>Abb. 5</td><td>Bereichsoptionen — Standardgateway: 192.168.10.254</td></tr>
+<tr><td>Abb. 6</td><td>Bereichsoptionen — DNS-Server: 192.168.10.10, Domäne: gfn_lab.local</td></tr>
+<tr><td>Abb. 7</td><td>Bereichserstellungs-Assistent — Erfolgreich abgeschlossen</td></tr>
+<tr><td>Abb. 8</td><td>Client IPv4 — „Automatisch beziehen" + DNS: 192.168.10.10</td></tr>
+<tr><td>Abb. 9</td><td>ipconfig /all — DHCP-Lease bestätigt (192.168.10.52)</td></tr>
+<tr><td>Abb. 10</td><td>Active Directory — 6 standardisierte Clients im Container „Computers"</td></tr>
+<tr><td>Abb. 11</td><td>DHCP Adressleases — 6 Clients mit automatisch zugewiesenen IPs</td></tr>
+<tr><td>Abb. 12</td><td>C:\Unternehmensdaten — 5 Abteilungsordner auf dem Server</td></tr>
+<tr><td>Abb. 13</td><td>SMB-Freigabe — Netzwerkpfad und Berechtigungen konfiguriert</td></tr>
+<tr><td>Abb. 14</td><td>Server-Manager — Zugriffsbasierte Aufzählung (ABE) aktiviert</td></tr>
+<tr><td>Abb. 15</td><td>Bereichsoptionen — Falsches Gateway (10.100.15.41) als Fehlernachweis</td></tr>
+</tbody>
+</table>
+
+</div>
+</section>
+
+<footer class="page-footer">
+<div class="container">
+<p><strong>Projekt 06</strong> — Microsoft Enterprise IT · Modul 2: Identity & Server Administration</p>
+<p style="margin-top:6px"><a href="https://gokhanzehirlioglu.de">gokhanzehirlioglu.de</a> · Gokhan Zehirlioglu · Fachinformatiker für Systemintegration</p>
+</div>
+</footer>
+
+<script>
+function openLB(f){document.getElementById('lb-img').src=f.querySelector('img').src;document.getElementById('lightbox').classList.add('active')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('lightbox').classList.remove('active')});
+</script>
+</body>
+</html>
