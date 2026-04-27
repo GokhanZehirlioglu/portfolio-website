@@ -3,515 +3,466 @@ import { Helmet } from "react-helmet-async";
 import Layout from "@/components/Layout";
 import Lightbox from "@/components/Lightbox";
 import { Link } from "react-router-dom";
-import {
-  Calendar,
-  Server,
-  ShieldCheck,
-  CheckCircle2,
-  ArrowRight,
-  FileText,
-  Download,
-  Network,
-  Shield,
-  Cpu,
-  Maximize2,
-  ChevronRight,
-  AlertTriangle,
-  HardDrive,
-  GitBranch,
-  Settings,
-  Activity,
-  Layers,
-  Lock,
-  Globe,
-  Terminal,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, Maximize2, ChevronLeft, ShieldCheck, AlertTriangle } from "lucide-react";
 
-// â”€â”€â”€ Part Navigator Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-const parts = [
-  { num: 0, short: "Projektübersicht", path: "/projekt/security/opnsense", done: true },
-  { num: 1, short: "Netzwerk & Virtualisierung", path: "/projekt/security/opnsense/part-1", done: true },
-  { num: 2, short: "OPNsense Firewall Anwendungen", path: "/projekt/security/opnsense/part-2", done: true },
-  { num: 3, short: "VLAN & Firewall-Regeln", path: "/projekt/security/opnsense/part-3", done: true },
-  { num: 4, short: "IDS/IPS & Suricata", path: "/projekt/security/opnsense/part-4", done: true },
-  { num: 5, short: "DNS & Reverse Proxy", path: "/projekt/security/opnsense/part-5", done: true },
-  { num: 6, short: "VPN & Bastion Host", path: "/projekt/security/opnsense/part-6", done: true },
-];
-
-/**
- * Image Mapping based on "Part_2_Firewall_Installation_Optimierung.docx"
- */
 const FOTO = {
-  hero: "/Opnsense/Foto's/Part 2 deckel FOTO.png",
-  abb1: "/Opnsense/Foto's/Part 2 deckel FOTO.png", // Abb. 1: OPNsense als virtuelle Firewall innerhalb der Proxmox-Architektur (Architekturdiagramm)
-  abb2: "/Opnsense/Foto's/Proxmox Opnsense VM Hardware.png", // Abb. 2: OPNsense VM-Hardware
-  abb3: "/Opnsense/Foto's/Opnsense Lobby Dashboard.png", // Abb. 3: OPNsense Lobby-Dashboard
-  abb4: "/Opnsense/Foto's/Opnsense Schnittstellen Zuweisungen.png", // Abb. 4: Schnittstellenzuweisungen
-  abb5: "/Opnsense/Foto's/Opnsense Schnittstellen Ãœbersicht.png", // Abb. 5: Schnittstellenübersicht
-  abb6: "/Opnsense/Foto's/Opnsense System Einstellungen Verwqaltung.png", // Abb. 6: System-Verwaltungseinstellungen
-  abb7: "/Opnsense/Foto's/Opnsense  System Routen Status.png", // Abb. 7: Routing-Tabelle
+  cover: "/Opnsense/Foto's/Part 2 deckel FOTO.png",
+  hardware: "/Opnsense/Foto's/Proxmox Opnsense VM Hardware.png",
+  dashboard: "/Opnsense/Foto's/Opnsense Lobby Dashboard.png",
+  schnittstellen: "/Opnsense/Foto's/Opnsense Schnittstellen Zuweisungen.png",
+  schnittstellenUebersicht: "/Opnsense/Foto's/Opnsense Schnittstellen Übersicht.png",
+  verwaltung: "/Opnsense/Foto's/Opnsense System Einstellungen Verwqaltung.png",
+  routen: "/Opnsense/Foto's/Opnsense  System Routen Status.png",
 };
 
-// â”€â”€â”€ Reusable clickable photo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-const Photo = ({ src, alt, caption, onClick, className = "" }: { src: string; alt: string; caption?: string; onClick: () => void; className?: string; }) => (
-  <div
-    className={`group relative cursor-zoom-in rounded-2xl overflow-hidden border border-white/5 shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-orange-500/10 ${className}`}
-    onClick={onClick}
-  >
-    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10" />
-    <img src={src} alt={alt} className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity" loading="lazy" />
-    <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 backdrop-blur-sm rounded-lg p-1.5 z-20">
-      <Maximize2 className="w-4 h-4 text-orange-400" />
-    </div>
-    {caption && (
-      <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
-        <p className="text-xs font-medium text-white/90 drop-shadow-md">{caption}</p>
+const sections = [
+  { id: "scope", label: "Scope" },
+  { id: "environment", label: "Environment" },
+  { id: "hardware", label: "Hardware" },
+  { id: "interfaces", label: "Interfaces" },
+  { id: "hardening", label: "Hardening" },
+  { id: "decisions", label: "Decisions" },
+  { id: "validation", label: "Validation" },
+  { id: "talking-points", label: "Talking Points" },
+];
+
+const envData = [
+  { k: "Hypervisor", v: "Proxmox VE 9.1.1, Standalone-Node (pve)" },
+  { k: "WAN-Bridge", v: "vmbr0 — Verbindung zum ISP-Modem (Bridge-Modus)" },
+  { k: "LAN/Trunk-Bridge", v: "vmbr3 — VLAN-Aware, IP 192.168.99.100/24" },
+  { k: "OPNsense ISO", v: "OPNsense 26.1.5 (amd64), FreeBSD 14.3-RELEASE-p9" },
+  { k: "VM-ID", v: "100" },
+  { k: "WAN-IP", v: "DHCP vom ISP (aktuell: 46.223.25.129/22)" },
+  { k: "LAN-IP / Management", v: "192.168.99.1/24 (statisch auf vtnet1)" },
+];
+
+const interfacesData = [
+  { name: "[LAN] (lan)", value: "vtnet1 (bc:24…c5) — statisch, 192.168.99.1/24" },
+  { name: "[LgBeta_Home] (opt2)", value: "vlan020 (Übergeordnet vtnet1, Tag 20) — 192.168.20.1/24" },
+  { name: "[LgBeta_IoT] (opt1)", value: "vlan030 (Übergeordnet vtnet1, Tag 30) — 192.168.30.1/24" },
+  { name: "[LgBeta_Server] (opt4)", value: "vlan040 (Übergeordnet vtnet1, Tag 40) — 192.168.40.1/24" },
+  { name: "[WAN] (wan)", value: "vtnet0 (bc:24…bb) — DHCP, 46.223.25.129/22" },
+  { name: "[WireGuard_VPN]", value: "wg0 (WireGuard_Server) — 10.10.10.1/24" },
+];
+
+const adminSettings = [
+  { k: "Protokoll", v: "HTTPS (HTTP deaktiviert)" },
+  { k: "SSL-Zertifikat", v: "Web GUI TLS certificate (self-signed)" },
+  { k: "TCP-Port", v: "8443 (vom Standard 443 geändert)" },
+  { k: "HTTP-Umleitung", v: "Aktiviert (HTTP → HTTPS)" },
+  { k: "Alternative Hostnamen", v: "opnsense.home.internal (für DNS-Rebind)" },
+  { k: "Sitzungszeitlimit", v: "240 Minuten" },
+  { k: "SSH-Server", v: "Deaktiviert (Härtung)" },
+];
+
+const hwParams = [
+  { k: "Maschinentyp", v: "q35 (Moderner Chipsatz, PCIe)" },
+  { k: "BIOS", v: "OVMF (UEFI)" },
+  { k: "Storage", v: "VirtIO SCSI, 32 GB local-lvm, ssd=1, discard=on" },
+  { k: "CPU", v: "4 Cores, Typ host (AES-NI Passthrough)" },
+  { k: "RAM", v: "8.00 GiB, balloon=0" },
+  { k: "NIC net0", v: "VirtIO, vmbr0, queues=4" },
+  { k: "NIC net2", v: "VirtIO, vmbr3, queues=4, trunks=20;30;40" },
+];
+
+const decisions = [
+  { title: "OPNsense statt pfSense", reason: "Modernere Codebasis, regelmäßige Updates, native Plugins (Nginx, WireGuard), intuitives Web-GUI. Ideal als FreeBSD-Fork." },
+  { title: "Virtuell statt Bare-Metal", reason: "Snapshots & Backups, Koexistenz mit Controller/Testumgebung auf demselben Host, schnellere Recovery." },
+  { title: "Zwei NICs statt drei", reason: "LAN und MGMT laufen über eine einzige Trunk-NIC (vtnet1), was die Komplexität senkt." },
+  { title: "CPU-Typ host", reason: "Host-Passthrough aktiviert AES-NI für VPN (WireGuard) und IDS/IPS (Suricata) Analyse." },
+  { title: "Ballooning deaktiviert", reason: "Firewall darf keinen schwankenden Speicher haben. Feste 8 GB verhindern Kernel-Panics." },
+  { title: "Port 8443, kein SSH", reason: "Port 443 bleibt frei für Nginx. SSH ist deaktiviert, um die Angriffsfläche zu minimieren." },
+];
+
+const tuning = [
+  { k: "Hardware Offloading Off", v: "CRC, TSO und LRO in virtualisierten Umgebungen deaktiviert, um Paketkorruption zu vermeiden." },
+  { k: "VirtIO Multiqueue", v: "Beide NICs nutzen 4 Queues zur Parallelisierung auf alle CPU-Cores." },
+  { k: "TRIM/Discard aktiv", v: "SSD-Emulation & TRIM für effizientes LVM Storage-Management." },
+  { k: "Ballooning = 0", v: "Ressourcengarantie verhindert Engpässe." },
+  { k: "DNS-Rebind-Schutz", v: "Verhindert Missbrauch der Web-GUI über alternative DNS-Einträge." },
+];
+
+const validation = [
+  "OPNsense VM läuft stabil (> 3 Tage Uptime)",
+  "WAN bezieht öffentliche IP per DHCP",
+  "LAN-Interface (192.168.99.1) korrekt zugewiesen",
+  "Alle 6 Schnittstellen sind grün/aktiv",
+  "Web-GUI erreichbar über HTTPS auf Port 8443",
+  "Default-Route zeigt auf das ISP-Gateway",
+  "VLAN-Routen korrekt in der Tabelle eingetragen",
+];
+
+const troubleshooting = [
+  { issue: "Fehlende net1-Netzwerkkarte", fix: "Eine ursprünglich geplante 3. NIC wurde entfernt, weshalb die Proxmox-Hardware direkt von net0 auf net2 springt. Funktional irrelevant." },
+  { issue: "Qemu Guest Agent inaktiv", fix: "FreeBSD/OPNsense unterstützt den Agent nicht standardmäßig. Status-Informationen werden stattdessen aus der OPNsense-GUI bezogen." },
+  { issue: "Proxmox RAM-Anzeige 99%", fix: "Da Ballooning=0 gesetzt ist, reserviert der Host sofort 100%. Die tatsächliche OPNsense-Verwendung liegt bei ~15%." },
+];
+
+const talkingPoints = [
+  { title: "OPNsense vs pfSense", text: "Ich habe OPNsense statt pfSense gewählt — modernere Codebasis, regelmäßige Updates, native Plugins für Nginx und WireGuard. Beide sind FreeBSD-Forks; OPNsense fühlt sich für mich aktueller an." },
+  { title: "Virtuelle Appliance", text: "Statt Bare-Metal läuft die Firewall als VM auf Proxmox. Das gibt mir Snapshots, Backups und die Möglichkeit, parallel Test-VMs auf demselben Host zu betreiben — ohne Sicherheitsverlust, weil die NICs physisch getrennt sind." },
+  { title: "AES-NI Passthrough", text: "Die VM nutzt CPU-Typ host, damit AES-NI direkt durchgereicht wird. Das ist später kritisch für WireGuard-VPN und Suricata IDS — ohne Hardware-Beschleunigung würden beide spürbar langsamer." },
+  { title: "HTTP-Härtung", text: "Web-GUI nur über HTTPS auf Port 8443, HTTP umgeleitet, SSH komplett deaktiviert. Port 443 bleibt frei für den Nginx Reverse Proxy später. Angriffsfläche minimiert." },
+  { title: "Schnittstellen-Zuordnung", text: "Eine einzige physische NIC trägt LAN plus drei VLAN-Sub-Interfaces (Home, IoT, Server) als 802.1Q getaggter Trunk. Saubere Trennung in Software, eine einzige Leitung in Hardware." },
+  { title: "DNS-Rebind-Schutz", text: "Alternative Hostnamen wie opnsense.home.internal sind eingetragen. Damit kann die Web-GUI nicht über DNS-Rebind-Angriffe missbraucht werden, falls jemand einen DNS-Eintrag manipuliert." },
+];
+
+const Figure = ({ src, alt, caption, onClick, className = "" }: { src: string; alt: string; caption?: string; onClick?: () => void; className?: string; }) => (
+  <figure className={className}>
+    <div onClick={onClick} className="group relative cursor-zoom-in overflow-hidden border border-stone-600/60 bg-stone-800">
+      <img src={src} alt={alt} className="w-full h-auto block" loading="lazy" />
+      <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-stone-950/70 backdrop-blur-md border border-stone-700 rounded-full p-2">
+        <Maximize2 className="w-3 h-3 text-stone-200" />
       </div>
-    )}
-  </div>
+    </div>
+    {caption && <figcaption className="mt-3 font-serif italic text-stone-500 text-xs md:text-sm leading-snug">{caption}</figcaption>}
+  </figure>
 );
 
-// â”€â”€â”€ Main Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const ProjektOPNsensePart2 = () => {
   const [zoomedImage, setZoomedImage] = useState<string | null>(null);
   const closeLightbox = useCallback(() => setZoomedImage(null), []);
   const zoom = (src: string) => () => setZoomedImage(src);
-
   const docUrl = "/Opnsense/Datei/Part_2_Firewall_Installation_Optimierung.docx";
-
-  // Data Tables
-  const paramData = [
-    { k: "Hypervisor", v: "Proxmox VE 9.1.1, Standalone-Node (pve)" },
-    { k: "WAN-Bridge", v: "vmbr0 â€” Verbindung zum ISP-Modem (Bridge-Modus)" },
-    { k: "LAN/Trunk-Bridge", v: "vmbr3 â€” VLAN-Aware, IP: 192.168.99.100/24" },
-    { k: "OPNsense ISO", v: "OPNsense 26.1.5 (amd64), FreeBSD 14.3-RELEASE-p9" },
-    { k: "VM-ID", v: "100" },
-    { k: "WAN-IP", v: "DHCP vom ISP (aktuell: 46.223.25.129/22)" },
-    { k: "LAN-IP / Management", v: "192.168.99.1/24 (statisch auf vtnet1)" },
-  ];
-
-  const interfacesData = [
-    { name: "[LAN] (lan)", value: "vtnet1 (bc:24...c5) â€” statisch, 192.168.99.1/24", icon: Shield },
-    { name: "[LgBeta_Home] (opt2)", value: "vlan020 (Ãœbergeordnet: vtnet1, Tag: 20) â€” statisch, 192.168.20.1/24", icon: Layers },
-    { name: "[LgBeta_IoT] (opt1)", value: "vlan030 (Ãœbergeordnet: vtnet1, Tag: 30) â€” statisch, 192.168.30.1/24", icon: Layers },
-    { name: "[LgBeta_Server] (opt4)", value: "vlan040 (Ãœbergeordnet: vtnet1, Tag: 40) â€” statisch, 192.168.40.1/24", icon: Server },
-    { name: "[WAN] (wan)", value: "vtnet0 (bc:24...bb) â€” DHCP, 46.223.25.129/22", icon: Globe },
-    { name: "[WireGuard_VPN]", value: "wg0 (WireGuard_Server) â€” 10.10.10.1/24", icon: Lock },
-  ];
-
-  const adminSettings = [
-    { k: "Protokoll", v: "HTTPS (HTTP deaktiviert)" },
-    { k: "SSL-Zertifikat", v: "Web GUI TLS certificate (self-signed)" },
-    { k: "TCP-Port", v: "8443 (vom Standard 443 geändert)" },
-    { k: "HTTP-Umleitung", v: "Aktiviert (HTTP â†’ HTTPS)" },
-    { k: "Alternative Hostnamen", v: "opnsense.home.internal (für DNS-Rebind)" },
-    { k: "Sitzungszeitlimit", v: "240 Minuten" },
-    { k: "SSH-Server", v: "Deaktiviert (Härtung)" },
-  ];
-
-  const hwParams = [
-    { k: "Maschinentyp", v: "q35 (Moderner Chipsatz, PCIe)" },
-    { k: "BIOS", v: "OVMF (UEFI)" },
-    { k: "Storage", v: "VirtIO SCSI, 32GB local-lvm, ssd=1, discard=on" },
-    { k: "CPU", v: "4 Cores, Typ: host (AES-NI Passthrough)" },
-    { k: "RAM", v: "8.00 GiB, balloon=0" },
-    { k: "NIC net0", v: "VirtIO, vmbr0, queues=4" },
-    { k: "NIC net2", v: "VirtIO, vmbr3, queues=4, trunks=20;30;40" },
-  ];
-
-  const keyDecisions = [
-    { title: "OPNsense statt pfSense", desc: "Modernere Codebasis, Updates, native Plugins (Nginx, WireGuard), intuitives Web-GUI. Ideal als FreeBSD-Fork." },
-    { title: "Virtuell statt Bare-Metal", desc: "Snapshots & Backups, Koexistenz mit Controller/Testumgebung auf demselben Host." },
-    { title: "Zwei NICs statt drei", desc: "LAN und MGMT laufen über eine einzige Trunk-NIC (vtnet1), was die Komplexität senkt." },
-    { title: "CPU-Typ: host", desc: "Host-Passthrough aktiviert AES-NI für VPN (WireGuard) und IDS/IPS (Suricata) Analyse." },
-    { title: "Ballooning deaktiviert", desc: "Firewall darf keinen schwankenden Speicher haben. Feste 8 GB verhindern Kernel-Panics." },
-    { title: "Port 8443 (kein SSH)", desc: "Port 443 bleibt frei für Nginx. SSH ist deaktiviert, um die Angriffsfläche zu minimieren." },
-  ];
 
   return (
     <Layout>
       <Helmet>
-        <title>Part 2 â€” OPNsense Firewall Anwendungen - Installation & Optimierung | Enterprise Security Lab</title>
-        <meta name="description" content="Part 2: Firewall-Installation, Konfiguration, Schnittstellenzuordnung und Performance-Tuning der OPNsense VM" />
+        <title>Part 02 — Firewall-Installation & Optimierung | Enterprise Security Lab</title>
+        <meta name="description" content="Part 2: Installation und Optimierung der OPNsense als Network Virtual Appliance." />
       </Helmet>
       <Lightbox src={zoomedImage} onClose={closeLightbox} />
 
-      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• HEADER / HERO â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
-      <section className="py-24 px-4 relative overflow-hidden bg-slate-950">
-        <div className="absolute top-0 right-0 w-full h-full overflow-hidden opacity-30 pointer-events-none">
-          <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full bg-orange-900/40 blur-[120px]" />
-          <div className="absolute bottom-[-10%] left-[-20%] w-[600px] h-[600px] rounded-full bg-amber-900/30 blur-[100px]" />
-        </div>
+      <article className="bg-stone-800 text-stone-200 selection:bg-orange-400/20 selection:text-orange-50 [&_section]:scroll-mt-32">
 
-        <div className="max-w-5xl mx-auto relative z-10">
-          <div className="flex items-center gap-2 text-xs text-slate-400 mb-8 font-mono uppercase tracking-wider">
-            <Link to="/projekte" className="hover:text-orange-400 transition-colors">Projekte</Link>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-orange-400">Cloud & CyberSec</span>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-white">Part 2</span>
-          </div>
+        <header className="relative px-6 pt-16 pb-24 md:pt-24 md:pb-32">
+          <div className="max-w-5xl mx-auto">
+            <nav className="flex items-center gap-3 text-[13px] tracking-[0.3em] uppercase text-stone-500 font-mono mb-14">
+              <Link to="/projekte" className="hover:text-stone-200 transition-colors">Projekte</Link>
+              <span className="text-stone-700">/</span>
+              <Link to="/projekt/security/opnsense" className="hover:text-stone-200 transition-colors">Enterprise Security Lab</Link>
+              <span className="text-stone-700">/</span>
+              <span className="text-stone-300">Part 02</span>
+            </nav>
 
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-900/30 border border-orange-500/20 text-orange-400 text-xs font-medium mb-6">
-            <Shield className="w-3 h-3" />
-            Enterprise Security Lab
-          </div>
-
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tight mb-6 leading-tight">
-            Firewall-Installation &<br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-amber-500">
-              Optimierung
-            </span>
-          </h1>
-          
-          <p className="text-lg text-slate-400 max-w-2xl leading-relaxed mb-10">
-            Konfiguration der virtuellen OPNsense-Appliance, Schnittstellenzuordnung und 
-            Performance-Tuning für das Enterprise Network.
-          </p>
-
-          <div className="flex items-center gap-4">
-            <a
-              href={docUrl}
-              download
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-semibold transition-all shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]"
-            >
-              <Download className="w-5 h-5" />
-              Dokumentation Herunterladen
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• PART-NAVIGATOR (STICKY) â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
-      <div className="sticky top-[73px] z-40 bg-slate-950/80 backdrop-blur-xl border-b border-white/5 py-3 px-4">
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center gap-2 md:gap-4 overflow-x-auto no-scrollbar">
-          <span className="text-[10px] text-slate-500 uppercase tracking-widest font-bold hidden md:block">Navigator</span>
-          {parts.map((p) => (
-            <Link
-              key={p.num === 0 ? "\u2605" : p.num}
-              to={p.path}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold border transition-all whitespace-nowrap ${
-                p.num === 2
-                  ? "bg-orange-950/50 text-orange-400 border-orange-500/30 shadow-[0_0_15px_-3px_rgba(249,115,22,0.2)]"
-                  : p.done
-                  ? "bg-slate-900 text-blue-400 border-blue-900/50 hover:bg-slate-800"
-                  : "bg-transparent text-slate-500 border-slate-800 hover:border-slate-600"
-              }`}
-            >
-              <div className={`w-5 h-5 rounded flex items-center justify-center text-[10px] ${p.num===2 ? 'bg-orange-500 text-slate-950': (p.done ? 'bg-slate-800' : 'bg-slate-800/50')}`}>
-                {p.num === 0 ? "\u2605" : p.num}
-              </div>
-              <span className="hidden sm:inline-block opacity-90">{p.short}</span>
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      <div className="bg-slate-950 text-slate-300 min-h-screen">
-        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• 1. SCOPE & 2. ENVIRONMENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
-        <section className="py-20 px-4 max-w-5xl mx-auto border-b border-white/5">
-          <div className="grid lg:grid-cols-2 gap-16">
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-orange-500 font-mono text-xl">01</span>
-                <h2 className="text-3xl font-bold text-white">Scope & Ziel</h2>
-              </div>
-              <p className="text-slate-400 leading-relaxed mb-6">
-                Dieses Dokument beschreibt die Installation, Konfiguration und Optimierung der 
-                OPNsense-Firewall als virtuelle Appliance (NVA) innerhalb von Proxmox.
-              </p>
-              
-              <div className="space-y-4">
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <Activity size={18} className="text-orange-500" />
-                  Design Goals
-                </h3>
-                <p className="text-sm text-slate-400 leading-relaxed">
-                  Die VM soll stabil und performant laufen, WAN via DHCP beziehen und als Management-Gateway dienen. 
-                  Sämtlicher Netzwerkverkehr muss diese Instanz passieren, weshalb die virtuellen 
-                  Interfaces (VirtIO) durch Hardware-Offloading-Deaktivierung und Multiqueue-Settings auf 
-                  maximale Paketdurchsätze vorbereitet wurden.
-                </p>
-              </div>
+            <div className="flex items-center gap-4 text-[13px] tracking-[0.3em] uppercase text-stone-500 font-mono mb-10">
+              <span className="text-orange-400">Part 02 / 06</span>
+              <span className="h-px w-12 bg-stone-700" />
+              <span>Installation · Hardening · Routing</span>
             </div>
 
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-orange-500 font-mono text-xl">02</span>
-                <h2 className="text-3xl font-bold text-white">Environment</h2>
+            <h1 className="font-serif text-stone-50 text-[44px] sm:text-[64px] md:text-[88px] lg:text-[104px] leading-[0.95] tracking-[-0.03em] mb-12">
+              Firewall-Installation<br />
+              &amp; <span className="italic font-light text-orange-400">Optimierung</span><span className="text-stone-50">.</span>
+            </h1>
+
+            <p className="font-serif italic text-stone-300 text-xl md:text-2xl leading-snug max-w-3xl mb-14">
+              OPNsense als Network Virtual Appliance — VirtIO-Multiqueue, AES-NI-Passthrough und ein gehärtetes Web-GUI auf Port 8443.
+            </p>
+
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl">
+                <div><div className="text-[11px] tracking-[0.3em] uppercase text-stone-600 font-mono mb-2">Etappe</div><div className="text-stone-200 text-sm">02 / 06</div></div>
+                <div><div className="text-[11px] tracking-[0.3em] uppercase text-stone-600 font-mono mb-2">Layer</div><div className="text-stone-200 text-sm">L3 · L4</div></div>
+                <div><div className="text-[11px] tracking-[0.3em] uppercase text-stone-600 font-mono mb-2">Reading</div><div className="text-stone-200 text-sm">~ 7 min</div></div>
+                <div><div className="text-[11px] tracking-[0.3em] uppercase text-stone-600 font-mono mb-2">Status</div><div className="text-orange-400 text-sm">Validiert</div></div>
               </div>
-              <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-2xl">
-                <table className="w-full text-sm text-left">
-                  <tbody>
-                    {paramData.map((row, i) => (
-                      <tr key={i} className={`border-b border-slate-800/50 ${i % 2 === 0 ? "bg-slate-900" : "bg-slate-800/20"}`}>
-                        <td className="py-3 px-4 font-semibold text-slate-300 w-1/3 align-top">{row.k}</td>
-                        <td className="py-3 px-4 text-slate-400 font-mono text-xs">{row.v}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <a href={docUrl} download className="group inline-flex items-center gap-3 text-[13px] tracking-[0.3em] uppercase text-stone-900 bg-stone-200 hover:bg-white font-mono px-5 py-3 transition-all">
+                <span>Originaldokument · DOCX</span>
+                <ArrowUpRight className="w-3.5 h-3.5 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+              </a>
+            </div>
+          </div>
+        </header>
+
+        <nav className="sticky top-20 z-30 bg-stone-800/85 backdrop-blur-xl border-y border-stone-700/80">
+          <div className="max-w-5xl mx-auto px-6 py-3 flex items-center gap-6 overflow-x-auto no-scrollbar">
+            <span className="text-[11px] tracking-[0.3em] uppercase text-stone-600 font-mono shrink-0 hidden md:inline">Auf dieser Seite</span>
+            <ol className="flex items-center gap-1 md:gap-2">
+              {sections.map((s, i) => (
+                <li key={s.id} className="shrink-0">
+                  <a href={`#${s.id}`} className="group flex items-center gap-2 px-3 py-1.5 text-[11px] tracking-[0.2em] uppercase font-mono text-stone-500 hover:text-orange-400 transition-colors">
+                    <span className="text-stone-700 group-hover:text-orange-500/60 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                    <span>{s.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </nav>
+
+        <figure className="px-6 pt-20 md:pt-28">
+          <div onClick={() => setZoomedImage(FOTO.cover)} className="group relative max-w-6xl mx-auto cursor-zoom-in overflow-hidden border border-stone-600/60 bg-stone-800">
+            <img src={FOTO.cover} alt="Part 2" className="w-full h-auto block" loading="lazy" />
+            <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity bg-stone-950/70 backdrop-blur-md border border-stone-700 rounded-full p-2.5">
+              <Maximize2 className="w-3.5 h-3.5 text-stone-200" />
+            </div>
+          </div>
+          <figcaption className="max-w-6xl mx-auto mt-5 font-serif italic text-stone-500 text-sm md:text-base">
+            <span className="text-stone-600 not-italic font-mono text-xs tracking-widest mr-3">FIG. 01</span>
+            OPNsense als Network Virtual Appliance innerhalb der Proxmox-Architektur.
+          </figcaption>
+        </figure>
+
+        <section id="scope" className="px-6 py-28 md:py-36">
+          <div className="max-w-2xl mx-auto">
+            <div className="text-[13px] tracking-[0.3em] uppercase text-stone-600 font-mono mb-5">01 · Scope</div>
+            <h2 className="font-serif text-stone-50 text-4xl md:text-5xl leading-[1.05] tracking-[-0.02em] mb-12">
+              Eine Firewall, <span className="italic text-orange-400 font-light">virtualisiert</span>.
+            </h2>
+            <p className="font-serif text-stone-100 text-2xl md:text-[26px] leading-[1.45] mb-10">
+              <span className="float-left font-serif font-light text-orange-400 text-[88px] leading-[0.85] mr-4 mt-1">I</span>
+              m zweiten Teil widmen wir uns der reibungslosen Bereitstellung von OPNsense als virtuelle Firewall-Appliance (NVA). Ziel dieser Phase ist es, die VM-Parameter in Proxmox zu härten, initiale WAN/LAN-Zuordnungen vorzunehmen und OPNsense als primäres Tor für das gesamte Netzwerk-Gateway zu verankern.
+            </p>
+            <p className="text-stone-400 leading-[1.85] text-base md:text-lg">
+              Sämtlicher Netzwerkverkehr muss diese Instanz passieren, weshalb die virtuellen Interfaces (VirtIO) durch Hardware-Offloading-Deaktivierung und Multiqueue-Settings auf maximale Paketdurchsätze vorbereitet wurden.
+            </p>
+          </div>
+        </section>
+
+        <section id="environment" className="px-6 py-24 md:py-32 border-t border-stone-700/80">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-12 gap-y-12 gap-x-12">
+              <div className="md:col-span-4">
+                <div className="text-[13px] tracking-[0.3em] uppercase text-stone-600 font-mono mb-5">02 · Environment</div>
+                <h2 className="font-serif text-stone-50 text-3xl md:text-4xl leading-[1.1] tracking-[-0.02em]">
+                  Der <span className="italic text-orange-400 font-light">Spec-Sheet</span>.
+                </h2>
+              </div>
+              <div className="md:col-span-8">
+                <dl className="border-t border-stone-600/60">
+                  {envData.map((row, i) => (
+                    <div key={i} className="grid grid-cols-3 gap-4 py-4 border-b border-stone-600/60">
+                      <dt className="col-span-1 text-[11px] tracking-[0.2em] uppercase text-orange-400/70 font-mono pt-0.5">{row.k}</dt>
+                      <dd className="col-span-2 text-stone-300 text-sm md:text-base font-light leading-snug">{row.v}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
             </div>
           </div>
         </section>
 
-        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• 6. IMPLEMENTATION STEPS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
-        <section className="py-20 px-4 max-w-5xl mx-auto border-b border-white/5">
-          <div className="flex items-center gap-3 mb-10">
-            <span className="text-orange-500 font-mono text-xl">03</span>
-            <h2 className="text-3xl font-bold text-white">Installation & Konfiguration</h2>
-          </div>
+        <section id="hardware" className="px-6 py-28 md:py-36 border-t border-stone-700/80">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-[13px] tracking-[0.3em] uppercase text-stone-600 font-mono mb-5">03 · VM Hardware Tuning</div>
+            <h2 className="font-serif text-stone-50 text-4xl md:text-5xl leading-[1.05] tracking-[-0.02em] mb-16 max-w-3xl">
+              Bewusste Abstimmung für eine <span className="italic text-orange-400 font-light">NVA</span>.
+            </h2>
 
-          <div className="space-y-16">
-            
-            {/* Architektur */}
-            <div className="grid md:grid-cols-2 gap-8 items-center bg-slate-900/30 p-6 rounded-2xl border border-slate-800">
-               <div>
-                <h3 className="text-xl font-bold text-white mb-2">Firewall Placement Architektur (Part 2)</h3>
-                <p className="text-sm text-slate-400 mb-6 leading-relaxed">
-                  OPNsense nimmt als dediziertes Network Virtual Appliance (NVA) den zentralen 
-                  Gateway-Punkt in der Infrastruktur ein. Sie regelt ab diesem Punkt den Datenverkehr 
-                  zwischen dem physischen WAN-Modem und der internen VLAN-Trunk-Bridge.
-                </p>
+            <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-start">
+              <div className="md:col-span-7">
+                <Figure src={FOTO.hardware} alt="VM Hardware" caption="FIG. 02 — OPNsense VM Hardware: q35, OVMF, VirtIO Multiqueue, balloon=0, trunks=20;30;40." onClick={zoom(FOTO.hardware)} />
               </div>
-              <div>
-                <Photo src={FOTO.abb1} alt="Firewall Placement" caption="Abb. 1: OPNsense als virtuelle Firewall innerhalb der Proxmox-Architektur" onClick={zoom(FOTO.abb1)} />
-              </div>
-            </div>
-
-            {/* Step 1: Hardware-Tuning */}
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-               <div className="order-2 md:order-1">
-                <h3 className="text-xl font-bold text-white mb-2">Step 1: VM Hardware Tuning</h3>
-                <p className="text-sm text-slate-400 mb-6 leading-relaxed">
-                  Bewusste Abstimmung für eine Network Virtual Appliance. AES-NI Passthrough 
-                  für zukünftige VPN- & IDS-Workloads. Paravirtualisierung durch VirtIO.
+              <div className="md:col-span-5">
+                <p className="text-stone-400 text-base leading-relaxed font-light mb-6">
+                  AES-NI Passthrough für zukünftige VPN- &amp; IDS-Workloads. Paravirtualisierung durch VirtIO. Festes RAM ohne Ballooning, damit die Firewall keine Kernel-Panics durch Speicherentzug erlebt.
                 </p>
-                <div className="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden">
-                  {hwParams.map((b, i) => (
-                    <div key={i} className="flex border-b border-slate-800/50 last:border-0 p-3">
-                      <div className="w-24 font-mono font-bold text-orange-400 text-xs shrink-0">{b.k}</div>
-                      <div className="text-xs text-slate-400 font-mono">{b.v}</div>
+                <dl className="grid grid-cols-2 gap-x-4 gap-y-3 border-t border-stone-600/60 pt-4">
+                  {hwParams.map((h, i) => (
+                    <div key={i} className="border-b border-stone-600/60 pb-3">
+                      <dt className="text-[11px] tracking-[0.2em] uppercase text-orange-400/70 font-mono mb-1.5">{h.k}</dt>
+                      <dd className="text-stone-300 text-xs font-mono leading-snug">{h.v}</dd>
                     </div>
                   ))}
-                </div>
-              </div>
-              <div className="order-1 md:order-2">
-                <Photo src={FOTO.abb2} alt="VM Hardware" caption="Abb. 2: OPNsense VM-Hardware â€” q35, VirtIO, balloon=0, trunks=20;30;40" onClick={zoom(FOTO.abb2)} />
+                </dl>
               </div>
             </div>
+          </div>
+        </section>
 
-            {/* Step 3: OPNsense Dashboard */}
-            <div className="bg-slate-900/30 p-6 rounded-2xl border border-slate-800">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-white">Step 2: OS Installation & System Status</h3>
-                <Terminal className="text-orange-500 w-6 h-6" />
-              </div>
-              <div className="grid md:grid-cols-2 gap-6 items-center">
-                 <Photo src={FOTO.abb3} alt="OPNsense Dashboard" caption="Abb. 3: OPNsense Lobby-Dashboard â€” System, Schnittstellen, Dienste" onClick={zoom(FOTO.abb3)} />
-                 <div>
-                    <h4 className="font-bold text-orange-400 mb-2">Erkenntnisse aus dem Dashboard</h4>
-                    <p className="text-sm text-slate-400 leading-relaxed mb-4">
-                      OPNsense 26.1.5 (FreeBSD 14.3) läuft stabil. Die WAN-Schnittstelle bezieht per 
-                      DHCP die IP `46.223.25.129`. Die Management/LAN-Schnittstelle ist `192.168.99.1`.
-                      Der Hostname <code>opnsense.home.internal</code> schützt vor DNS-Rebind Attacken.
-                      <br/><br/>
-                      Zusätzliche Interfaces wie LgBeta_Home, LgBeta_IoT und LgBeta_Server wurden bereits aktiviert.
-                    </p>
-                 </div>
-              </div>
+        <section id="interfaces" className="px-6 py-28 md:py-36 border-t border-stone-700/80">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-[13px] tracking-[0.3em] uppercase text-stone-600 font-mono mb-5">04 · Interfaces &amp; Routing</div>
+            <h2 className="font-serif text-stone-50 text-4xl md:text-5xl leading-[1.05] tracking-[-0.02em] mb-16 max-w-3xl">
+              Sechs <span className="italic text-orange-400 font-light">Schnittstellen</span>, ein Trunk.
+            </h2>
+
+            <div className="grid md:grid-cols-2 gap-6 mb-14">
+              <Figure src={FOTO.dashboard} alt="Dashboard" caption="FIG. 03 — OPNsense Lobby-Dashboard: System, Schnittstellen, Dienste." onClick={zoom(FOTO.dashboard)} />
+              <Figure src={FOTO.schnittstellen} alt="Zuweisungen" caption="FIG. 04 — Schnittstellenzuweisungen: 6 aktive Interfaces auf vtnet0/vtnet1." onClick={zoom(FOTO.schnittstellen)} />
             </div>
 
-            {/* Step 4 & 5: Interfaces */}
-            <div>
-              <h3 className="text-xl font-bold text-white mb-6">Step 3: Schnittstellenzuordnung & VLAN-Trunking</h3>
-              <p className="text-sm text-slate-400 leading-relaxed mb-6">
-                Alle virtuellen Netzwerkkarten werden logischen Interfaces zugeordnet. 
-                Besonderheit: Alle VLAN-Schnittstellen (Home, IoT, Server) sind Sub-Interfaces von <code>vtnet1 (LAN)</code>. 
-                Eine einzige physische Verbindung transportiert den internen Verkehr als <strong>802.1Q</strong> getaggten Trunk.
-              </p>
-              
-              <div className="grid lg:grid-cols-2 gap-6 mb-8">
-                 <Photo src={FOTO.abb4} alt="Schnittstellen Zuweisung" caption="Abb. 4: Schnittstellenzuweisungen â€” 6 aktive Interfaces" onClick={zoom(FOTO.abb4)} />
-                 <Photo src={FOTO.abb5} alt="Schnittstellen Ãœbersicht" caption="Abb. 5: Schnittstellenübersicht â€” IP, VLAN-Tag, Gateway & Routen" onClick={zoom(FOTO.abb5)} />
-              </div>
+            <p className="text-stone-400 leading-[1.85] text-base md:text-lg max-w-3xl mb-10 font-light">
+              Alle VLAN-Schnittstellen (Home, IoT, Server) sind Sub-Interfaces von <em className="not-italic text-stone-200">vtnet1 (LAN)</em>. Eine einzige physische Verbindung transportiert den internen Verkehr als <em className="not-italic text-stone-200">802.1Q</em>-getaggter Trunk.
+            </p>
 
-               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {interfacesData.map((inf, i) => (
-                  <div key={i} className="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-start gap-3">
-                    <inf.icon className="w-5 h-5 text-orange-400 shrink-0 mt-0.5" />
-                    <div>
-                      <div className="text-xs font-bold text-white mb-1">{inf.name}</div>
-                      <div className="text-[10px] text-slate-400 font-mono leading-relaxed">{inf.value}</div>
-                    </div>
+            <ol className="grid md:grid-cols-2 gap-x-10 border-t border-stone-600/60">
+              {interfacesData.map((inf, i) => (
+                <li key={i} className="grid grid-cols-12 gap-3 py-4 border-b border-stone-600/60">
+                  <span className="col-span-1 text-orange-400/70 text-[11px] font-mono tabular-nums tracking-widest pt-1">{String(i + 1).padStart(2, "0")}</span>
+                  <div className="col-span-11">
+                    <div className="text-stone-100 text-sm font-medium mb-1">{inf.name}</div>
+                    <div className="text-stone-400 text-xs font-mono leading-snug">{inf.value}</div>
                   </div>
-                ))}
-              </div>
-            </div>
+                </li>
+              ))}
+            </ol>
 
-            {/* Step 6 & 7: Admin & Routing */}
-            <div className="grid md:grid-cols-2 gap-8 items-start">
-              <div>
-                <h3 className="text-xl font-bold text-white mb-4">Step 4: Verwaltung & Härtung</h3>
-                <p className="text-sm text-slate-400 mb-6 leading-relaxed">
-                  Die Web-GUI von OPNsense wurde primär für Sicherheit konfiguriert.
+            <div className="grid md:grid-cols-2 gap-6 mt-14">
+              <Figure src={FOTO.schnittstellenUebersicht} alt="Übersicht" caption="FIG. 05 — Schnittstellenübersicht: IP, VLAN-Tag, Gateway &amp; Routen." onClick={zoom(FOTO.schnittstellenUebersicht)} />
+              <Figure src={FOTO.routen} alt="Routen" caption="FIG. 06 — Routing-Tabelle: alle Netzsegmente erreichbar, Default-Route 46.223.24.1." onClick={zoom(FOTO.routen)} />
+            </div>
+          </div>
+        </section>
+
+        <section id="hardening" className="px-6 py-28 md:py-36 border-t border-stone-700/80">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-12 gap-y-12 gap-x-12">
+              <div className="md:col-span-4">
+                <div className="text-[13px] tracking-[0.3em] uppercase text-stone-600 font-mono mb-5">05 · Verwaltung &amp; Härtung</div>
+                <h2 className="font-serif text-stone-50 text-3xl md:text-4xl leading-[1.1] tracking-[-0.02em]">
+                  Web-GUI auf <span className="italic text-orange-400 font-light">Port 8443</span>.
+                </h2>
+                <p className="text-stone-500 text-sm mt-6 leading-relaxed font-light">
+                  HTTPS-only, Port aus dem Standard verschoben, SSH deaktiviert.
                 </p>
-                <div className="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden mb-6">
+                <Figure src={FOTO.verwaltung} alt="Verwaltung" caption="FIG. 07 — Verwaltungseinstellungen, HTTPS auf Port 8443, SSH deaktiviert." onClick={zoom(FOTO.verwaltung)} className="mt-8" />
+              </div>
+              <div className="md:col-span-8">
+                <dl className="border-t border-stone-600/60">
                   {adminSettings.map((s, i) => (
-                    <div key={i} className="flex border-b border-slate-800/50 last:border-0 p-3">
-                      <div className="w-1/3 font-medium text-orange-400 text-xs shrink-0">{s.k}</div>
-                      <div className="text-xs text-slate-300">{s.v}</div>
+                    <div key={i} className="grid grid-cols-3 gap-4 py-4 border-b border-stone-600/60">
+                      <dt className="col-span-1 text-[11px] tracking-[0.2em] uppercase text-orange-400/70 font-mono pt-0.5">{s.k}</dt>
+                      <dd className="col-span-2 text-stone-300 text-sm md:text-base font-light leading-snug">{s.v}</dd>
                     </div>
                   ))}
+                </dl>
+
+                <div className="mt-12">
+                  <div className="text-[13px] tracking-[0.3em] uppercase text-stone-600 font-mono mb-5">Performance Tuning</div>
+                  <ul className="border-t border-stone-600/60">
+                    {tuning.map((t, i) => (
+                      <li key={i} className="border-b border-stone-600/60 py-4 flex items-start gap-5">
+                        <ShieldCheck className="w-4 h-4 text-orange-400/70 mt-1 shrink-0" />
+                        <div>
+                          <div className="text-stone-100 text-sm md:text-base font-medium leading-snug mb-1">{t.k}</div>
+                          <div className="text-stone-400 text-xs md:text-sm font-light leading-snug">{t.v}</div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <Photo src={FOTO.abb6} alt="Verwaltung" caption="Abb. 6: Verwaltungseinstellungen â€” HTTPS, Port 8443, SSH deakt." onClick={zoom(FOTO.abb6)} />
-              </div>
-              
-              <div>
-                <h3 className="text-xl font-bold text-white mb-4">Step 5: Routing-Status</h3>
-                <p className="text-sm text-slate-400 mb-6 leading-relaxed">
-                  Die Routing-Tabelle bestätigt alle aktiven IPv4- & IPv6-Routen.
-                  Default Route zeigt auf das ISP-Gateway `46.223.24.1`.
-                </p>
-                <Photo src={FOTO.abb7} alt="Routing" caption="Abb. 7: Routing-Tabelle â€” Alle Netzsegmente sind erreichbar" onClick={zoom(FOTO.abb7)} />
               </div>
             </div>
-            
           </div>
         </section>
 
-        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• 7. KEY DECISIONS & 8. TUNING â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
-        <section className="py-20 px-4 max-w-5xl mx-auto border-b border-white/5">
-           <div className="grid md:grid-cols-2 gap-16">
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-orange-500 font-mono text-xl">04</span>
-                <h2 className="text-3xl font-bold text-white">Engineering Decisions</h2>
+        <section id="decisions" className="px-6 py-28 md:py-36 border-t border-stone-700/80">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-12 gap-y-12 gap-x-12">
+              <div className="md:col-span-4">
+                <div className="text-[13px] tracking-[0.3em] uppercase text-stone-600 font-mono mb-5">06 · Engineering Decisions</div>
+                <h2 className="font-serif text-stone-50 text-3xl md:text-4xl leading-[1.1] tracking-[-0.02em]">
+                  Sechs <span className="italic text-orange-400 font-light">bewusste Wahlen</span>.
+                </h2>
               </div>
-              <div className="space-y-5">
-                {keyDecisions.map((dec, i) => (
-                  <div key={i} className="group relative pl-4 border-l-2 border-slate-800 hover:border-orange-500 transition-colors">
-                    <h4 className="text-sm font-bold text-white">{dec.title}</h4>
-                    <p className="text-xs text-slate-400 mt-1 leading-relaxed">{dec.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-             <div>
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-orange-500 font-mono text-xl">05</span>
-                <h2 className="text-3xl font-bold text-white">Performance Tuning</h2>
-              </div>
-              <div className="grid grid-cols-1 gap-3">
-                {[
-                  { k: "Hardware Offloading Off", v: "CRC, TSO und LRO in virtualisierten Umgebungen deaktiviert, um Paketkorruption zu vermeiden." },
-                  { k: "VirtIO Multiqueue", v: "Beide NICs nutzen 4 Queues zur Parallelisierung auf alle CPU-Cores." },
-                  { k: "TRIM/Discard aktiv", v: "SSD-Emulation & TRIM für effizientes LVM Storage-Management." },
-                  { k: "Ballooning = 0", v: "Ressourcengarantie verhindert Engpässe." },
-                  { k: "DNS-Rebind-Schutz", v: "Verhindert Missbrauch der Web-GUI über alternative DNS." },
-                ].map((t, i) => (
-                  <div key={i} className="flex items-center gap-3 bg-slate-900 border border-slate-800 p-3 rounded-lg">
-                    <ShieldCheck className="w-5 h-5 text-orange-500 shrink-0" />
-                    <div>
-                      <div className="text-sm font-bold text-white">{t.k}</div>
-                      <div className="text-xs text-slate-400">{t.v}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-           </div>
-        </section>
-
-        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• 9. VALIDATION & 11. ISSUES â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
-        <section className="py-20 px-4 max-w-5xl mx-auto border-b border-white/5">
-           <div className="grid md:grid-cols-2 gap-16">
-              <div>
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="text-orange-500 font-mono text-xl">06</span>
-                  <h2 className="text-3xl font-bold text-white">Validation</h2>
-                </div>
-                <div className="space-y-2">
-                  {[
-                    "OPNsense VM läuft stabil (> 3 Tage Uptime)",
-                    "WAN bezieht öffentliche IP per DHCP",
-                    "LAN-Interface (192.168.99.1) korrekt zugewiesen",
-                    "Alle 6 Schnittstellen sind grün/aktiv",
-                    "Web-GUI erreichbar über HTTPS auf Port 8443",
-                    "Default-Route zeigt auf das ISP-Gateway",
-                    "VLAN-Routen korrekt in der Tabelle eingetragen",
-                  ].map((val, i) => (
-                    <div key={i} className="flex items-center justify-between p-3 rounded-md bg-slate-900 border border-slate-800">
-                      <span className="text-xs text-slate-300 font-mono">{val}</span>
-                      <span className="text-xs font-bold text-green-500">âœ… PASS</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="text-amber-500 font-mono text-xl">07</span>
-                  <h2 className="text-3xl font-bold text-white">Troubleshooting</h2>
-                </div>
-                <div className="space-y-4">
-                  {[
-                    { issue: "Fehlende net1-Netzwerkkarte", fix: "Eine ursprünglich geplante 3. NIC wurde entfernt, weshalb die Proxmox-Hardware direkt von net0 auf net2 springt. Funktional irrelevant." },
-                    { issue: "Qemu Guest Agent inaktiv", fix: "FreeBSD/OPNsense unterstützt den Agent nicht standardmäÃŸig. Status-Informationen werden stattdessen aus der OPNsense GUI bezogen." },
-                    { issue: "Proxmox RAM Anzeige 99%", fix: "Da Ballooning=0 gesetzt ist, reserviert der Host sofort 100%. Die tatsächliche OPNsense-Verwendung liegt bei ~15%." },
-                  ].map((ts, i) => (
-                    <div key={i} className="p-4 rounded-xl bg-amber-500/5 border border-amber-500/20">
-                      <div className="flex items-start gap-2 mb-2">
-                        <AlertTriangle className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
-                        <span className="text-sm font-bold text-amber-500">{ts.issue}</span>
+              <div className="md:col-span-8">
+                <ul className="border-t border-stone-600/60">
+                  {decisions.map((d, i) => (
+                    <li key={i} className="border-b border-stone-600/60 py-6 grid grid-cols-12 gap-4">
+                      <div className="col-span-1 font-serif text-orange-400/70 text-2xl tabular-nums leading-none">{String(i + 1).padStart(2, "0")}</div>
+                      <div className="col-span-11">
+                        <h3 className="font-serif text-stone-50 text-lg md:text-xl leading-tight mb-2">{d.title}</h3>
+                        <p className="text-stone-400 text-sm md:text-base leading-relaxed font-light">{d.reason}</p>
                       </div>
-                      <p className="text-xs text-slate-400 pl-6 leading-relaxed">{ts.fix}</p>
-                    </div>
+                    </li>
                   ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="validation" className="px-6 py-28 md:py-36 border-t border-stone-700/80">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-12 gap-y-16 gap-x-12">
+              <div className="md:col-span-6">
+                <div className="text-[13px] tracking-[0.3em] uppercase text-stone-600 font-mono mb-5">07 · Validation</div>
+                <h2 className="font-serif text-stone-50 text-3xl md:text-4xl leading-[1.1] tracking-[-0.02em] mb-10">
+                  Was nachweislich <span className="italic text-orange-400 font-light">funktioniert</span>.
+                </h2>
+                <ol className="border-t border-stone-600/60">
+                  {validation.map((v, i) => (
+                    <li key={i} className="grid grid-cols-12 gap-4 py-4 border-b border-stone-600/60 items-baseline">
+                      <span className="col-span-1 font-mono text-orange-400/70 text-[11px] tabular-nums tracking-widest pt-0.5">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="col-span-10 text-stone-300 text-sm md:text-base leading-snug font-light">{v}</span>
+                      <span className="col-span-1 text-right text-orange-400 text-[11px] uppercase tracking-widest font-mono">Pass</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+              <div className="md:col-span-6">
+                <div className="text-[13px] tracking-[0.3em] uppercase text-stone-600 font-mono mb-5">Troubleshooting</div>
+                <h2 className="font-serif text-stone-50 text-3xl md:text-4xl leading-[1.1] tracking-[-0.02em] mb-10">
+                  Was <span className="italic text-amber-400 font-light">schiefging</span>.
+                </h2>
+                <ul className="space-y-5">
+                  {troubleshooting.map((t, i) => (
+                    <li key={i} className="border-l-2 border-amber-500/40 pl-5 py-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <AlertTriangle className="w-3.5 h-3.5 text-amber-500/80" />
+                        <span className="text-amber-400 text-[11px] uppercase tracking-[0.2em] font-mono">{t.issue}</span>
+                      </div>
+                      <p className="text-stone-300 text-sm md:text-base leading-snug font-light">{t.fix}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="talking-points" className="px-6 py-28 md:py-36 border-t border-stone-700/80 bg-gradient-to-b from-stone-800 via-stone-800 to-orange-950/10">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-12 gap-y-12 gap-x-12 mb-16">
+              <div className="md:col-span-5">
+                <div className="text-[13px] tracking-[0.3em] uppercase text-orange-400/80 font-mono mb-5">08 · Bewerbungsgespräch</div>
+                <h2 className="font-serif text-stone-50 text-4xl md:text-5xl leading-[1.05] tracking-[-0.02em]">
+                  Wie ich diesen <span className="italic text-orange-400 font-light">Part</span> erkläre.
+                </h2>
+              </div>
+              <div className="md:col-span-7">
+                <p className="text-stone-400 text-base md:text-lg leading-relaxed font-light">
+                  Sechs vorformulierte Sätze auf Deutsch — direkt ablesbar. Jeder Satz beantwortet eine typische Rückfrage zur Firewall-Installation und Härtung.
+                </p>
+              </div>
+            </div>
+            <ol className="border-t border-stone-600/60">
+              {talkingPoints.map((tp, i) => (
+                <li key={i} className="grid md:grid-cols-12 gap-6 md:gap-10 py-8 md:py-10 border-b border-stone-600/60">
+                  <div className="md:col-span-3">
+                    <div className="font-serif text-orange-400/80 text-4xl md:text-5xl tabular-nums leading-none mb-2">{String(i + 1).padStart(2, "0")}</div>
+                    <div className="text-[11px] tracking-[0.2em] uppercase text-stone-500 font-mono">{tp.title}</div>
+                  </div>
+                  <blockquote className="md:col-span-9 font-serif italic text-stone-100 text-xl md:text-2xl leading-[1.45]">&ldquo;{tp.text}&rdquo;</blockquote>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section className="px-6 py-20 md:py-24 border-t border-stone-700/80">
+          <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
+            <Link to="/projekt/security/opnsense/part-1" className="text-[13px] tracking-[0.3em] uppercase text-stone-500 hover:text-stone-100 font-mono transition-colors flex items-center gap-2 group">
+              <ChevronLeft className="w-3 h-3 group-hover:-translate-x-0.5 transition-transform" />
+              Part 01 · Netzwerk-Aufbau
+            </Link>
+            <Link to="/projekt/security/opnsense/part-3" className="group flex items-center gap-5 hover:gap-7 transition-all">
+              <div className="text-right">
+                <div className="text-[13px] tracking-[0.3em] uppercase text-stone-600 font-mono mb-1.5">Weiter mit</div>
+                <div className="font-serif text-stone-50 text-2xl md:text-3xl tracking-[-0.01em]">
+                  Part 03 · <span className="italic text-orange-400 font-light">VLAN &amp; Zero-Trust</span>
                 </div>
               </div>
-           </div>
-        </section>
-
-        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• NAVIGATION / FOOTER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
-        <section className="py-20 px-4 max-w-5xl mx-auto">
-          <div className="text-center mb-10 text-slate-400 text-sm max-w-2xl mx-auto">
-            Die Firewall Appliance ist nun als Network Virtual Appliance (NVA) optimiert.
-            Die Schnittstellen und das VLAN-Trunking sind aktiv.
-          </div>
-          <div className="flex flex-col md:flex-row justify-center items-stretch gap-4">
-            
-            <Link
-              to="/projekt/security/opnsense/part-1"
-              className="flex flex-col items-center justify-center p-5 rounded-2xl w-full md:w-1/3 border border-slate-800 bg-slate-900/50 hover:bg-slate-800 transition-all group text-center"
-            >
-              <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Zurück zu</p>
-              <p className="text-sm font-bold text-white">Part 1 â€” Netzwerk & Virtualisierung</p>
-            </Link>
-
-             <a
-              href={docUrl}
-              download
-              className="flex flex-col items-center justify-center p-5 rounded-2xl w-full md:w-1/3 border border-orange-500/20 bg-orange-500/10 hover:bg-orange-500/20 transition-all group text-center"
-            >
-              <FileText className="w-7 h-7 text-orange-400 mb-2 group-hover:scale-110 transition-transform" />
-              <p className="text-sm font-bold text-white">Original Dokument</p>
-              <p className="text-xs text-orange-400 mt-1">Lade DOCX herunter</p>
-            </a>
-
-            <Link
-              to="/projekt/security/opnsense/part-3"
-              className="flex flex-col items-center justify-center p-5 rounded-2xl w-full md:w-1/3 border border-blue-500/30 bg-blue-500/10 hover:border-blue-500/50 hover:bg-blue-500/20 transition-all group text-center"
-            >
-              <p className="text-[10px] text-blue-400 font-bold uppercase tracking-widest mb-1">Weiter zu</p>
-              <p className="text-sm font-bold text-white">Part 3 â€” VLAN-Segmentierung & Firewall-Regeln</p>
-              <ArrowRight className="w-5 h-5 text-blue-400 mt-2 group-hover:translate-x-1 transition-transform" />
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-stone-700 flex items-center justify-center group-hover:bg-orange-400 group-hover:border-orange-400 group-hover:text-stone-950 transition-all shrink-0">
+                <ArrowRight className="w-5 h-5" />
+              </div>
             </Link>
           </div>
         </section>
-      </div>
+
+      </article>
     </Layout>
   );
 };

@@ -5,300 +5,300 @@ import Lightbox from "@/components/Lightbox";
 import { Link } from "react-router-dom";
 import {
   ShieldCheck,
-  CheckCircle2,
   ArrowRight,
-  FileText,
-  Download,
-  Network,
-  Shield,
+  ArrowUpRight,
   Maximize2,
-  ChevronRight,
-  Activity,
-  Layers,
-  Lock,
-  Globe,
-  Server,
-  Cpu,
-  Radio,
-  Eye,
+  ChevronLeft,
 } from "lucide-react";
 
-// ─── Part Navigator Data ───────────────────────────────────────────────────────
 const parts = [
-  { num: 0, short: "Projektübersicht", path: "/projekt/security/opnsense", done: true },
-  { num: 1, short: "Netzwerk & Virtualisierung", path: "/projekt/security/opnsense/part-1", done: true },
-  { num: 2, short: "OPNsense Firewall Anwendungen", path: "/projekt/security/opnsense/part-2", done: true },
-  { num: 3, short: "VLAN & Firewall-Regeln", path: "/projekt/security/opnsense/part-3", done: true },
-  { num: 4, short: "IDS/IPS & Suricata", path: "/projekt/security/opnsense/part-4", done: true },
-  { num: 5, short: "DNS & Reverse Proxy", path: "/projekt/security/opnsense/part-5", done: true },
-  { num: 6, short: "VPN & Bastion Host", path: "/projekt/security/opnsense/part-6", done: true },
+  {
+    num: 1,
+    title: "Netzwerk-Aufbau & Virtualisierung",
+    subtitle: "Hardware, Proxmox-Hypervisor, Bridge-Design",
+    path: "/projekt/security/opnsense/part-1",
+    thumb: "/Opnsense/Foto's/Part 1 deckel FOTO.png",
+  },
+  {
+    num: 2,
+    title: "Firewall-Installation & Optimierung",
+    subtitle: "OPNsense als Network Virtual Appliance",
+    path: "/projekt/security/opnsense/part-2",
+    thumb: "/Opnsense/Foto's/Part 2 deckel FOTO.png",
+  },
+  {
+    num: 3,
+    title: "VLAN-Segmentierung & Firewall-Regeln",
+    subtitle: "Zero-Trust in vier Sicherheitszonen",
+    path: "/projekt/security/opnsense/part-3",
+    thumb: "/Opnsense/Foto's/Part 3 deckel FOTO.png",
+  },
+  {
+    num: 4,
+    title: "Bedrohungserkennung & Log-Management",
+    subtitle: "Suricata IDS · Wazuh SIEM-Pipeline",
+    path: "/projekt/security/opnsense/part-4",
+    thumb: "/Opnsense/Foto's/part4 .png",
+  },
+  {
+    num: 5,
+    title: "Netzwerkdienste & Reverse Proxy",
+    subtitle: "Unbound DNS · Nginx als Single Entry Point",
+    path: "/projekt/security/opnsense/part-5",
+    thumb: "/Opnsense/Foto's/part5.png",
+  },
+  {
+    num: 6,
+    title: "Fernzugriff & Systemvalidierung",
+    subtitle: "WireGuard VPN · NUC Bastion · Full Validation",
+    path: "/projekt/security/opnsense/part-6",
+    thumb: "/Opnsense/Foto's/part6.png",
+  },
 ];
 
-const FOTO = {
-  hero: "/Opnsense/Foto's/General übersicht.png",
-};
+const HERO_FOTO = "/Opnsense/Foto's/General übersicht.png";
 
-// ─── Reusable clickable photo ──────────────────────────────────────────────────
-const Photo = ({ src, alt, caption, onClick, className = "" }: { src: string; alt: string; caption?: string; onClick: () => void; className?: string }) => (
-  <div
-    className={`group relative cursor-zoom-in rounded-2xl overflow-hidden border border-white/5 shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-emerald-500/10 ${className}`}
-    onClick={onClick}
-  >
-    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10" />
-    <img src={src} alt={alt} className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity" loading="lazy" />
-    <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 backdrop-blur-sm rounded-lg p-1.5 z-20">
-      <Maximize2 className="w-4 h-4 text-emerald-400" />
-    </div>
-    {caption && (
-      <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
-        <p className="text-xs font-medium text-white/90 drop-shadow-md">{caption}</p>
-      </div>
-    )}
-  </div>
-);
+const stats = [
+  { value: "06", label: "Implementierungs-Etappen" },
+  { value: "04", label: "VLAN-Sicherheitszonen" },
+  { value: "65+", label: "Dokumentations-Screenshots" },
+  { value: "L1→L7", label: "Defense-in-Depth Tiefe" },
+];
 
-// ─── Main Component ────────────────────────────────────────────────────────────
+const skills = [
+  "Netzwerk-Design & VLAN-Architektur",
+  "Firewall-Konfiguration (ACL, NAT, Zero-Trust)",
+  "Intrusion Detection & Prevention (Suricata)",
+  "SIEM-Integration (Wazuh + Syslog Pipeline)",
+  "DNS-Management (Unbound, Domain Overrides)",
+  "Reverse Proxy & TLS-Terminierung (Nginx)",
+  "VPN-Tunneling (WireGuard, Split-Tunneling)",
+  "Infrastruktur-Monitoring (Uptime Kuma, Grafana)",
+  "Docker & Container-Orchestrierung",
+  "Out-of-Band Management & Disaster Recovery",
+];
+
 const ProjektOPNsenseIntro = () => {
   const [zoomedImage, setZoomedImage] = useState<string | null>(null);
   const closeLightbox = useCallback(() => setZoomedImage(null), []);
-  const zoom = (src: string) => () => setZoomedImage(src);
-
-  const milestones = [
-    { icon: Server,      title: "Hardware & Virtualisierung", desc: "Proxmox-Hypervisor, 4-NIC Host, NUC Bastion, Raspberry Pi 5 Server" },
-    { icon: Shield,      title: "OPNsense Firewall", desc: "Virtuelle NVA mit UEFI, AES-NI Passthrough, VirtIO Multiqueue" },
-    { icon: Network,     title: "VLAN-Segmentierung", desc: "4 Zonen (LAN, Home, IoT, Server) mit 802.1Q Trunking und Zero-Trust" },
-    { icon: Eye,         title: "IDS/IPS — Suricata & Wazuh", desc: "Deep Packet Inspection, SIEM-Korrelation, automatisierte Alerts" },
-    { icon: Globe,       title: "DNS & Reverse Proxy", desc: "Unbound DNS (*.home.internal), Nginx Plugin als Single Entry Point" },
-    { icon: Lock,        title: "VPN & Bastion Host", desc: "WireGuard Road-Warrior, NUC OOB-Monitoring, Uptime Kuma, Full Validation" },
-  ];
-
-  const skills = [
-    "Netzwerk-Design & VLAN-Architektur",
-    "Firewall-Konfiguration (ACL, NAT, Zero-Trust)",
-    "Intrusion Detection & Prevention (Suricata)",
-    "SIEM-Integration (Wazuh + Syslog Pipeline)",
-    "DNS-Management (Unbound, Domain Overrides)",
-    "Reverse Proxy & TLS-Terminierung (Nginx)",
-    "VPN-Tunneling (WireGuard, Split-Tunneling)",
-    "Infrastruktur-Monitoring (Uptime Kuma, Grafana)",
-    "Docker & Container-Orchestrierung",
-    "Out-of-Band Management & Disaster Recovery",
-  ];
 
   return (
     <Layout>
       <Helmet>
-        <title>Enterprise Security Lab — Projektübersicht | OPNsense</title>
-        <meta name="description" content="Gesamtübersicht über das 6-teilige Enterprise Security Lab mit OPNsense, Proxmox, Suricata, Wazuh und WireGuard." />
+        <title>Enterprise Security Lab — OPNsense | Gokhan Zehirlioglu</title>
+        <meta name="description" content="Editorial-Studie: Aufbau eines sechsteiligen Cloud-Security-Labs mit OPNsense, Proxmox, Suricata, Wazuh und WireGuard." />
       </Helmet>
       <Lightbox src={zoomedImage} onClose={closeLightbox} />
 
-      {/* ═══════════════════════ HERO ═══════════════════════ */}
-      <section className="py-24 px-4 relative overflow-hidden bg-slate-950">
-        <div className="absolute top-0 right-0 w-full h-full overflow-hidden opacity-30 pointer-events-none">
-          <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full bg-emerald-900/40 blur-[120px]" />
-          <div className="absolute bottom-[-10%] left-[-20%] w-[600px] h-[600px] rounded-full bg-teal-900/30 blur-[100px]" />
-        </div>
+      <article className="bg-stone-800 text-stone-200 selection:bg-emerald-400/20 selection:text-emerald-50">
 
-        <div className="max-w-5xl mx-auto relative z-10">
-          <div className="flex items-center gap-2 text-xs text-slate-400 mb-8 font-mono uppercase tracking-wider">
-            <Link to="/projekte" className="hover:text-emerald-400 transition-colors">Projekte</Link>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-emerald-400">Cloud & CyberSec</span>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-white">Projektübersicht</span>
-          </div>
+        <header className="relative px-6 pt-20 pb-28 md:pt-28 md:pb-40">
+          <div className="max-w-5xl mx-auto">
+            <nav className="flex items-center gap-3 text-[13px] tracking-[0.3em] uppercase text-stone-300 font-mono mb-16">
+              <Link to="/projekte" className="hover:text-stone-200 transition-colors">Projekte</Link>
+              <span className="text-stone-700">/</span>
+              <span className="text-stone-300">Cloud &amp; CyberSec</span>
+            </nav>
 
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/30 border border-emerald-500/20 text-emerald-400 text-xs font-medium mb-6">
-            <Radio className="w-3 h-3" />
-            Enterprise Security Lab
-          </div>
+            <div className="flex items-center gap-4 text-[13px] tracking-[0.3em] uppercase text-stone-300 font-mono mb-10">
+              <span className="text-emerald-400">№ 01</span>
+              <span className="h-px w-12 bg-stone-800" />
+              <span>Case Study · Enterprise Security Lab</span>
+            </div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tight mb-6 leading-tight">
-            Enterprise Security<br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-500">
-              Lab: OPNsense
-            </span>
-          </h1>
+            <h1 className="font-serif text-stone-50 text-[44px] sm:text-[64px] md:text-[88px] lg:text-[120px] leading-[0.92] tracking-[-0.03em] mb-12">
+              Enterprise<br />
+              Security <span className="italic font-light text-emerald-400">Lab</span><span className="text-stone-50">.</span>
+            </h1>
 
-          <p className="text-lg text-slate-400 max-w-2xl leading-relaxed mb-10">
-            Ein vollständiges, 6-teiliges Cloud-Security-Projekt: Vom physischen Netzwerkaufbau über
-            Firewall-Härtung, VLAN-Isolation und IDS/IPS bis hin zu VPN-Fernzugriff und
-            Architekturvalidierung — dokumentiert, getestet und betriebsbereit.
-          </p>
+            <p className="font-serif italic text-stone-300 text-xl md:text-2xl leading-snug max-w-3xl mb-16">
+              Vom Homelab zur Enterprise Cloud: Die On-Premise Simulation einer vollständigen Cloud-Security-Architektur — vom Hypervisor bis zum SIEM.
+            </p>
 
-          <p className="text-xs text-slate-500 font-mono mb-2">Gokhan Zehirlioglu · Fachinformatiker für Systemintegration · April 2026</p>
-        </div>
-      </section>
-
-      {/* ═══════════════════════ PART-NAVIGATOR (STICKY) ═══════════════════════ */}
-      <div className="sticky top-[73px] z-40 bg-slate-950/80 backdrop-blur-xl border-b border-white/5 py-3 px-4">
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center gap-2 md:gap-4 overflow-x-auto no-scrollbar">
-          <span className="text-[10px] text-slate-500 uppercase tracking-widest font-bold hidden md:block">Navigator</span>
-          {parts.map((p) => (
-            <Link
-              key={p.num}
-              to={p.path}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold border transition-all whitespace-nowrap ${
-                p.num === 0
-                  ? "bg-emerald-950/50 text-emerald-400 border-emerald-500/30 shadow-[0_0_15px_-3px_rgba(16,185,129,0.2)]"
-                  : "bg-slate-900 text-blue-400 border-blue-900/50 hover:bg-slate-800"
-              }`}
-            >
-              <div className={`w-5 h-5 rounded flex items-center justify-center text-[10px] ${p.num === 0 ? "bg-emerald-500 text-slate-950" : "bg-slate-800"}`}>
-                {p.num === 0 ? "★" : p.num}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 max-w-3xl">
+              <div>
+                <div className="text-[11px] tracking-[0.3em] uppercase text-stone-400 font-mono mb-2">Author</div>
+                <div className="text-stone-200 text-sm">Gokhan Zehirlioglu</div>
               </div>
-              <span className="hidden sm:inline-block opacity-90">{p.short}</span>
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      <div className="bg-slate-950 text-slate-300 min-h-screen">
-        {/* ═══════════════════════ ARCHITECTURE OVERVIEW ═══════════════════════ */}
-        <section className="py-20 px-4 max-w-5xl mx-auto border-b border-white/5">
-          <div className="flex items-center gap-3 mb-10">
-            <span className="text-emerald-500 font-mono text-xl">01</span>
-            <h2 className="text-3xl font-bold text-white">Architektur & Zielsetzung</h2>
+              <div>
+                <div className="text-[11px] tracking-[0.3em] uppercase text-stone-400 font-mono mb-2">Date</div>
+                <div className="text-stone-200 text-sm">April 2026</div>
+              </div>
+              <div>
+                <div className="text-[11px] tracking-[0.3em] uppercase text-stone-400 font-mono mb-2">Role</div>
+                <div className="text-stone-200 text-sm">FISI · Cloud &amp; Sec</div>
+              </div>
+              <div>
+                <div className="text-[11px] tracking-[0.3em] uppercase text-stone-400 font-mono mb-2">Status</div>
+                <div className="text-emerald-400 text-sm">Abgeschlossen</div>
+              </div>
+            </div>
           </div>
+        </header>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            <div>
-              <p className="text-slate-400 leading-relaxed mb-6">
-                Das Ziel dieses Projekts war der Aufbau eines <strong className="text-white">Cloud Security Labs</strong> in
-                einer realen Homelab-Umgebung. Der Kern: Eine <strong className="text-white">OPNsense-Firewall</strong> als
-                zentrale Sicherheitsinstanz, die sämtlichen Netzwerkverkehr kontrolliert, analysiert und filtert.
-              </p>
-              <p className="text-slate-400 leading-relaxed mb-6">
-                Von der physischen Verkabelung über die Virtualisierung mit <strong className="text-white">Proxmox</strong>,
-                der Netzwerksegmentierung mit <strong className="text-white">VLANs</strong>, der Bedrohungserkennung mit
-                <strong className="text-white"> Suricata & Wazuh</strong>, bis hin zum sicheren Fernzugriff per
-                <strong className="text-white"> WireGuard VPN</strong> — jede Schicht wurde einzeln implementiert,
-                dokumentiert und validiert.
-              </p>
-              <p className="text-slate-400 leading-relaxed">
-                Das Ergebnis ist eine <strong className="text-white">Zero-Trust-Architektur</strong> mit vollständiger
-                VLAN-Isolation, Echtzeit-Monitoring (Uptime Kuma, Homepage Dashboard), IDS/IPS-Analyse und einem
-                physisch getrennten Bastion-Host für Out-of-Band Management.
-              </p>
-            </div>
-            <div>
-              <Photo
-                src={FOTO.hero}
-                alt="Enterprise Security Lab — Gesamtarchitektur"
-                caption="Gesamtarchitektur: Enterprise Security Lab mit OPNsense"
-                onClick={zoom(FOTO.hero)}
-              />
-            </div>
+        <div className="px-6"><div className="max-w-5xl mx-auto h-px bg-stone-800/80" /></div>
+
+        <section className="px-6 py-24 md:py-32">
+          <div className="max-w-2xl mx-auto">
+            <p className="font-serif text-stone-100 text-2xl md:text-[28px] leading-[1.45] mb-10">
+              <span className="float-left font-serif font-light text-emerald-400 text-[88px] leading-[0.85] mr-4 mt-1">M</span>
+              ein Ziel war es nicht, ein weiteres theoretisches Cloud-Zertifikat zu bestehen. Die Intention war es, die komplexe Sicherheitsarchitektur moderner Cloud-Umgebungen wie Microsoft Azure physisch und greifbar auf meinem Schreibtisch zu simulieren.
+            </p>
+            <p className="text-stone-400 leading-[1.85] text-base md:text-lg mb-6">
+              Dieses Homelab ist die On-Premise Rekonstruktion eines Enterprise Datacenters. Wo in der Cloud virtuelle Netzwerke (<em className="not-italic text-stone-200">VNets</em>) und Security Groups (<em className="not-italic text-stone-200">NSGs</em>) per Klick generiert werden, habe ich die zugrundeliegende Mechanik selbst entworfen: Von der Hypervisor-Isolierung mit <em className="not-italic text-stone-200">Proxmox</em> über L3-Mikrosegmentierung via <em className="not-italic text-stone-200">VLANs</em> bis hin zur Deep Packet Inspection mit <em className="not-italic text-stone-200">Suricata</em> und einem zentralen SIEM (<em className="not-italic text-stone-200">Wazuh</em>).
+            </p>
+            <p className="text-stone-400 leading-[1.85] text-base md:text-lg mb-6">
+              Das Ergebnis ist eine Zero-Trust-Architektur mit vollständiger VLAN-Isolation, Echtzeit-Monitoring (Uptime Kuma, Homepage Dashboard), IDS/IPS-Analyse und einem physisch getrennten Bastion-Host für Out-of-Band Management.
+            </p>
+            <p className="text-stone-400 leading-[1.85] text-base md:text-lg">
+              Das Ergebnis ist kein gewöhnliches Heimnetzwerk, sondern eine validierte Zero-Trust-Infrastruktur. Es beweist das tiefe Verständnis dafür, wie Traffic Flow, Isolation und Threat Detection auf Enterprise-Level tatsächlich funktionieren — unabhängig davon, ob die Server im eigenen Rack oder im Azure-Rechenzentrum stehen.
+            </p>
           </div>
         </section>
 
-        {/* ═══════════════════════ 6-PART MILESTONES ═══════════════════════ */}
-        <section className="py-20 px-4 max-w-5xl mx-auto border-b border-white/5">
-          <div className="flex items-center gap-3 mb-10">
-            <span className="text-emerald-500 font-mono text-xl">02</span>
-            <h2 className="text-3xl font-bold text-white">Was wurde aufgebaut?</h2>
+        <figure className="px-6">
+          <div onClick={() => setZoomedImage(HERO_FOTO)} className="group relative max-w-6xl mx-auto cursor-zoom-in overflow-hidden border border-stone-600/60 bg-stone-800">
+            <img src={HERO_FOTO} alt="Enterprise Security Lab — Gesamtarchitektur" className="w-full h-auto block" loading="lazy" />
+            <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity bg-stone-800/70 backdrop-blur-md border border-stone-600 rounded-full p-2.5">
+              <Maximize2 className="w-3.5 h-3.5 text-stone-200" />
+            </div>
           </div>
+          <figcaption className="max-w-6xl mx-auto mt-5 font-serif italic text-stone-500 text-sm md:text-base">
+            <span className="text-stone-600 not-italic font-mono text-xs tracking-widest mr-3">FIG. 01</span>
+            Gesamtarchitektur des Enterprise Security Labs — Proxmox-Hypervisor, OPNsense-VM, vier VLAN-Zonen und Bastion-Host.
+          </figcaption>
+        </figure>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {milestones.map((m, i) => (
-              <Link
-                key={i}
-                to={parts[i + 1].path}
-                className="group bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-emerald-500/30 hover:-translate-y-1 transition-all duration-300"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                    <m.icon className="w-5 h-5 text-emerald-400" />
-                  </div>
-                  <span className="text-[10px] text-emerald-500 font-mono font-bold uppercase">Part {i + 1}</span>
+        <section className="px-6 py-28 md:py-40">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-[13px] tracking-[0.3em] uppercase text-stone-400 font-mono mb-14">By the numbers</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-y-14 gap-x-8">
+              {stats.map((s, i) => (
+                <div key={i} className="border-t border-stone-600 pt-7">
+                  <div className="font-serif text-stone-50 text-5xl md:text-6xl lg:text-7xl leading-none mb-4 tracking-[-0.02em]">{s.value}</div>
+                  <div className="text-[13px] tracking-[0.2em] uppercase text-stone-300 font-mono leading-snug">{s.label}</div>
                 </div>
-                <h3 className="text-white font-bold mb-2 group-hover:text-emerald-400 transition-colors">{m.title}</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">{m.desc}</p>
-                <ArrowRight className="w-4 h-4 text-emerald-500 mt-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-              </Link>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* ═══════════════════════ SKILLS GAINED ═══════════════════════ */}
-        <section className="py-20 px-4 max-w-5xl mx-auto border-b border-white/5">
-          <div className="grid md:grid-cols-2 gap-16">
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-emerald-500 font-mono text-xl">03</span>
-                <h2 className="text-3xl font-bold text-white">Erlernte Skills</h2>
+        <section className="px-6 py-24 md:py-32">
+          <div className="max-w-5xl mx-auto">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+              <div>
+                <div className="text-[13px] tracking-[0.3em] uppercase text-stone-400 font-mono mb-4">Inhalt · Index</div>
+                <h2 className="font-serif text-stone-50 text-4xl md:text-6xl leading-[1.05] tracking-[-0.02em]">
+                  Die sechs <span className="italic text-emerald-400 font-light">Stationen</span>.
+                </h2>
               </div>
-              <div className="space-y-2">
-                {skills.map((s, i) => (
-                  <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-slate-900 border border-slate-800">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span className="text-sm text-slate-300">{s}</span>
-                  </div>
-                ))}
-              </div>
+              <p className="text-stone-500 text-sm md:text-base max-w-sm font-light leading-relaxed">
+                Jeder Teil ist eigenständig dokumentiert — von Hardware bis Application Layer.
+              </p>
             </div>
 
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-emerald-500 font-mono text-xl">04</span>
-                <h2 className="text-3xl font-bold text-white">Projektziel</h2>
-              </div>
-              <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-6 mb-6">
-                <p className="text-slate-400 leading-relaxed mb-4">
-                  Als angehender <strong className="text-white">Fachinformatiker für Systemintegration</strong> mit
-                  Fokus auf <strong className="text-white">Cloud & Cybersecurity</strong> war mein Ziel, ein
-                  praxisnahes Security Lab aufzubauen, das reale Enterprise-Szenarien abbildet.
-                </p>
-                <p className="text-slate-400 leading-relaxed">
-                  Dieses Projekt demonstriert die Fähigkeit, eine komplette Sicherheitsinfrastruktur
-                  eigenständig zu planen, zu implementieren und zu validieren — von Layer 1 (Kabel)
-                  bis Layer 7 (Application Proxy).
+            <ol className="border-t border-stone-600/80">
+              {parts.map((p) => (
+                <li key={p.num} className="border-b border-stone-600/80">
+                  <Link to={p.path} className="grid grid-cols-12 items-center gap-4 py-7 md:py-9 group transition-colors hover:bg-stone-800/30 px-2 -mx-2">
+                    <div className="col-span-2 md:col-span-1 font-serif text-stone-500 group-hover:text-emerald-400 text-3xl md:text-5xl tabular-nums tracking-tight leading-none transition-colors">
+                      {String(p.num).padStart(2, "0")}
+                    </div>
+                    <div className="col-span-2 md:col-span-2 hidden md:block">
+                      <div className="w-full aspect-[4/3] overflow-hidden rounded-sm border border-stone-600/60 bg-stone-800">
+                        <img src={p.thumb} alt="" className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" loading="lazy" />
+                      </div>
+                    </div>
+                    <div className="col-span-9 md:col-span-8">
+                      <div className="font-serif text-stone-50 text-lg md:text-3xl leading-[1.15] tracking-[-0.01em] group-hover:text-emerald-50 transition-colors">{p.title}</div>
+                      <div className="text-stone-500 text-xs md:text-sm mt-2 font-light tracking-wide">{p.subtitle}</div>
+                    </div>
+                    <div className="col-span-1 flex justify-end">
+                      <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6 text-stone-600 group-hover:text-emerald-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section className="px-6 py-32 md:py-44">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="font-serif text-emerald-400/40 text-[120px] md:text-[180px] leading-none mb-2 select-none -mt-12">&ldquo;</div>
+            <blockquote className="font-serif text-stone-100 text-3xl md:text-5xl lg:text-[56px] leading-[1.15] tracking-[-0.02em]">
+              Eine komplette Sicherheitsinfrastruktur — eigenständig <span className="italic text-emerald-400">geplant</span>, <span className="italic text-emerald-400">implementiert</span> und <span className="italic text-emerald-400">validiert</span>. Von Layer 1 bis Layer 7.
+            </blockquote>
+            <div className="mt-14 text-[13px] tracking-[0.3em] uppercase text-stone-400 font-mono">— Projektziel</div>
+          </div>
+        </section>
+
+        <section className="px-6 py-24 md:py-32 border-t border-stone-600/80">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-12 gap-y-14 gap-x-12">
+              <div className="md:col-span-4">
+                <div className="text-[13px] tracking-[0.3em] uppercase text-stone-400 font-mono mb-5">Erworbene Kompetenzen</div>
+                <h2 className="font-serif text-stone-50 text-3xl md:text-4xl leading-[1.1] tracking-[-0.02em]">
+                  Was ich auf jedem <span className="italic text-emerald-400 font-light">Layer</span> gelernt habe.
+                </h2>
+                <p className="text-stone-500 text-sm mt-6 leading-relaxed font-light">
+                  Zehn konkrete Skill-Domänen, die in den sechs Parts hands-on durchgearbeitet wurden.
                 </p>
               </div>
-
-              <div className="p-5 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-emerald-500 rounded-full text-white">
-                    <ShieldCheck className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-bold">Projekt Status: Abgeschlossen</h4>
-                    <p className="text-xs text-slate-400 mt-1">
-                      6 Parts · 65+ Screenshots · Vollständige Dokumentation
-                    </p>
-                  </div>
-                </div>
+              <div className="md:col-span-8">
+                <ul className="grid sm:grid-cols-2 gap-x-10">
+                  {skills.map((s, i) => (
+                    <li key={i} className="border-t border-stone-600/60 py-4 flex items-baseline gap-4">
+                      <span className="text-emerald-400/60 text-[13px] font-mono tabular-nums tracking-widest">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="text-stone-300 text-sm md:text-base leading-snug">{s}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ═══════════════════════ NAVIGATION ═══════════════════════ */}
-        <section className="py-20 px-4 max-w-5xl mx-auto">
-          <div className="text-center mb-10 text-slate-400 text-sm max-w-2xl mx-auto">
-            Bereit, in die Tiefe zu gehen? Starte mit Part 1 und folge der Implementierung Schritt für Schritt.
+        <section className="px-6 py-28 md:py-40 border-t border-stone-600/80">
+          <div className="max-w-2xl mx-auto">
+            <div className="text-[13px] tracking-[0.3em] uppercase text-stone-400 font-mono mb-8">Schlusswort</div>
+            <p className="font-serif text-stone-100 text-2xl md:text-[28px] leading-[1.45]">
+              Als angehender Fachinformatiker für Systemintegration mit Fokus auf Cloud &amp; Cybersecurity wollte ich kein Tutorial nachbauen — sondern eine Infrastruktur entwerfen, die reale Enterprise-Szenarien abbildet. Dieses Projekt demonstriert die Fähigkeit, eine komplette Sicherheitsinfrastruktur eigenständig zu planen, zu implementieren und zu validieren.
+            </p>
+            <div className="mt-14 pt-8 border-t border-stone-600/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <div className="font-serif text-stone-50 text-xl">Gokhan Zehirlioglu</div>
+                <div className="text-[13px] uppercase tracking-[0.3em] text-stone-300 font-mono mt-2">FISI · Cloud &amp; Cybersecurity · April 2026</div>
+              </div>
+              <div className="flex items-center gap-2.5 text-emerald-400">
+                <ShieldCheck className="w-4 h-4" />
+                <span className="text-[13px] uppercase tracking-[0.3em] font-mono">Status: Abgeschlossen</span>
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col md:flex-row justify-center items-stretch gap-4">
-            <Link
-              to="/projekt/security/opnsense/part-1"
-              className="flex flex-col items-center justify-center p-5 rounded-2xl w-full md:w-1/2 border border-emerald-500/30 bg-emerald-500/10 hover:border-emerald-500/50 hover:bg-emerald-500/20 transition-all group text-center"
-            >
-              <p className="text-[10px] text-emerald-400 font-bold uppercase tracking-widest mb-1">Los geht's</p>
-              <p className="text-sm font-bold text-white">Part 1 — Netzwerk & Virtualisierung</p>
-              <ArrowRight className="w-5 h-5 text-emerald-400 mt-2 group-hover:translate-x-1 transition-transform" />
-            </Link>
+        </section>
 
-            <Link
-              to="/projekte"
-              className="flex flex-col items-center justify-center p-5 rounded-2xl w-full md:w-1/2 border border-slate-800 bg-slate-900/50 hover:bg-slate-800 transition-all group text-center"
-            >
-              <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Zurück zu</p>
-              <p className="text-sm font-bold text-white">Alle Projekte</p>
+        <section className="px-6 py-20 md:py-24 border-t border-stone-600/80">
+          <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
+            <Link to="/projekte" className="text-[13px] tracking-[0.3em] uppercase text-stone-500 hover:text-stone-100 font-mono transition-colors flex items-center gap-2 group">
+              <ChevronLeft className="w-3 h-3 group-hover:-translate-x-0.5 transition-transform" />
+              Zurück zu allen Projekten
+            </Link>
+            <Link to="/projekt/security/opnsense/part-1" className="group flex items-center gap-5 hover:gap-7 transition-all">
+              <div className="text-right">
+                <div className="text-[13px] tracking-[0.3em] uppercase text-stone-400 font-mono mb-1.5">Beginnen mit</div>
+                <div className="font-serif text-stone-50 text-2xl md:text-3xl tracking-[-0.01em]">
+                  Part 01 · <span className="italic text-emerald-400 font-light">Netzwerk-Aufbau</span>
+                </div>
+              </div>
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-stone-600 flex items-center justify-center group-hover:bg-emerald-400 group-hover:border-emerald-400 group-hover:text-stone-900 transition-all shrink-0">
+                <ArrowRight className="w-5 h-5" />
+              </div>
             </Link>
           </div>
         </section>
-      </div>
+
+      </article>
     </Layout>
   );
 };

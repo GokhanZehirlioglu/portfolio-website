@@ -130,7 +130,7 @@ const Navigation = () => {
                         <div className="flex items-center gap-0.5">
                             <Link
                                 to="/projekte"
-                                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors py-2"
+                                className="text-sm font-medium text-orange-400 border border-orange-400/50 px-4 py-1.5 rounded-full hover:bg-orange-400/10 hover:border-orange-400 hover:shadow-[0_0_15px_rgba(251,146,60,0.2)] transition-all duration-300"
                             >
                                 Projekte
                             </Link>
@@ -251,10 +251,11 @@ const Navigation = () => {
                             {/* ── Col 4: Cloud & Security ── */}
                             <div className="bg-card/30 border border-border/30 rounded-2xl p-4 hover:border-red-500/20 transition-colors duration-300">
                                 <OverlaySectionHeader label="Cloud & Security" color="#EF4444" dotColor={DOT.sec} />
-                                {cloudSecurityProjects.map(p => <OverlayProjectRow key={p.path} path={p.path} label={p.label} logo={p.logos[0]} onClose={() => setIsOverlayOpen(false)} />)}
-                                <div className="border-t border-border/20 my-1 mx-2" />
-                                <OverlaySubLabel label="Enterprise Security Lab" />
+                                <OverlaySubLabel label="Enterprise Cloud & Security Lab Erstellung" />
                                 {opnsenseParts.map(p => <OverlayProjectRow key={p.path} path={p.path} label={p.label} logo={p.logos[0]} onClose={() => setIsOverlayOpen(false)} />)}
+                                <div className="border-t border-border/20 my-1 mx-2" />
+                                <OverlaySubLabel label="VPN Gateway & Defense-in-Depth" />
+                                {cloudSecurityProjects.map(p => <OverlayProjectRow key={p.path} path={p.path} label={p.label} logo={p.logos[0]} onClose={() => setIsOverlayOpen(false)} />)}
                                 <div className="border-t border-border/20 my-1 mx-2" />
                                 <OverlayPlannedRow label="Azure Cloud Security Lab" />
                             </div>
@@ -337,15 +338,16 @@ const Navigation = () => {
                         <span className={`w-1.5 h-1.5 rounded-full ${DOT.sec}`} />
                         <span className="text-[10px] font-semibold text-muted-foreground uppercase">Cloud & Security</span>
                     </div>
-                    {cloudSecurityProjects.map(p => (
-                        <Link key={p.path} to={p.path} onClick={close} className="flex items-center gap-3 px-6 py-2.5 rounded-lg text-sm text-foreground hover:bg-secondary transition-colors">
-                            <img src={p.logos[0]} alt="" className="w-4 h-4 object-contain" />{p.label}
-                        </Link>
-                    ))}
-                    <div className="px-6 py-1 mt-1"><span className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-wider">Enterprise Security Lab</span></div>
+                    <div className="px-6 py-1"><span className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-wider">Enterprise Cloud & Security Lab Erstellung</span></div>
                     {opnsenseParts.map(p => (
                         <Link key={p.path} to={p.path} onClick={close} className="flex items-center gap-3 px-6 py-2.5 rounded-lg text-sm text-foreground hover:bg-secondary transition-colors">
                             <span className="w-4 h-4 flex items-center justify-center text-muted-foreground text-[10px]">•</span>{p.label}
+                        </Link>
+                    ))}
+                    <div className="px-6 py-1 mt-1"><span className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-wider">VPN Gateway & Defense-in-Depth</span></div>
+                    {cloudSecurityProjects.map(p => (
+                        <Link key={p.path} to={p.path} onClick={close} className="flex items-center gap-3 px-6 py-2.5 rounded-lg text-sm text-foreground hover:bg-secondary transition-colors">
+                            <img src={p.logos[0]} alt="" className="w-4 h-4 object-contain" />{p.label}
                         </Link>
                     ))}
 

@@ -1,259 +1,350 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import {
-  Quote,
-  Briefcase,
-  FlaskConical, // Yeni ikon: Home Lab / Deney Tüpü
   ArrowRight,
-  CheckCircle2,
-  Loader2,
-  Target,
-  Layers,
+  Network,
+  Server,
+  ShieldCheck,
+  Home,
+  Terminal,
+  Award,
   BookOpen,
-  LayoutDashboard
+  Cpu,
+  Globe,
+  Layers,
 } from "lucide-react";
 
+// ─── DATA ────────────────────────────────────────────────────────────────────
+
+const certs = [
+  { name: "MS Azure Administrator", code: "AZ-104", color: "from-blue-500/20 to-blue-600/10", border: "border-blue-500/30", text: "text-blue-400" },
+  { name: "MS Windows Server 2022 & PowerShell", code: "MCSA", color: "from-cyan-500/20 to-cyan-600/10", border: "border-cyan-500/30", text: "text-cyan-400" },
+  { name: "Linux Essentials", code: "LPI LE-1", color: "from-yellow-500/20 to-yellow-600/10", border: "border-yellow-500/30", text: "text-yellow-400" },
+  { name: "ITIL v4 Foundation", code: "ITIL v4", color: "from-purple-500/20 to-purple-600/10", border: "border-purple-500/30", text: "text-purple-400" },
+];
+
+const badges = [
+  "CCNA: Introduction to Networks",
+  "Cisco Networking Basics",
+  "Cisco Operating Systems Support",
+  "Cisco Security & Connectivity",
+  "Cisco Introduction to IoT",
+  "Industrial Networking Essentials",
+  "Industrial Cybersecurity Essential",
+  "Linux Unhatched",
+];
+
+const projectGroups = [
+  {
+    icon: ShieldCheck,
+    color: "text-emerald-400",
+    bg: "bg-emerald-500/10",
+    border: "border-emerald-500/20 hover:border-emerald-500/50",
+    label: "Enterprise Security Lab",
+    count: 6,
+    description: "6-teiliges OPNsense-Projekt: Proxmox, VLAN-Segmentierung, Suricata IDS/IPS, Wazuh SIEM, WireGuard VPN.",
+    link: "/projekt/security/opnsense",
+    tag: "Flagship",
+  },
+  {
+    icon: Home,
+    color: "text-orange-400",
+    bg: "bg-orange-500/10",
+    border: "border-orange-500/20 hover:border-orange-500/50",
+    label: "Homelab Infrastruktur",
+    count: 5,
+    description: "Raspberry Pi 5, Docker-Stack, Nginx Reverse Proxy, Cloudflare Tunnel, SSD-Upgrade & Home Assistant.",
+    link: "/projekte",
+    tag: null,
+  },
+  {
+    icon: Server,
+    color: "text-blue-400",
+    bg: "bg-blue-500/10",
+    border: "border-blue-500/20 hover:border-blue-500/50",
+    label: "Windows Server & Active Directory",
+    count: 5,
+    description: "AD-Setup, DHCP/DNS, RBAC & GPO, Endpoint Hardening, Enterprise Storage mit FSRM & VSS.",
+    link: "/projekte/windows",
+    tag: null,
+  },
+  {
+    icon: Terminal,
+    color: "text-yellow-400",
+    bg: "bg-yellow-500/10",
+    border: "border-yellow-500/20 hover:border-yellow-500/50",
+    label: "Linux Challenge Labs",
+    count: 4,
+    description: "User Management, Bash Scripting & Automation, Log Archiving, Text Processing Pipelines.",
+    link: "/projekte/linux",
+    tag: null,
+  },
+  {
+    icon: Network,
+    color: "text-cyan-400",
+    bg: "bg-cyan-500/10",
+    border: "border-cyan-500/20 hover:border-cyan-500/50",
+    label: "Cisco Networking Labs",
+    count: 2,
+    description: "Packet Tracer: Router-Grundkonfiguration mit IPv4/IPv6 & SSH, VLAN-Segmentierung & Trunking.",
+    link: "/projekte/cisco",
+    tag: null,
+  },
+  {
+    icon: Globe,
+    color: "text-rose-400",
+    bg: "bg-rose-500/10",
+    border: "border-rose-500/20 hover:border-rose-500/50",
+    label: "Cloud & VPN",
+    count: 1,
+    description: "OpenVPN Gateway auf Raspberry Pi 5 mit Defense-in-Depth-Modell, 7 Sicherheitsschichten.",
+    link: "/projekte",
+    tag: null,
+  },
+];
+
+const focus = [
+  {
+    icon: Cpu,
+    label: "Microsoft Azure",
+    sub: "AZ-104 Vorbereitung",
+    progress: 75,
+    color: "bg-blue-500",
+  },
+  {
+    icon: ShieldCheck,
+    label: "Cloud Security",
+    sub: "Zero-Trust & SIEM-Architekturen",
+    progress: 60,
+    color: "bg-emerald-500",
+  },
+  {
+    icon: Layers,
+    label: "Homelab Ausbau",
+    sub: "Weitere Enterprise-Simulationen",
+    progress: 85,
+    color: "bg-orange-500",
+  },
+];
+
+// ─── COMPONENT ───────────────────────────────────────────────────────────────
+
 const UeberMich: React.FC = () => {
-
-  // --- KONFİGÜRASYON: TEKNOLOJİ STACK'İ ---
-  // Not: Linux yerine Ubuntu (Orijinal Turuncu) kullanıldı - Daha temiz görünür.
-  // Wazuh için güvenilir Wikimedia kaynağı kullanıldı.
-  const techStack = [
-    { name: "Linux", url: "https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg" },
-    { name: "Ubuntu / Linux", url: "https://cdn.simpleicons.org/ubuntu/E95420" },
-    { name: "Docker", url: "https://cdn.simpleicons.org/docker/2496ED" },
-    { name: "Home Assistant", url: "https://cdn.simpleicons.org/homeassistant/41BDF5" },
-    { name: "Nginx", url: "https://cdn.simpleicons.org/nginx/009639" },
-    { name: "Cloudflare", url: "https://cdn.simpleicons.org/cloudflare/F38020" },
-    { name: "Cisco", url: "https://cdn.simpleicons.org/cisco/1BA0D7" },
-    { name: "Wazuh", url: "https://raw.githubusercontent.com/wazuh/wazuh/master/brand/icon_wazuh.png" },
-  ];
-
-  // --- KONFİGÜRASYON: PROJE DURUMLARI (TOPLAM 8 MODÜL) ---
-  const projectStatus = [
-    { label: "Home Server & Infrastruktur Einrichten (Docker-Basis)", status: "Abgeschlossen", active: false },
-    { label: "Smart Home & IoT-Integration (Home Assistant)", status: "Abgeschlossen", active: false },
-    { label: "Web-Server Einrichten (Ngnix)", status: "Abgeschlossen", active: false },
-    { label: "Web-Hosting & Reverse Proxy(Cloudflare Tunnel)", status: "Abgeschlossen", active: false },
-    { label: "Switching Layerr 2 VLAN & Netz-Segmentierung", status: "In Arbeit", active: true },
-    { label: "Routing Layer-3 ACL", status: "Geplant", active: false },
-    { label: "Implementierung von Next Gen. Firewalls", status: "Geplant", active: false }, // İsim Düzeltildi
-    { label: "Zentrales Logging & SIEM (Wazuh)", status: "Geplant", active: false }, // Eklendi (8. Modül)
-  ];
-
   return (
     <Layout>
       <Helmet>
         <title>Über mich | Gökhan Zehirlioglu</title>
-        <meta name="description" content="Erfahren Sie mehr über meinen Werdegang vom Nachhilfeleiter zum IT-Spezialisten und mein Home-Lab." />
+        <meta
+          name="description"
+          content="Angehender Fachinformatiker für Systemintegration — ich lerne durch Bauen: Enterprise Security Labs, Homelab, Cloud & Security."
+        />
       </Helmet>
-      {/* 1. HERO SECTION (KİMLİK) */}
-      <section className="pt-20 pb-12 px-4 bg-gradient-to-b from-primary/5 to-transparent">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-8">
-            <span className="gradient-text">Über mich</span>
+
+      {/* ── 1. HERO ──────────────────────────────────────────────────────────── */}
+      <section className="pt-28 pb-20 px-4 relative overflow-hidden">
+        {/* background glows */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full bg-orange-500/5 blur-[120px]" />
+          <div className="absolute top-20 right-0 w-[500px] h-[500px] rounded-full bg-emerald-500/5 blur-[120px]" />
+        </div>
+
+        <div className="max-w-4xl mx-auto relative z-10">
+          {/* label */}
+          <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.35em] uppercase font-mono text-muted-foreground mb-8">
+            <BookOpen className="w-3 h-3 text-orange-400" />
+            Fachinformatiker Ausbildung · Jahrgang 2024
+          </span>
+
+          {/* headline */}
+          <h1 className="text-4xl md:text-6xl font-black text-foreground tracking-tight leading-[1.1] mb-8">
+            Ich lerne nicht durch<br />
+            Zuschauen —{" "}
+            <span className="italic font-light text-orange-400 font-serif">
+              ich baue.
+            </span>
           </h1>
 
-          <div className="space-y-6 text-lg leading-relaxed text-foreground/90 max-w-3xl mx-auto">
-            <p className="font-medium text-xl md:text-2xl text-primary/90">
-              Ich arbeite strukturiert, prozessorientiert und verantwortungsbewusst.
+          {/* body */}
+          <div className="space-y-5 text-lg text-muted-foreground max-w-3xl leading-relaxed">
+            <p>
+              Meine Ausbildung zum Fachinformatiker für Systemintegration gibt mir das Fundament.
+              Aber was mich wirklich antreibt, passiert abends im Homelab: echte Enterprise-Architekturen
+              aufbauen, sichern, dokumentieren — und verstehen, <em className="text-foreground not-italic font-medium">warum</em> etwas funktioniert.
             </p>
             <p>
-              Ein sorgfältiger Umgang mit Daten, klare Abläufe und nachvollziehbare Dokumentation sind für mich
-              zentrale Voraussetzungen für einen verlässlichen IT-Betrieb. Aus diesem Grund habe ich mich bewusst
-              für einen beruflichen Wechsel in die IT entschieden und befinde mich seit Juni 2025 in der
-              Umschulung zum Fachinformatiker für Systemintegration.
+              Über <span className="text-foreground font-semibold">20+ Projekte</span> in Networking, Windows Server,
+              Linux, Cloud Security und Homelab-Infrastruktur — alle selbst konzipiert, aufgebaut und dokumentiert.
+              Kein Tutorial-Klonen, sondern echte Problemlösung.
             </p>
-            <p>
-              Die IT bietet mir den Rahmen, in dem ich strukturiertes Arbeiten, analytisches Denken und
-              technische Verantwortung systematisch verbinden kann.
-            </p>
+          </div>
 
-            {/* Alıntı */}
-            <div className="glass mt-10 p-6 rounded-xl border border-primary/10 shadow-sm flex flex-col md:flex-row items-center justify-center gap-4 text-center md:text-left">
-              <div className="bg-primary/10 p-3 rounded-full">
-                <Quote className="w-6 h-6 text-primary" />
+          {/* quick stats */}
+          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { n: "23+", label: "Projekte" },
+              { n: "4", label: "Zertifikate" },
+              { n: "8", label: "Cisco Badges" },
+              { n: "24/7", label: "Home Server" },
+            ].map((s) => (
+              <div
+                key={s.label}
+                className="bg-muted/30 border border-border rounded-2xl p-5 text-center hover:border-orange-500/30 transition-colors"
+              >
+                <div className="text-3xl font-black text-foreground">{s.n}</div>
+                <div className="text-xs text-muted-foreground mt-1 tracking-wide uppercase font-mono">{s.label}</div>
               </div>
-              <p className="italic text-muted-foreground font-medium">
-                "Meine berufliche Haltung ist klar: Systeme müssen nicht nur funktionieren, sondern verständlich,
-                wartbar und langfristig stabil sein."
-              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 2. WAS ICH GEBAUT HABE ───────────────────────────────────────────── */}
+      <section className="py-20 px-4 border-t border-border">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-12">
+            <p className="text-xs font-mono tracking-[0.3em] uppercase text-muted-foreground mb-3">Projektarbeit</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Was ich gebaut habe</h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {projectGroups.map((g) => {
+              const Icon = g.icon;
+              return (
+                <Link
+                  key={g.label}
+                  to={g.link}
+                  className={`group relative flex flex-col gap-4 p-6 rounded-2xl border bg-muted/20 ${g.border} transition-all duration-300 hover:bg-muted/40`}
+                >
+                  {g.tag && (
+                    <span className="absolute top-4 right-4 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                      {g.tag}
+                    </span>
+                  )}
+                  <div className={`${g.bg} w-11 h-11 rounded-xl flex items-center justify-center`}>
+                    <Icon className={`w-5 h-5 ${g.color}`} />
+                  </div>
+                  <div>
+                    <div className="flex items-baseline gap-2 mb-1">
+                      <h3 className="font-bold text-foreground">{g.label}</h3>
+                      <span className={`text-xs font-mono ${g.color}`}>{g.count} Proj.</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{g.description}</p>
+                  </div>
+                  <div className={`flex items-center gap-1 text-xs font-semibold ${g.color} mt-auto opacity-0 group-hover:opacity-100 transition-opacity`}>
+                    Ansehen <ArrowRight className="w-3 h-3" />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 3. ZERTIFIKATE & BADGES ──────────────────────────────────────────── */}
+      <section className="py-20 px-4 border-t border-border">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-12">
+            <p className="text-xs font-mono tracking-[0.3em] uppercase text-muted-foreground mb-3">Qualifikationen</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Zertifikate & Badges</h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Certs */}
+            <div>
+              <div className="flex items-center gap-2 mb-5">
+                <Award className="w-4 h-4 text-orange-400" />
+                <span className="text-sm font-semibold text-foreground uppercase tracking-widest">Offizielle Zertifikate</span>
+              </div>
+              <div className="flex flex-col gap-3">
+                {certs.map((c) => (
+                  <div
+                    key={c.code}
+                    className={`flex items-center justify-between p-4 rounded-xl bg-gradient-to-r ${c.color} border ${c.border}`}
+                  >
+                    <span className="text-sm font-medium text-foreground">{c.name}</span>
+                    <span className={`text-xs font-mono font-bold ${c.text} shrink-0 ml-3`}>{c.code}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Badges */}
+            <div>
+              <div className="flex items-center gap-2 mb-5">
+                <Network className="w-4 h-4 text-cyan-400" />
+                <span className="text-sm font-semibold text-foreground uppercase tracking-widest">Cisco Networking Academy</span>
+              </div>
+              <div className="flex flex-col gap-2">
+                {badges.map((b) => (
+                  <div
+                    key={b}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-muted/30 border border-border"
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                    <span className="text-sm text-muted-foreground">{b}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="pb-16 px-4 max-w-5xl mx-auto space-y-20">
-
-        {/* 2. GEÇMİŞ (HINTERGRUND) */}
-        <div className="grid md:grid-cols-[1fr_3fr] gap-8 items-start">
-          <div className="hidden md:flex flex-col items-center text-center p-6 glass rounded-2xl border border-primary/10 bg-gradient-to-br from-primary/5 to-transparent shadow-sm">
-            <Briefcase className="w-10 h-10 text-primary mb-3" />
-            <span className="text-xs font-bold text-primary tracking-wider uppercase">Hintergrund</span>
+      {/* ── 4. AKTUELLER FOKUS ───────────────────────────────────────────────── */}
+      <section className="py-20 px-4 border-t border-border">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-12">
+            <p className="text-xs font-mono tracking-[0.3em] uppercase text-muted-foreground mb-3">Derzeit</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Aktueller Fokus</h2>
           </div>
 
-          <div className="space-y-5 text-muted-foreground leading-relaxed">
-            <h2 className="text-2xl font-bold text-foreground flex items-center gap-4">
-              <span className="md:hidden bg-primary/10 p-2 rounded-lg"><Briefcase className="w-6 h-6 text-primary" /></span>
-              Vom Hintergrund zur IT-Praxis
-            </h2>
-            <p>
-              Bereits vor meiner Umschulung habe ich in daten- und prozessorientierten Kontexten gearbeitet.
-              Der strukturierte Umgang mit Informationen, das Aufbereiten von Ergebnissen sowie das Arbeiten mit
-              Systemübersichten und Dokumentationen gehörten dabei zu meinem Alltag.
-            </p>
-            <p>
-              Diese Erfahrung bildet heute die Grundlage meiner IT-Arbeitsweise. Besonders Aufgaben an der
-              Schnittstelle zwischen Technik, Organisation und Prozessen sprechen mich an.
-            </p>
-            <div className="bg-card p-5 rounded-xl border-l-4 border-primary shadow-sm">
-              <p className="text-foreground font-medium">
-                Auch meine vorherige Tätigkeit als <span className="text-primary font-bold">Gründer und Leiter eines Nachhilfezentrums</span> hat
-                meine Organisationsfähigkeit, Verlässlichkeit und Kommunikationsstärke nachhaltig geprägt.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* 3. YÖNTEM (HOME LAB FELSEFESİ) */}
-        <div>
-          {/* İkon Değişti: Mezuniyet Kepi -> Deney Tüpü (FlaskConical) */}
-          <h2 className="text-2xl font-bold flex items-center gap-4 mb-6 text-foreground">
-            <div className="bg-primary/10 p-2 rounded-lg shadow-sm">
-              <FlaskConical className="w-7 h-7 text-primary" />
-            </div>
-            Aktuelle Entwicklung & Lernansatz
-          </h2>
-          <div className="prose max-w-none text-muted-foreground leading-relaxed text-lg">
-            <p className="mb-4">
-              Parallel zur Umschulung entwickle ich meine praktischen Fähigkeiten gezielt weiter.
-              Dafür habe ich unter dem Namen <strong>Home-LAB</strong> eine eigene, zusammenhängende IT-Lernumgebung aufgebaut.
-            </p>
-            <p>
-              Dabei geht es mir nicht um isolierte Einzelübungen, sondern um eine <strong>systematische, praxisnahe Entwicklung</strong>:
-              Planung, Umsetzung, Betrieb und Dokumentation gehören immer zusammen. Die einzelnen Module bauen bewusst
-              aufeinander auf und orientieren sich an realen Anforderungen aus dem IT-Betrieb.
-            </p>
-          </div>
-        </div>
-
-        {/* 4. GÖRSEL KANIT */}
-        <div className="my-10">
-          <div className="w-full rounded-2xl overflow-hidden shadow-2xl border border-primary/20 bg-black/50 group relative aspect-[16/9] md:aspect-[21/9]">
-            <img
-              src="/images/homelab-architecture.png"
-              alt="IT System Architecture Diagram"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-            />
-            <div className="absolute bottom-0 w-full bg-black/80 backdrop-blur-md py-4 px-6 border-t border-white/10">
-              <p className="text-sm text-center text-white/90 font-medium tracking-wide">
-                Systemdenken in der Praxis: Eine Schicht-für-Schicht visualisierte Infrastruktur – von der Hardware bis zur Security-Gateway.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* 5. PROJE DURUMU & GELECEK */}
-        <div className="grid md:grid-cols-2 gap-12 pt-10 border-t border-primary/10">
-
-          {/* Sol: Proje Durumları */}
-          <div>
-            <h3 className="text-xl font-bold flex items-center gap-3 mb-6">
-              <div className="bg-primary/10 p-2 rounded-lg">
-                <LayoutDashboard className="text-primary w-5 h-5" />
-              </div>
-              Projekt-Status & Module
-            </h3>
-            <div className="space-y-3">
-              {projectStatus.map((item, index) => (
-                <div key={index} className={`flex items-center justify-between p-3 rounded-lg border transition-all hover:shadow-md ${item.active ? 'bg-primary/5 border-primary/30 shadow-sm' : 'glass border-transparent'}`}>
-                  <span className={`text-sm ${item.active ? 'font-semibold text-foreground' : 'text-muted-foreground'}`}>
-                    {item.label}
-                  </span>
-                  <div className="flex items-center gap-2">
-                    {item.status === "Abgeschlossen" && <CheckCircle2 size={18} className="text-green-500" />}
-                    {item.status === "In Arbeit" && <Loader2 size={18} className="text-primary animate-spin" />}
-                    {item.status === "Geplant" && <div className="w-4 h-4 rounded-full border-2 border-muted-foreground/30" />}
-
-                    {/* Status Text (Mobil uyumlu min-width) */}
-                    <span className="text-xs text-muted-foreground w-24 text-right hidden sm:block">{item.status}</span>
+          <div className="flex flex-col gap-6">
+            {focus.map((f) => {
+              const Icon = f.icon;
+              return (
+                <div key={f.label} className="flex items-start gap-5">
+                  <div className="bg-muted/30 border border-border w-11 h-11 rounded-xl flex items-center justify-center shrink-0 mt-0.5">
+                    <Icon className="w-5 h-5 text-muted-foreground" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex justify-between items-baseline mb-2">
+                      <span className="font-semibold text-foreground">{f.label}</span>
+                      <span className="text-xs text-muted-foreground font-mono">{f.progress}%</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
+                      <div
+                        className={`h-full ${f.color} rounded-full`}
+                        style={{ width: `${f.progress}%` }}
+                      />
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">{f.sub}</p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Sağ: Gelecek Hedefleri */}
-          <div className="space-y-6">
-            <h3 className="text-xl font-bold flex items-center gap-3 mb-6">
-              <div className="bg-primary/10 p-2 rounded-lg">
-                <Target className="text-primary w-5 h-5" />
-              </div>
-              Blick nach vorn
-            </h3>
-            <div className="text-muted-foreground text-base leading-relaxed space-y-4">
-              <p>
-                Perspektivisch möchte ich mich im Bereich <strong>Cloud- und Security-naher IT-Infrastrukturen</strong> weiterentwickeln.
-                Dabei liegt mein Fokus auf cloudbasierten Architekturen, Container-Plattformen und sicherem Betrieb verteilter Systeme.
-              </p>
-              <div className="bg-card p-5 rounded-xl border border-primary/10 shadow-sm">
-                <p className="font-medium text-foreground mb-2">Mein Ziel:</p>
-                <p>
-                  Meine fachlichen Grundlagen systematisch zu vertiefen und mich langfristig in
-                  verantwortungsvollen, struktur- und sicherheitsorientierten IT-Rollen zu etablieren.
-                </p>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
+      </section>
 
-        {/* 6. AKADEMİK DERİNLEŞME (VERTIEFUNG) */}
-        <div className="glass p-8 rounded-2xl border border-primary/10 bg-gradient-to-r from-primary/5 via-transparent to-transparent relative overflow-hidden mt-8">
-          <BookOpen className="absolute -right-8 -bottom-8 w-40 h-40 text-primary/5 rotate-12" />
-
-          <h3 className="text-xl font-bold mb-4 flex items-center gap-3">
-            <div className="bg-primary/10 p-2 rounded-lg">
-              <Layers className="w-6 h-6 text-primary" />
-            </div>
-            Aktuelle fachliche Vertiefung
-          </h3>
-          <p className="text-base text-muted-foreground leading-relaxed relative z-10 max-w-3xl">
-            Parallel zu meiner Umschulung und der praktischen Arbeit im Home-LAB vertiefe ich meine Kenntnisse
-            gezielt in netzwerk-, system- und cloudnahen Betriebsbereichen. Dabei folge ich strukturierten Lernpfaden
-            mit Fokus auf <span className="text-foreground font-semibold">Netzwerk- und Systemadministration, Linux- und containerbasiertem Betrieb,
-              Cloud-Administration</span> sowie <span className="text-foreground font-semibold">security-nahen Betriebs- und Monitoring-Themen</span>.
-            Ziel ist es, meine praktische Systemerfahrung durch fundiertes, rollenorientiertes Fachwissen zu ergänzen
-            und kontinuierlich zu schärfen.
-          </p>
-        </div>
-
-        {/* 7. TECH STACK (UX ve Renk Düzeltmeleri Yapıldı) */}
-        <div className="mt-12 pt-10 border-t border-primary/10 text-center">
-          <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-[0.2em] mb-10">
-            Eingesetzte Technologien & Tools
+      {/* ── 5. CTA ───────────────────────────────────────────────────────────── */}
+      <section className="py-20 px-4 border-t border-border">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+            Alles in einem Ort
           </h2>
-
-          <div className="flex flex-wrap justify-center items-center gap-10 md:gap-16">
-            {techStack.map((tech) => (
-              // UX: Relative ve Group eklendi - Tooltip artık kaymaz
-              <div key={tech.name} className="relative group flex flex-col items-center gap-3 transition-transform hover:-translate-y-1 cursor-pointer">
-                {/* Logo */}
-                <img
-                  src={tech.url}
-                  alt={tech.name}
-                  className="h-10 w-10 md:h-12 md:w-12 drop-shadow-sm object-contain"
-                />
-
-                {/* Tooltip (Label) - Absolute pozisyon düzeltildi */}
-                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[11px] font-medium text-muted-foreground bg-background/80 px-2 py-1 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-primary/10">
-                  {tech.name}
-                </span>
-              </div>
-            ))}
-          </div>
+          <p className="text-muted-foreground mb-8">
+            Alle Projekte sind vollständig dokumentiert — von der Architekturentscheidung bis zur finalen Konfiguration.
+          </p>
+          <Link
+            to="/projekte"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-foreground text-background font-bold rounded-xl hover:opacity-90 transition-opacity group"
+          >
+            Alle Projekte ansehen
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
-
       </section>
     </Layout>
   );

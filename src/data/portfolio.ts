@@ -24,24 +24,31 @@ export interface LinuxProject extends Project {
 // ============================================
 
 export const techLogos: TechLogo[] = [
-    // Row 1
-    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg", alt: "Azure", title: "Microsoft Azure" },
-    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg", alt: "Linux", title: "Linux" },
-    { src: "https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg", alt: "Cisco", title: "Cisco" },
-    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", alt: "Docker", title: "Docker" },
-    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg", alt: "Raspberry Pi", title: "Raspberry Pi" },
-    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg", alt: "Cloudflare", title: "Cloudflare" },
-    { src: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/home-assistant.svg", alt: "Home Assistant", title: "Home Assistant" },
-    { src: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/zigbee2mqtt.svg", alt: "Zigbee", title: "Zigbee" },
-    // Row 2
-    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg", alt: "Nginx", title: "Nginx" },
+    // — Security & Network —
+    { src: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/opnsense.svg", alt: "OPNsense", title: "OPNsense" },
+    { src: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/wazuh.svg", alt: "Wazuh", title: "Wazuh SIEM" },
+    { src: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/wireguard.svg", alt: "WireGuard", title: "WireGuard VPN" },
+    { src: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/unifi.svg", alt: "UniFi", title: "Ubiquiti UniFi" },
     { src: "https://cdn.simpleicons.org/openvpn/EA7E20", alt: "OpenVPN", title: "OpenVPN" },
+    { src: "https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg", alt: "Cisco", title: "Cisco" },
+    // — Cloud & Infrastructure —
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg", alt: "Azure", title: "Microsoft Azure" },
+    { src: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/proxmox.svg", alt: "Proxmox", title: "Proxmox" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", alt: "Docker", title: "Docker" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg", alt: "Cloudflare", title: "Cloudflare" },
+    // — OS & Server —
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg", alt: "Linux", title: "Linux" },
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg", alt: "Windows", title: "Windows Server" },
-    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", alt: "Python", title: "Python" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg", alt: "Raspberry Pi", title: "Raspberry Pi" },
+    // — Services & Monitoring —
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg", alt: "Nginx", title: "Nginx" },
+    { src: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/home-assistant.svg", alt: "Home Assistant", title: "Home Assistant" },
+    { src: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/uptime-kuma.svg", alt: "Uptime Kuma", title: "Uptime Kuma" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg", alt: "Grafana", title: "Grafana" },
+    // — Scripting & Automation —
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg", alt: "Bash", title: "Bash" },
     { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/powershell/powershell-original.svg", alt: "PowerShell", title: "PowerShell" },
-    { src: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/proxmox.svg", alt: "Proxmox", title: "Proxmox" },
-    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg", alt: "Grafana", title: "Grafana" },
+    { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", alt: "Python", title: "Python" },
 ];
 
 export const certificates: string[] = [
@@ -291,13 +298,29 @@ export const opnsenseParts: Project[] = [
     },
 ];
 
+// Tüm proje sayısı (StatCard sayacı için)
+export const totalProjectCount = [
+    ...ciscoProjects,
+    ...linuxProjects,
+    ...windowsModul1Projects,
+    ...windowsModul2Projects,
+    ...cloudSecurityProjects,
+    ...homelabProjects,
+    ...opnsenseParts,
+].length;
+
+// Tooltip'te gösterilen 10 öne çıkan proje
 export const projects: string[] = [
-    ...ciscoProjects.map(p => p.label),
-    ...linuxProjects.map(p => p.label),
-    ...windowsModul1Projects.map(p => p.label),
-    ...windowsModul2Projects.map(p => p.label),
-    ...cloudSecurityProjects.map(p => p.label),
-    ...homelabProjects.map(p => p.label),
+    "OPNsense Enterprise Firewall Lab",
+    "Proxmox Virtualization Environment",
+    "Wazuh SIEM Deployment",
+    "Zero-Trust Network Design",
+    "WireGuard Site-to-Site VPN",
+    "Automated Docker Infrastructure",
+    "Nginx Reverse Proxy & SSL Gateway",
+    "Monitoring Stack (Grafana & Prometheus)",
+    "Active Directory Integration",
+    "OpenVPN Gateway & Defense-in-Depth",
 ];
 
 export const portfolioCategories = {

@@ -4,7 +4,7 @@ import Layout from "@/components/Layout";
 import TechLogos from "@/components/TechLogos";
 import StatCard from "@/components/StatCard";
 import { ArrowRight } from "lucide-react";
-import { techLogos, certificates, badges, projects } from "@/data/portfolio";
+import { techLogos, certificates, badges, projects, totalProjectCount } from "@/data/portfolio";
 
 const Index = () => {
   return (
@@ -18,28 +18,35 @@ const Index = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Hero Content */}
             <div className="flex flex-col gap-8">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal leading-tight tracking-tight">
-                <span className="font-bold gradient-text">Fachinformatiker für Systemintegration</span>
+              <h1 className="flex flex-col gap-2 mb-4">
+                <span className="text-[13px] md:text-[15px] tracking-[0.3em] uppercase text-muted-foreground font-mono">
+                  Angehender
+                </span>
+                <span className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight">
+                  Fachinformatiker
+                </span>
+                <span className="font-serif text-5xl md:text-6xl lg:text-7xl italic font-light text-orange-400 tracking-[-0.02em]">
+                  Cloud Security.
+                </span>
               </h1>
 
               <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-                Fachinformatiker für Systemintegration mit Azure & Cisco Zertifizierungen.
-                Spezialisiert auf Netzwerkinfrastruktur, Containerisierung und Smart Home Automation.
+                Angehender Fachinformatiker für Systemintegration mit klarem Fokus auf Cloud Security. Während ich mich intensiv auf Azure-Zertifizierungen vorbereite, simuliere ich bereits heute komplexe Enterprise-Sicherheitsarchitekturen in meinem eigenen Homelab, um Cloud-Konzepte in die Praxis umzusetzen.
               </p>
 
               {/* Stats */}
               <div className="flex flex-wrap gap-8 pt-4">
                 <StatCard
-                  value={projects.length.toString()}
+                  value={`${totalProjectCount}+`}
                   label="Projekte"
-                  tooltipTitle="Abgeschlossene Projekte"
+                  tooltipTitle="Highlight-Projekte (Auswahl)"
                   items={projects}
                 />
 
                 <StatCard
                   value={certificates.length.toString()}
                   label="Zertifikate"
-                  tooltipTitle="Offizielle Zertifikate"
+                  tooltipTitle="Offizielle Zertifikate · Azure (In Progress)"
                   items={certificates}
                 />
 
@@ -103,8 +110,13 @@ const Index = () => {
               </div>
 
               {/* Tech Logos */}
-              <div className="w-full max-w-[95%]">
-                <TechLogos logos={techLogos} className="flex-nowrap justify-center" />
+              <div className="w-full max-w-4xl mx-auto px-4 mt-4">
+                <div className="scale-90 md:scale-100 opacity-70 hover:opacity-100 transition-opacity duration-500">
+                  <TechLogos
+                    logos={techLogos}
+                    className="flex-wrap justify-center gap-x-8 gap-y-6 md:gap-x-12 md:gap-y-8"
+                  />
+                </div>
               </div>
             </div>
           </div>

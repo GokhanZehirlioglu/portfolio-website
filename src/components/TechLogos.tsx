@@ -9,16 +9,23 @@ interface TechLogosProps {
 
 const TechLogos = ({ logos, className = "" }: TechLogosProps) => {
   return (
-    <div className={`flex flex-wrap md:flex-nowrap justify-center gap-4 md:gap-6 py-3 px-6 md:px-8 bg-card/80 backdrop-blur-md border border-primary/20 rounded-full shadow-lg shadow-primary/5 ${className}`}>
+    <div className={`flex flex-wrap justify-center gap-4 md:gap-6 py-4 px-6 md:px-10 bg-card/80 backdrop-blur-md border border-primary/20 rounded-2xl shadow-lg shadow-primary/5 ${className}`}>
       {logos.map((logo, index) => (
-        <img
+        <div
           key={logo.alt}
-          src={logo.src}
-          alt={logo.alt}
-          title={logo.title}
-          className="w-8 h-8 opacity-70 grayscale-[30%] hover:opacity-100 hover:scale-110 hover:grayscale-0 transition-all duration-200 animate-float"
+          className="relative group flex items-center justify-center animate-float"
           style={{ animationDelay: `${index * 0.2}s` }}
-        />
+        >
+          <img
+            src={logo.src}
+            alt={logo.alt}
+            className="w-4 h-4 opacity-70 grayscale-[30%] group-hover:opacity-100 group-hover:scale-110 group-hover:grayscale-0 transition-all duration-200"
+          />
+          {/* Tooltip */}
+          <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-popover border border-border px-2 py-1 text-[10px] font-medium text-popover-foreground shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10">
+            {logo.title}
+          </span>
+        </div>
       ))}
     </div>
   );

@@ -10,6 +10,7 @@ import {
     windowsModul2Projects,
     homelabProjects,
     cloudSecurityProjects,
+    opnsenseParts,
 } from "@/data/portfolio";
 
 // ─── Category definitions ────────────────────────────────────────────────────
@@ -52,17 +53,22 @@ const categories = [
     {
         id: "cloud",
         label: "Cloud & Security",
-        description: "Sichere Fernzugriffs-Architekturen, VPN-Tunneling, Firewalling und Defense-in-Depth-Modelle. Zukünftig: OPNsense Enterprise Lab und Azure Cloud Security.",
+        description: "Enterprise-Security-Lab mit OPNsense, VLAN-Segmentierung und SIEM-Pipeline. Sichere Fernzugriffs-Architekturen, VPN-Tunneling, Firewalling und Defense-in-Depth-Modelle.",
         color: "#EF4444",
         dotColor: "bg-red-500",
         borderHover: "hover:border-red-500/40",
         iconBg: "from-red-500/20 to-red-600/5",
         logos: [
+            "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/opnsense.svg",
             "https://cdn.simpleicons.org/openvpn/EA7E20",
             "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg",
         ],
-        projects: cloudSecurityProjects,
-        planned: ["OPNsense Enterprise Security Lab Part 1-6", "Azure Cloud Security Lab"],
+        projects: [...opnsenseParts, ...cloudSecurityProjects],
+        subcategories: [
+            { label: "Enterprise Cloud & Security Lab Erstellung", projects: opnsenseParts },
+            { label: "VPN Gateway & Defense-in-Depth", projects: cloudSecurityProjects },
+        ],
+        planned: ["Azure Cloud Security Lab"],
     },
     {
         id: "homelab",
