@@ -233,7 +233,7 @@ const ProjektDeployment = () => {
                         </div>
                         <NoteBlock
                             title="Golden Rule"
-                            text="Das originale Master-Image ist strengstens „Read-Only". Jede neue VM erhält eine eigene Kopie — niemals das Original."
+                            text={'Das originale Master-Image ist strengstens „Read-Only". Jede neue VM erhält eine eigene Kopie — niemals das Original.'}
                         />
                     </section>
 
