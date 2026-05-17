@@ -10,10 +10,10 @@ const Index = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Gökhan Zehirlioglu - Fachinformatiker für Systemintegration</title>
-        <meta name="description" content="Portfolio von Gökhan Zehirlioglu, Fachinformatiker für Systemintegration. Spezialisiert auf Azure, Cisco, Linux und Netzwerkinfrastruktur." />
+        <title>Gökhan Zehirlioglu | Angehender Fachinformatiker — Cloud Security</title>
+        <meta name="description" content="Portfolio von Gökhan Zehirlioglu — Angehender Fachinformatiker für Systemintegration mit Fokus auf Cloud Security, Azure, OPNsense und Enterprise Homelab." />
       </Helmet>
-      <section className="min-h-[calc(100vh-5rem)] flex items-center px-4 md:px-6 py-12">
+      <section className="min-h-[calc(100vh-5rem)] flex items-center px-4 md:px-6 pt-4 pb-6">
         <div className="max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Hero Content */}
@@ -31,7 +31,7 @@ const Index = () => {
               </h1>
 
               <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-                Angehender Fachinformatiker für Systemintegration mit klarem Fokus auf Cloud Security. Während ich mich intensiv auf Azure-Zertifizierungen vorbereite, simuliere ich bereits heute komplexe Enterprise-Sicherheitsarchitekturen in meinem eigenen Homelab, um Cloud-Konzepte in die Praxis umzusetzen.
+                Angehender Fachinformatiker für Systemintegration mit klarem Fokus auf Cloud Security. Während ich mich intensiv auf Azure-Zertifizierungen vorbereite, baue und betreibe ich bereits heute komplexe Enterprise-Sicherheitsarchitekturen in meinem eigenen Homelab — dokumentiert, reproduzierbar und production-ready.
               </p>
 
               {/* Stats */}
@@ -98,7 +98,7 @@ const Index = () => {
                 {/* HERO IMAGE */}
                 <img
                   src="/images/hero.jpg"
-                  alt="Gökhan Zehirlioglu — Fachinformatiker für Systemintegration, HomeLab und Netzwerk-Projekte"
+                  alt="Gökhan Zehirlioglu — Angehender Fachinformatiker für Systemintegration, Cloud Security und Enterprise Homelab"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   // @ts-expect-error React 18 doesn't support fetchPriority prop yet
                   fetchpriority="high"

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 export const windowProjectsData = [
   { id: 1, label: "01 Server Upgrade", path: "/projekt/windows/win10-upgrade" },
   { id: 2, label: "02 Migration", path: "/projekt/windows/usmt-migration" },
-  { id: 3, label: "03 Golden Image", isGeplant: true },
-  { id: 4, label: "04 Deployment", isGeplant: true },
+  { id: 3, label: "03 Golden Image", path: "/projekt/windows/golden-image" },
+  { id: 4, label: "04 Deployment", path: "/projekt/windows/deployment" },
   { id: 5, label: "05 Active Directory Setup", path: "/projekt/windows/ad-setup" },
   { id: 6, label: "06 Zentrale Domäneninfrastruktur", path: "/projekt/windows/netzwerk-infrastruktur" },
   { id: 7, label: "07 Rollenbasierte Zugriffskontrolle", path: "/projekt/windows/rbac-gpo" },

@@ -2,6 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
+import { totalProjectCount } from "@/data/portfolio";
 import {
   ArrowRight,
   Network,
@@ -67,7 +68,7 @@ const projectGroups = [
     label: "Windows Server & Active Directory",
     count: 5,
     description: "AD-Setup, DHCP/DNS, RBAC & GPO, Endpoint Hardening, Enterprise Storage mit FSRM & VSS.",
-    link: "/projekte/windows",
+    link: "/windows-projekte",
     tag: null,
   },
   {
@@ -78,7 +79,7 @@ const projectGroups = [
     label: "Linux Challenge Labs",
     count: 4,
     description: "User Management, Bash Scripting & Automation, Log Archiving, Text Processing Pipelines.",
-    link: "/projekte/linux",
+    link: "/linux-projekte",
     tag: null,
   },
   {
@@ -89,7 +90,7 @@ const projectGroups = [
     label: "Cisco Networking Labs",
     count: 2,
     description: "Packet Tracer: Router-Grundkonfiguration mit IPv4/IPv6 & SSH, VLAN-Segmentierung & Trunking.",
-    link: "/projekte/cisco",
+    link: "/cisco-projekte",
     tag: null,
   },
   {
@@ -100,7 +101,7 @@ const projectGroups = [
     label: "Cloud & VPN",
     count: 1,
     description: "OpenVPN Gateway auf Raspberry Pi 5 mit Defense-in-Depth-Modell, 7 Sicherheitsschichten.",
-    link: "/projekte",
+    link: "/projekt/openvpn-gateway",
     tag: null,
   },
 ];
@@ -183,7 +184,7 @@ const UeberMich: React.FC = () => {
           {/* quick stats */}
           <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { n: "23+", label: "Projekte" },
+              { n: `${totalProjectCount}+`, label: "Projekte" },
               { n: "4", label: "Zertifikate" },
               { n: "8", label: "Cisco Badges" },
               { n: "24/7", label: "Home Server" },

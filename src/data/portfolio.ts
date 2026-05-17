@@ -194,7 +194,7 @@ export const ciscoProjects: Project[] = [
 export const windowsModul1Projects: Project[] = [
     {
         path: "/projekt/windows/win10-upgrade",
-        label: "Projekt 01: Windows Update (10 â†’ 11)",
+        label: "Projekt 01: Windows Update (10 → 11)",
         description: "Windows 10 auf Windows 11 upgraden ohne Datenverlust. Schritt-für-Schritt Dokumentation mit Screenshots, Logs und Lösungen für häufige Probleme.",
         logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg"],
     },
@@ -203,7 +203,19 @@ export const windowsModul1Projects: Project[] = [
         label: "Projekt 02: Benutzerdaten Umzug",
         description: "Benutzerdaten und Programme sicher von Windows 10 zu Windows 11 migrieren. Professionelle Umzugsstrategie für Unternehmensumgebungen.",
         logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg"],
-    }
+    },
+    {
+        path: "/projekt/windows/golden-image",
+        label: "Projekt 03: Golden Image & Sysprep",
+        description: "Standardisiertes Windows 11 Master-Image (VHDX) erstellen, mit Sysprep generalisieren und für das Massen-Deployment vorbereiten.",
+        logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg"],
+    },
+    {
+        path: "/projekt/windows/deployment",
+        label: "Projekt 04: Rapid Deployment & Provisioning",
+        description: "Skalierbare Bereitstellung neuer virtueller Clients aus dem Golden Image — ohne manuelle OS-Installation, in unter 10 Minuten.",
+        logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg"],
+    },
 ];
 
 export const windowsModul2Projects: Project[] = [
@@ -237,6 +249,84 @@ export const windowsModul2Projects: Project[] = [
         description: "File Screening, Quotas (2GB) und DSGVO-konforme Datensicherheit mit Self-Service Wiederherstellung via Schattenkopien.",
         logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg"],
     }
+];
+
+export const windowsModul3Parts: Project[] = [
+    {
+        path: "/projekt/windows/modul-3",
+        label: "Modul 3: Hybrid Identity & Azure — Übersicht",
+        description: "Gesamtübersicht des 5-teiligen Hybrid-Identity-Projekts mit Entra ID, AD CS, LAPS und Cloud Sync.",
+        logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg"],
+    },
+    {
+        path: "/projekt/windows/modul-3/part-1",
+        label: "Part 1: Infrastructure & Windows Admin Center",
+        description: "Windows Server 2022 Umgebung aufbauen und Windows Admin Center für zentrales Remote-Management einrichten.",
+        logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg"],
+    },
+    {
+        path: "/projekt/windows/modul-3/part-2",
+        label: "Part 2: Multi-Site Active Directory DS",
+        description: "Zweiten Domain Controller für Stuttgart aufbauen, AD Sites & Services konfigurieren und Replikation validieren.",
+        logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg"],
+    },
+    {
+        path: "/projekt/windows/modul-3/part-3",
+        label: "Part 3: PKI & LDAPS",
+        description: "Interne Certificate Authority aufbauen, LDAPS aktivieren und Zertifikate per GPO ausrollen.",
+        logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg"],
+    },
+    {
+        path: "/projekt/windows/modul-3/part-4",
+        label: "Part 4: LAPS & Endpoint Hardening",
+        description: "Windows LAPS für automatisches Passwort-Management einrichten und Security-Baselines per GPO durchsetzen.",
+        logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg"],
+    },
+    {
+        path: "/projekt/windows/modul-3/part-5",
+        label: "Part 5: Entra Cloud Sync",
+        description: "Hybrid Identity aufbauen: On-Premises AD mit Microsoft Entra ID über den Cloud Sync Agent synchronisieren.",
+        logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg"],
+    },
+];
+
+export const windowsModul4Parts: Project[] = [
+    {
+        path: "/projekt/windows/modul-4",
+        label: "Modul 4: Cloud Security & Compliance — Übersicht",
+        description: "Gesamtübersicht des 5-teiligen Cloud-Security-Projekts mit Intune, Conditional Access, PIM, Defender und Sentinel.",
+        logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg"],
+    },
+    {
+        path: "/projekt/windows/modul-4/part-1",
+        label: "Part 1: Microsoft Intune & MDM",
+        description: "Geräte-Enrollment via Autopilot, Compliance Policies und App-Deployment für alle Unternehmensgeräte.",
+        logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg"],
+    },
+    {
+        path: "/projekt/windows/modul-4/part-2",
+        label: "Part 2: Conditional Access & MFA",
+        description: "Zero-Trust-Identitätsabsicherung: Zugriff nur aus konformen Geräten und definierten Standorten.",
+        logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg"],
+    },
+    {
+        path: "/projekt/windows/modul-4/part-3",
+        label: "Part 3: Privileged Identity Management (PIM)",
+        description: "Just-In-Time-Zugriff auf privilegierte Azure-Rollen mit Genehmigungsworkflow.",
+        logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg"],
+    },
+    {
+        path: "/projekt/windows/modul-4/part-4",
+        label: "Part 4: Microsoft Defender for Endpoint",
+        description: "EDR-Lösung für alle Unternehmensgeräte — ASR, EDR und Threat & Vulnerability Management.",
+        logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg"],
+    },
+    {
+        path: "/projekt/windows/modul-4/part-5",
+        label: "Part 5: Microsoft Sentinel & SIEM",
+        description: "Cloud-natives SIEM mit Log Analytics, Analytics Rules, Playbooks und Threat Hunting mit KQL.",
+        logos: ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg"],
+    },
 ];
 
 export const windowsProjects: Project[] = [...windowsModul1Projects, ...windowsModul2Projects];
@@ -304,6 +394,8 @@ export const totalProjectCount = [
     ...linuxProjects,
     ...windowsModul1Projects,
     ...windowsModul2Projects,
+    ...windowsModul3Parts,
+    ...windowsModul4Parts,
     ...cloudSecurityProjects,
     ...homelabProjects,
     ...opnsenseParts,
@@ -328,6 +420,8 @@ export const portfolioCategories = {
     windows: windowsProjects,
     windowsModul1: windowsModul1Projects,
     windowsModul2: windowsModul2Projects,
+    windowsModul3: windowsModul3Parts,
+    windowsModul4: windowsModul4Parts,
     linux: linuxProjects,
     cisco: ciscoProjects,
     homelab: homelabProjects,

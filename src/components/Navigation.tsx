@@ -21,7 +21,7 @@ const DOT = {
 };
 
 // ─── Overlay Project Link Row ────────────────────────────────────────────────
-const OverlayProjectRow = ({ path, label, logo, onClose }: { path: string; label: string; logo?: string; onClose: () => void }) => (
+const OverlayProjectRow = ({ path, label, logo, badge, onClose }: { path: string; label: string; logo?: string; badge?: string; onClose: () => void }) => (
     <Link
         to={path}
         onClick={onClose}
@@ -34,7 +34,10 @@ const OverlayProjectRow = ({ path, label, logo, onClose }: { path: string; label
         ) : (
             <span className="w-4 h-4 flex items-center justify-center text-muted-foreground text-[10px]">&bull;</span>
         )}
-        <span className="leading-tight group-hover:translate-x-0.5 transition-transform duration-200">{label}</span>
+        <span className="leading-tight group-hover:translate-x-0.5 transition-transform duration-200 flex-1">{label}</span>
+        {badge && (
+            <span className="text-[8px] border border-white/15 px-1.5 py-0.5 rounded-full whitespace-nowrap text-muted-foreground/60 flex-shrink-0">{badge}</span>
+        )}
     </Link>
 );
 
@@ -49,7 +52,7 @@ const OverlaySectionHeader = ({ label, color, dotColor }: { label: string; color
 // ─── Overlay Sub Section Label ───────────────────────────────────────────────
 const OverlaySubLabel = ({ label }: { label: string }) => (
     <div className="px-2 pt-2 pb-1">
-        <span className="text-[10px] text-muted-foreground/50 font-semibold uppercase tracking-wider">{label}</span>
+        <span className="text-[10px] text-foreground/60 font-bold uppercase tracking-wider">{label}</span>
     </div>
 );
 
@@ -117,7 +120,7 @@ const Navigation = () => {
                         <Logo className="w-10 h-10 text-primary transition-transform group-hover:scale-110" />
                         <div className="flex flex-col leading-tight">
                             <span className="text-lg md:text-xl font-semibold text-foreground">gökhan zehirlioglu</span>
-                            <span className="text-[10px] md:text-xs font-normal text-primary tracking-wide">Fachinformatiker für Systemintegration</span>
+                            <span className="text-[10px] md:text-xs font-normal text-primary tracking-wide">Angehender Fachinformatiker für Systemintegration</span>
                         </div>
                     </Link>
 
@@ -130,7 +133,11 @@ const Navigation = () => {
                         <div className="flex items-center gap-0.5">
                             <Link
                                 to="/projekte"
-                                className="text-sm font-medium text-orange-400 border border-orange-400/50 px-4 py-1.5 rounded-full hover:bg-orange-400/10 hover:border-orange-400 hover:shadow-[0_0_15px_rgba(251,146,60,0.2)] transition-all duration-300"
+                                className={`text-sm font-medium border px-4 py-1.5 rounded-full transition-all duration-300 ${
+                                    isActive("/projekte")
+                                        ? "text-orange-400 border-orange-400 bg-orange-400/10"
+                                        : "text-orange-400 border-orange-400/50 hover:bg-orange-400/10 hover:border-orange-400 hover:shadow-[0_0_15px_rgba(251,146,60,0.2)]"
+                                }`}
                             >
                                 Projekte
                             </Link>
@@ -218,32 +225,39 @@ const Navigation = () => {
                                 <OverlayPlannedRow label="Cisco Lab xxx" />
                             </div>
 
-                            {/* ── Col 2-3: System & Server Administration ── */}
+                            {/* ── Col 2-3: Windows & Azure Administration ── */}
                             <div className="bg-card/30 border border-border/30 rounded-2xl p-4 hover:border-orange-500/20 transition-colors duration-300 md:col-span-1 xl:col-span-2">
-                                <OverlaySectionHeader label="System & Server Administration" color="#F97316" dotColor={DOT.sys} />
+                                <OverlaySectionHeader label="Windows & Azure Administration" color="#F97316" dotColor={DOT.sys} />
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                    {/* Left: Linux */}
+                                    {/* Left: Modul 1 + Modul 3 */}
                                     <div>
-                                        <OverlaySubLabel label="Linux Essential Zertifizierung" />
-                                        {linuxProjects.map(p => <OverlayProjectRow key={p.path} path={p.path} label={p.label} logo={p.logos[0]} onClose={() => setIsOverlayOpen(false)} />)}
-                                        <div className="border-t border-border/20 my-2 mx-2" />
-                                        <OverlaySubLabel label="LPIC-1" />
-                                        <OverlayPlannedRow label="[Coming Soon]" />
-                                    </div>
-                                    {/* Right: Microsoft */}
-                                    <div>
-                                        <OverlaySubLabel label="Microsoft Enterprise IT" />
-                                        <div className="px-2 pt-1 pb-0.5">
-                                            <span className="text-[8px] text-muted-foreground/40 font-medium">Modul 1: Client OS Lifecycle</span>
-                                        </div>
+                                        <OverlaySubLabel label="Modul 1: Client OS Lifecycle" />
                                         {windowsModul1Projects.map(p => <OverlayProjectRow key={p.path} path={p.path} label={p.label} logo={p.logos[0]} onClose={() => setIsOverlayOpen(false)} />)}
-                                        <OverlayPlannedRow label="Projekt 03: Golden Image" />
-                                        <OverlayPlannedRow label="Projekt 04: Deployment" />
                                         <div className="border-t border-border/20 my-2 mx-2" />
-                                        <div className="px-2 pt-1 pb-0.5">
-                                            <span className="text-[8px] text-muted-foreground/40 font-medium">Modul 2: Identity & Server Admin</span>
-                                        </div>
+                                        <OverlaySubLabel label="Modul 3: Hybrid Identity & Azure" />
+                                        <OverlayProjectRow path="/projekt/windows/modul-3" label="Modul 3 Übersicht (5 Parts)" logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" onClose={() => setIsOverlayOpen(false)} />
+                                        <OverlayProjectRow path="/projekt/windows/modul-3/part-1" label="Part 1: DC-Deployment & AD-Architektur" logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg" onClose={() => setIsOverlayOpen(false)} />
+                                        <OverlayProjectRow path="/projekt/windows/modul-3/part-2" label="Part 2: PKI · LAPS · GPO Hardening" logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg" onClose={() => setIsOverlayOpen(false)} />
+                                        <OverlayProjectRow path="/projekt/windows/modul-3/part-3" label="Part 3: Entra Tenant & Prov. Agent" logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" onClose={() => setIsOverlayOpen(false)} />
+                                        <OverlayProjectRow path="/projekt/windows/modul-3/part-4" label="Part 4: Cloud Sync & Validation" logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" onClose={() => setIsOverlayOpen(false)} />
+                                        <OverlayProjectRow path="/projekt/windows/modul-3/part-5" label="Part 5: Coming Soon" logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" badge="Bald" onClose={() => setIsOverlayOpen(false)} />
+                                    </div>
+                                    {/* Right: Modul 2 + Modul 4 */}
+                                    <div>
+                                        <OverlaySubLabel label="Modul 2: Windows Server Administration" />
                                         {windowsModul2Projects.map(p => <OverlayProjectRow key={p.path} path={p.path} label={p.label} logo={p.logos[0]} onClose={() => setIsOverlayOpen(false)} />)}
+                                        <div className="border-t border-border/20 my-2 mx-2" />
+                                        <OverlaySubLabel label="Modul 4: Cloud Security & Compliance" />
+                                        <OverlayProjectRow path="/projekt/windows/modul-4" label="Modul 4 Übersicht (5 Parts)" logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" badge="Soon" onClose={() => setIsOverlayOpen(false)} />
+                                        <OverlayProjectRow path="/projekt/windows/modul-4/part-1" label="Part 1: Intune & MDM" logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" badge="Soon" onClose={() => setIsOverlayOpen(false)} />
+                                        <OverlayProjectRow path="/projekt/windows/modul-4/part-2" label="Part 2: Conditional Access" logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" badge="Soon" onClose={() => setIsOverlayOpen(false)} />
+                                        <OverlayProjectRow path="/projekt/windows/modul-4/part-3" label="Part 3: PIM" logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" badge="Soon" onClose={() => setIsOverlayOpen(false)} />
+                                        <OverlayProjectRow path="/projekt/windows/modul-4/part-4" label="Part 4: Defender for Endpoint" logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" badge="Soon" onClose={() => setIsOverlayOpen(false)} />
+                                        <OverlayProjectRow path="/projekt/windows/modul-4/part-5" label="Part 5: Sentinel & SIEM" logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" badge="Soon" onClose={() => setIsOverlayOpen(false)} />
+                                        <div className="border-t border-border/20 my-2 mx-2" />
+                                        <OverlaySubLabel label="Modul 5: Enterprise AD Administration" />
+                                        <OverlayProjectRow path="/projekt/windows/modul-5/part-1" label="Vertrauensstellungen & Standort-Topologie" logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg" badge="Fertig" onClose={() => setIsOverlayOpen(false)} />
+                                        <OverlayProjectRow path="/projekt/windows/modul-5/part-2" label="AD-Zertifikatdienste & PKI" logo="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg" badge="Fertig" onClose={() => setIsOverlayOpen(false)} />
                                     </div>
                                 </div>
                             </div>
@@ -260,13 +274,18 @@ const Navigation = () => {
                                 <OverlayPlannedRow label="Azure Cloud Security Lab" />
                             </div>
 
-                            {/* ── Col 5: Homelab ── */}
+                            {/* ── Col 5: Homelab & Linux Labs ── */}
                             <div className="bg-card/30 border border-border/30 rounded-2xl p-4 hover:border-green-500/20 transition-colors duration-300">
-                                <OverlaySectionHeader label="Homelab" color="#22C55E" dotColor={DOT.lab} />
+                                <OverlaySectionHeader label="Homelab & Linux Labs" color="#22C55E" dotColor={DOT.lab} />
+                                <OverlaySubLabel label="Homelab Infrastruktur & Services" />
                                 {homelabProjects.map(p => <OverlayProjectRow key={p.path} path={p.path} label={p.label} logo={p.logos[0]} onClose={() => setIsOverlayOpen(false)} />)}
+                                <div className="border-t border-border/20 my-1 mx-2" />
+                                <OverlaySubLabel label="Linux Challenge Labs (LPIC-1)" />
+                                {linuxProjects.map(p => <OverlayProjectRow key={p.path} path={p.path} label={p.label} logo={p.logos[0]} onClose={() => setIsOverlayOpen(false)} />)}
                                 <div className="border-t border-border/20 my-1 mx-2" />
                                 <OverlayPlannedRow label="Local LLM" />
                                 <OverlayPlannedRow label="Automation (n8n / Ansible)" />
+                                <OverlayPlannedRow label="LPIC-1: [Coming Soon]" />
                             </div>
                         </div>
 
@@ -310,28 +329,56 @@ const Navigation = () => {
                         </Link>
                     ))}
 
-                    {/* System & Server Administration */}
+                    {/* Windows & Azure Administration */}
                     <div className="flex items-center gap-2 px-4 py-1.5 mt-2">
                         <span className={`w-1.5 h-1.5 rounded-full ${DOT.sys}`} />
-                        <span className="text-[10px] font-semibold text-muted-foreground uppercase">System & Server Administration</span>
+                        <span className="text-[10px] font-semibold text-muted-foreground uppercase">Windows & Azure Administration</span>
                     </div>
-                    <div className="px-6 py-1"><span className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-wider">Linux Essential Zertifizierung</span></div>
-                    {linuxProjects.map(p => (
-                        <Link key={p.path} to={p.path} onClick={close} className="flex items-center gap-3 px-6 py-2.5 rounded-lg text-sm text-foreground hover:bg-secondary transition-colors">
-                            <img src={p.logos[0]} alt="" className="w-4 h-4 object-contain" />{p.label}
-                        </Link>
-                    ))}
-                    <div className="px-6 py-1 mt-1"><span className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-wider">Microsoft Enterprise IT</span></div>
+                    <div className="px-6 py-1"><span className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-wider">Modul 1: Client OS Lifecycle</span></div>
                     {windowsModul1Projects.map(p => (
                         <Link key={p.path} to={p.path} onClick={close} className="flex items-center gap-3 px-6 py-2.5 rounded-lg text-sm text-foreground hover:bg-secondary transition-colors">
                             <img src={p.logos[0]} alt="" className="w-4 h-4 object-contain" />{p.label}
                         </Link>
                     ))}
+                    <div className="px-6 py-1 mt-1"><span className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-wider">Modul 2: Windows Server Administration</span></div>
                     {windowsModul2Projects.map(p => (
                         <Link key={p.path} to={p.path} onClick={close} className="flex items-center gap-3 px-6 py-2.5 rounded-lg text-sm text-foreground hover:bg-secondary transition-colors">
                             <img src={p.logos[0]} alt="" className="w-4 h-4 object-contain" />{p.label}
                         </Link>
                     ))}
+                    <div className="px-6 py-1 mt-1"><span className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-wider">Modul 3: Hybrid Identity & Azure</span></div>
+                    {[
+                        { path: "/projekt/windows/modul-3",        label: "Modul 3 Übersicht (5 Parts)",         logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" },
+                        { path: "/projekt/windows/modul-3/part-1", label: "Part 1: DC-Deployment & AD-Architektur", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg" },
+                        { path: "/projekt/windows/modul-3/part-2", label: "Part 2: PKI · LAPS · GPO Hardening",   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg" },
+                        { path: "/projekt/windows/modul-3/part-3", label: "Part 3: Entra Tenant & Prov. Agent",   logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" },
+                        { path: "/projekt/windows/modul-3/part-4", label: "Part 4: Cloud Sync & Validation",      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" },
+                        { path: "/projekt/windows/modul-3/part-5", label: "Part 5: Coming Soon",                  logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" },
+                    ].map(p => (
+                        <Link key={p.path} to={p.path} onClick={close} className="flex items-center gap-3 px-6 py-2.5 rounded-lg text-sm text-foreground hover:bg-secondary transition-colors">
+                            <img src={p.logo} alt="" className="w-4 h-4 object-contain" />{p.label}
+                        </Link>
+                    ))}
+                    <div className="px-6 py-1 mt-1"><span className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-wider">Modul 4: Cloud Security & Compliance</span></div>
+                    {[
+                        { path: "/projekt/windows/modul-4",        label: "Modul 4 Übersicht (5 Parts)" },
+                        { path: "/projekt/windows/modul-4/part-1", label: "Part 1: Intune & MDM" },
+                        { path: "/projekt/windows/modul-4/part-2", label: "Part 2: Conditional Access" },
+                        { path: "/projekt/windows/modul-4/part-3", label: "Part 3: PIM" },
+                        { path: "/projekt/windows/modul-4/part-4", label: "Part 4: Defender for Endpoint" },
+                        { path: "/projekt/windows/modul-4/part-5", label: "Part 5: Sentinel & SIEM" },
+                    ].map(p => (
+                        <Link key={p.path} to={p.path} onClick={close} className="flex items-center gap-3 px-6 py-2.5 rounded-lg text-sm text-foreground hover:bg-secondary transition-colors">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="" className="w-4 h-4 object-contain" />{p.label}
+                        </Link>
+                    ))}
+                    <div className="px-6 py-1 mt-1"><span className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-wider">Modul 5: Enterprise AD Administration</span></div>
+                    <Link to="/projekt/windows/modul-5/part-1" onClick={close} className="flex items-center gap-3 px-6 py-2.5 rounded-lg text-sm text-foreground hover:bg-secondary transition-colors">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg" alt="" className="w-4 h-4 object-contain" />Vertrauensstellungen &amp; Standort-Topologie
+                    </Link>
+                    <Link to="/projekt/windows/modul-5/part-2" onClick={close} className="flex items-center gap-3 px-6 py-2.5 rounded-lg text-sm text-foreground hover:bg-secondary transition-colors">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg" alt="" className="w-4 h-4 object-contain" />AD-Zertifikatdienste &amp; PKI
+                    </Link>
 
                     {/* Cloud & Security */}
                     <div className="flex items-center gap-2 px-4 py-1.5 mt-2">
@@ -351,12 +398,19 @@ const Navigation = () => {
                         </Link>
                     ))}
 
-                    {/* Homelab */}
+                    {/* Homelab & Linux Labs */}
                     <div className="flex items-center gap-2 px-4 py-1.5 mt-2">
                         <span className={`w-1.5 h-1.5 rounded-full ${DOT.lab}`} />
-                        <Link to="/projekte" onClick={close} className="text-[10px] font-semibold text-muted-foreground uppercase hover:text-primary">Homelab</Link>
+                        <Link to="/projekte" onClick={close} className="text-[10px] font-semibold text-muted-foreground uppercase hover:text-primary">Homelab & Linux Labs</Link>
                     </div>
+                    <div className="px-6 py-1"><span className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-wider">Homelab Infrastruktur & Services</span></div>
                     {homelabProjects.map(p => (
+                        <Link key={p.path} to={p.path} onClick={close} className="flex items-center gap-3 px-6 py-2.5 rounded-lg text-sm text-foreground hover:bg-secondary transition-colors">
+                            <img src={p.logos[0]} alt="" className="w-4 h-4 object-contain" />{p.label}
+                        </Link>
+                    ))}
+                    <div className="px-6 py-1 mt-1"><span className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-wider">Linux Challenge Labs (LPIC-1)</span></div>
+                    {linuxProjects.map(p => (
                         <Link key={p.path} to={p.path} onClick={close} className="flex items-center gap-3 px-6 py-2.5 rounded-lg text-sm text-foreground hover:bg-secondary transition-colors">
                             <img src={p.logos[0]} alt="" className="w-4 h-4 object-contain" />{p.label}
                         </Link>

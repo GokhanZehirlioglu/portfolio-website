@@ -13,8 +13,7 @@ const TechLogos = ({ logos, className = "" }: TechLogosProps) => {
       {logos.map((logo, index) => (
         <div
           key={logo.alt}
-          className="relative group flex items-center justify-center animate-float"
-          style={{ animationDelay: `${index * 0.2}s` }}
+          className="relative group flex items-center justify-center"
         >
           <img
             src={logo.src}

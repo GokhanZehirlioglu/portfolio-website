@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -24,15 +24,28 @@ const ProjektCiscoLab162 = lazy(() => import("./pages/ProjektCiscoLab162"));
 const Lab361VlansUndTrunking = lazy(() => import("./pages/Lab361VlansUndTrunking"));
 const ProjektOpenVPN = lazy(() => import("./pages/ProjektOpenVPN"));
 const ProjektSSDUpgrade = lazy(() => import("./pages/ProjektSSDUpgrade"));
-const ProjektLemyeOgreniyor = lazy(() => import("./pages/ProjektLemyeOgreniyor"));
 const WindowsProjekte = lazy(() => import("./pages/WindowsProjekte"));
 const ProjektWin10Upgrade = lazy(() => import("./pages/ProjektWin10Upgrade"));
+const ProjektGoldenImage = lazy(() => import("./pages/ProjektGoldenImage"));
+const ProjektDeployment = lazy(() => import("./pages/ProjektDeployment"));
 const ProjektADSetup = lazy(() => import("./pages/ProjektADSetup"));
 const ProjektUSMTMigration = lazy(() => import("./pages/ProjektUSMTMigration"));
 const ProjektWindowsNetzwerk = lazy(() => import("./pages/ProjektWindowsNetzwerk"));
 const ProjektRBACGPO = lazy(() => import("./pages/ProjektRBACGPO"));
 const ProjektClientHardening = lazy(() => import("./pages/ProjektClientHardening"));
 const Projekt09 = lazy(() => import("./pages/Projekt09"));
+const ProjektModul3Intro = lazy(() => import("./pages/ProjektModul3Intro"));
+const ProjektModul3Part1 = lazy(() => import("./pages/ProjektModul3Part1"));
+const ProjektModul3Part2 = lazy(() => import("./pages/ProjektModul3Part2"));
+const ProjektModul3Part3 = lazy(() => import("./pages/ProjektModul3Part3"));
+const ProjektModul3Part4 = lazy(() => import("./pages/ProjektModul3Part4"));
+const ProjektModul3Part5 = lazy(() => import("./pages/ProjektModul3Part5"));
+const ProjektModul4Intro = lazy(() => import("./pages/ProjektModul4Intro"));
+const ProjektModul4Part1 = lazy(() => import("./pages/ProjektModul4Part1"));
+const ProjektModul4Part2 = lazy(() => import("./pages/ProjektModul4Part2"));
+const ProjektModul4Part3 = lazy(() => import("./pages/ProjektModul4Part3"));
+const ProjektModul4Part4 = lazy(() => import("./pages/ProjektModul4Part4"));
+const ProjektModul4Part5 = lazy(() => import("./pages/ProjektModul4Part5"));
 const ProjektOPNsenseIntro = lazy(() => import("./pages/ProjektOPNsenseIntro"));
 const ProjektOPNsensePart1 = lazy(() => import("./pages/ProjektOPNsensePart1"));
 const ProjektOPNsensePart2 = lazy(() => import("./pages/ProjektOPNsensePart2"));
@@ -40,7 +53,8 @@ const ProjektOPNsensePart3 = lazy(() => import("./pages/ProjektOPNsensePart3"));
 const ProjektOPNsensePart4 = lazy(() => import("./pages/ProjektOPNsensePart4"));
 const ProjektOPNsensePart5 = lazy(() => import("./pages/ProjektOPNsensePart5"));
 const ProjektOPNsensePart6 = lazy(() => import("./pages/ProjektOPNsensePart6"));
-const PlaceholderPage = lazy(() => import("./pages/PlaceholderPage"));
+const ProjektModul5Part1 = lazy(() => import("./pages/ProjektModul5Part1"));
+const ProjektModul5Part2 = lazy(() => import("./pages/ProjektModul5Part2"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const PageLoader = () => (
@@ -53,9 +67,6 @@ const PageLoader = () => (
 );
 
 const App = () => {
-  useEffect(() => {
-    document.title = "Gökhan Zehirlioglu — Portfolio";
-  }, []);
 
   return (
     <HelmetProvider>
@@ -84,15 +95,30 @@ const App = () => {
               <Route path="/projekt/cisco/lab-3-6-1" element={<Lab361VlansUndTrunking />} />
               <Route path="/projekt/openvpn-gateway" element={<ProjektOpenVPN />} />
               <Route path="/projekt/ssd-upgrade" element={<ProjektSSDUpgrade />} />
-              <Route path="/projekt/lemye-ogreniyor" element={<ProjektLemyeOgreniyor />} />
               <Route path="/windows-projekte" element={<WindowsProjekte />} />
               <Route path="/projekt/windows/win10-upgrade" element={<ProjektWin10Upgrade />} />
+              <Route path="/projekt/windows/golden-image" element={<ProjektGoldenImage />} />
+              <Route path="/projekt/windows/deployment" element={<ProjektDeployment />} />
               <Route path="/projekt/windows/ad-setup" element={<ProjektADSetup />} />
               <Route path="/projekt/windows/usmt-migration" element={<ProjektUSMTMigration />} />
               <Route path="/projekt/windows/netzwerk-infrastruktur" element={<ProjektWindowsNetzwerk />} />
               <Route path="/projekt/windows/rbac-gpo" element={<ProjektRBACGPO />} />
               <Route path="/projekt/windows/client-hardening" element={<ProjektClientHardening />} />
               <Route path="/projekt/windows/storage-management" element={<Projekt09 />} />
+              <Route path="/projekt/windows/modul-3" element={<ProjektModul3Intro />} />
+              <Route path="/projekt/windows/modul-3/part-1" element={<ProjektModul3Part1 />} />
+              <Route path="/projekt/windows/modul-3/part-2" element={<ProjektModul3Part2 />} />
+              <Route path="/projekt/windows/modul-3/part-3" element={<ProjektModul3Part3 />} />
+              <Route path="/projekt/windows/modul-3/part-4" element={<ProjektModul3Part4 />} />
+              <Route path="/projekt/windows/modul-3/part-5" element={<ProjektModul3Part5 />} />
+              <Route path="/projekt/windows/modul-4" element={<ProjektModul4Intro />} />
+              <Route path="/projekt/windows/modul-4/part-1" element={<ProjektModul4Part1 />} />
+              <Route path="/projekt/windows/modul-4/part-2" element={<ProjektModul4Part2 />} />
+              <Route path="/projekt/windows/modul-4/part-3" element={<ProjektModul4Part3 />} />
+              <Route path="/projekt/windows/modul-4/part-4" element={<ProjektModul4Part4 />} />
+              <Route path="/projekt/windows/modul-4/part-5" element={<ProjektModul4Part5 />} />
+              <Route path="/projekt/windows/modul-5/part-1" element={<ProjektModul5Part1 />} />
+              <Route path="/projekt/windows/modul-5/part-2" element={<ProjektModul5Part2 />} />
               <Route path="/projekt/security/opnsense" element={<ProjektOPNsenseIntro />} />
               <Route path="/projekt/security/opnsense/part-1" element={<ProjektOPNsensePart1 />} />
               <Route path="/projekt/security/opnsense/part-2" element={<ProjektOPNsensePart2 />} />

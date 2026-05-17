@@ -21,7 +21,7 @@ const Kontakt = () => {
     {
       icon: Mail,
       title: "E-Mail",
-      subtitle: "Direkt schreiben",
+      subtitle: "gokhanzehirlioglu@gmail.com",
       href: "mailto:gokhanzehirlioglu@gmail.com",
       color: "currentColor",
     },
@@ -31,17 +31,17 @@ const Kontakt = () => {
     {
       icon: MapPin,
       label: "Standort",
-      value: "Mannheim, Deutschland",
+      value: "Mannheim, Baden-Württemberg",
     },
     {
       icon: Briefcase,
       label: "Beruf",
-      value: "Fachinformatiker für Systemintegration",
+      value: "Angehender Fachinformatiker für Systemintegration",
     },
     {
       icon: Lightbulb,
       label: "Schwerpunkte",
-      value: "IT-Infrastruktur, Netzwerksicherheit, Home Automation",
+      value: "Cloud Security, IT-Infrastruktur, Enterprise Homelab",
     },
   ];
 
@@ -49,7 +49,7 @@ const Kontakt = () => {
     <Layout>
       <Helmet>
         <title>Kontakt | Gökhan Zehirlioglu</title>
-        <meta name="description" content="Kontaktieren Sie mich für Zusammenarbeit oder Fragen. Erreichbar über LinkedIn, GitHub und E-Mail." />
+        <meta name="description" content="Schreib mir — ich freue mich über Zusammenarbeit, Fragen oder fachlichen Austausch. Erreichbar über LinkedIn, GitHub und E-Mail." />
       </Helmet>
       {/* Hero */}
       <section className="py-16 px-4 text-center bg-gradient-to-b from-primary/5 to-transparent">
@@ -57,7 +57,7 @@ const Kontakt = () => {
           <span className="gradient-text">Kontakt</span>
         </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Interesse an einer Zusammenarbeit? Ich freue mich auf Ihre Nachricht!
+          Interesse an einer Zusammenarbeit? Ich freue mich auf deine Nachricht.
         </p>
       </section>
 

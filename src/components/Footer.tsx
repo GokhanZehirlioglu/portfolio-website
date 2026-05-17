@@ -14,7 +14,7 @@ const Footer = () => {
             <span className="text-sm font-semibold text-foreground">Gökhan Zehirlioglu</span>
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <MapPin className="w-3 h-3" />
-              <span>Baden-Württemberg, Deutschland</span>
+              <span>Mannheim, Deutschland</span>
               <span className="hidden md:inline">·</span>
               <span className="hidden md:inline">© {new Date().getFullYear()}</span>
             </div>
